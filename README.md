@@ -1,2 +1,2 @@
 # algorithm-
-The practice of algorithm class. 
+The practice of algorithm. 
