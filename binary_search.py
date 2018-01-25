@@ -1,7 +1,7 @@
 def binary_search(nums,x): 
 	left,right = 0, len(nums)-1 
 
-	while(left<=right): 
+	while(left<=right):  #left == right时 就是数组中仅剩一个元素，mid==left==right 其必然被返回
 		mid = (left + right)//2 
 		if nums[mid] == x : 
 			return mid 
