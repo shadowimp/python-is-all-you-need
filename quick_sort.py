@@ -48,5 +48,5 @@ def  quick(nums):
 def qsort(nums):
 	if len(nums)<=1: 
 		return nums 
-	return qsort([x for x in nums if x<nums[0]]) + qsort([x for x in nums if x == nums[0]]) + qsort([x for x in nums if x>nums[0]])
+	return qsort([x for x in nums if x<nums[0]]) + [x for x in nums if x == nums[0]] + qsort([x for x in nums if x>nums[0]])
 print(qsort([6,4,5,1,7,3]))
