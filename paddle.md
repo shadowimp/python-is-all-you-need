@@ -17,21 +17,23 @@ From the formula ($1$), we can using modeling condition probability $P(\omega_t|
 
 **The vector of the sequence of given words represents $h$, called the context, and the model predicts the probability of the next target word $\omega$.**
 
-In[$n$-gram language models](https://github.com/PaddlePaddle/book/tree/develop/04.word2vec)，上下文取固定的 $n-1$ 个词，[RNN 语言模型](https://github.com/PaddlePaddle/models/tree/develop/generate_sequence_by_rnn_lm)可以处理任意长度的上下文。
+In[$n$-gram language models](https://github.com/PaddlePaddle/book/tree/develop/04.word2vec)，上下文取固定的 $n-1$ 个词，[RNN language models](https://github.com/PaddlePaddle/models/tree/develop/generate_sequence_by_rnn_lm)可以处理任意长度的上下文。
 
-给定上下文 $h$，NPLM 学习一个分值函数（scoring function）$s_\theta(\omega, h)$，$s$ 刻画了上下文 $h$ 向量和所有可能的下一个词的向量表示 $\omega'$ 之间的相似度，再通过在全词表空间对打分函数 $s$ 的取值进行归一化（除以归一化因子 $Z$），得到目标词 $\omega$ 的概率分布，其中：$\theta$ 是可学习参数，这一过程用式($2$)表示，也就是 `Softmax` 函数的计算过程。
+Given the context $h$, NPLM learns a scoring function $s_\theta(\omega, h)$, $s$ which characterizes the context $h$ vector and all possible next-word vectors representing $ The similarity between \omega'$ is then normalized by dividing the value of the scoring function $s$ in the whole word table space (divided by the normalization factor $Z$) to get the target word $\omega$ The probability distribution, where: $\theta$ is a learnable parameter, this process is expressed by the formula ($2$), which is the calculation of the `Softmax` function.
 
 $$P_\theta^h(\omega) = \frac{\text{exp}{s_\theta(\omega, h)}}{Z}，Z=\sum_{\omega'} \exp{s_\theta(\omega', h)}\tag{2}$$
 
-极大似然估计（MLE，Maximum Likelihood Estimation）是求解概率($2$)最常用的学习准则。然而，不论是估计概率 $P_\theta^h(\omega)$ 还是计算似然（likelihood）的梯度时，都要计算归一化因子$Z$。$Z$ 的计算随着词典大小线性增长，当训练大规模语言模型时，例如，当词典增长到百万级别甚至更大，训练时间将变得十分漫长，因此，我们**需要其它可能的学习准则，他的求解过程从计算上应该更加轻便可解。**
+However, the normalization factor $Z$ must be calculated whether the estimated probability $P_\theta^h(\omega)$ or the gradient of the likelihood is calculated. The calculation of $Z$ increases linearly with the size of the dictionary. When training large-scale language models, for example, when the dictionary grows to a million or more, the training time will become very long. Therefore, we need other possibilities. Learning guidelines, his solution process should be more light and solvable. **
 
-models 的另一篇介绍了使用[Hsigmoid加速词向量训练](https://github.com/PaddlePaddle/models/tree/develop/hsigmoid) ，这里我们介绍另一种基于采样的提高语言模型训练速度的方法：使用噪声对比估计（Noise-contrastive estimation, NCE）\[[1](#参考文献)\]。
+MLE (Maximum Likelihood Estimation) is the most common learning criterion for solving the probability ($2$). However, the normalization factor $Z$ must be calculated whether the estimated probability $P_\theta^h(\omega)$ or the gradient of the likelihood is calculated. The calculation of $Z$ increases linearly with the size of the dictionary. When training large-scale language models, for example, when the dictionary grows to a million or more, the training time will become very long. Therefore, we need other possibilities. Learning guidelines, his solution process should be more light and solvable. **
+
+Another of part the models introduces the use of [Hsigmoid Accelerated Word Vector Training] (https://github.com/PaddlePaddle/models/tree/develop/hsigmoid). Here we introduce another sample-based training model to speed up language training. method：Using NCE（Noise-contrastive estimation, NCE）\[[1](#reference document)\]。
 
 ## What is NCE
 
 NCE is a probability density estimation criterion based on the sampling idea and is used for estimation/fitting: the probability function is composed of a non-normalized score function and a normalization factor. Such a special probability function [[1](#References)\]. NCE avoids the calculation of the normalization factor $Z$ in the full dictionary space by constructing an auxiliary problem such as the following, which reduces the computational cost:
 
-给定上下文 $h$ 和任意已知的噪声分布 $P_n$ ，学习一个二类分类器来拟合：目标 $\omega$ 来自真实分布 $P_\theta$ ($D = 1$) 还是噪声分布 $P_n$（$D = 0$）的概率。假设来自噪声分布的负类样本的数量 $k$ 倍于目标样本，于是有：
+Given a context $h$ and any known noise distribution $P_n$, learn a second-class classifier to fit: target $\mega$ from real distribution $P_\theta$ ($D = 1$) or noise distribution The probability of $P_n$ ($D = 0$). Assuming that the number of negative class samples from the noise distribution is $k$ times the target sample, then there are:
 
 $$P(D=1|h,\omega) = \frac{P_\theta(h, \omega)}{P_\theta (h, \omega) + kP_n} \tag{3}$$
 
@@ -105,14 +107,14 @@ return paddle.layer.nce(
 
 NCE 层的一些重要参数解释如下：
 
-| 参数名                   | 参数作用                                 | 介绍                                                                                                                                                 |
+| Parameter name                    | Parameter function                                 | Introduction                                                                                                                                               |
 | :----------------------- | :--------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------- |
 | param\_attr / bias\_attr | 用来设置参数名字                         | 方便预测阶段加载参数，具体在预测一节中介绍。                                                                                                         |
 | num\_neg\_samples        | 负样本采样个数                           | 可以控制正负样本比例，这个值取值区间为 [1, 字典大小-1]，负样本个数越多则整个模型的训练速度越慢，模型精度也会越高                                     |
 | neg\_distribution        | 生成负样例标签的分布，默认是一个均匀分布 | 可以自行控制负样本采样时各个类别的采样权重。例如：希望正样例为“晴天”时，负样例“洪水”在训练时更被着重区分，则可以将“洪水”这个类别的采样权重增加 |
 
-## 预测
-1. 在命令行运行 :
+## Prediction
+1. Runing in command line :
     ```bash
     python infer.py \
       --model_path "models/XX" \
@@ -120,9 +122,9 @@ NCE 层的一些重要参数解释如下：
       --use_gpu false \
       --trainer_count 1
     ```
-    参数含义如下：
-    - `model_path`：指定训练好的模型所在的路径。必选。
-    - `batch_size`：一次预测并行的样本数目。可选，默认值为 `1`。
+    The parameters are as follows：
+    - `model_path`：Specify the path where the trained model is located. required.
+    - `batch_size`：The number of samples in parallel is predicted at one time. Optional, the default value is `1`.
     - `use_gpu`：是否使用 GPU 进行预测。可选，默认值为 `False`。
     - `trainer_count` : 预测使用的线程数目。可选，默认为 `1`。**注意：预测使用的线程数目必选大于一次预测并行的样本数目**。
 
