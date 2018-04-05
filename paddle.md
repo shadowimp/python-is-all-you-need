@@ -1,4 +1,4 @@
-Running the following program need use PaddlePaddle v0.10.0 version。If your PaddlePaddle installed lower demand，Please following the [install document](http://www.paddlepaddle.org/docs/develop/documentation/zh/build_and_install/pip_install_cn.html)中的说明更新PaddlePaddle install version。
+Running the following program need use PaddlePaddle v0.10.0 version。If your PaddlePaddle installed lower demand，Please following the [install document](http://www.paddlepaddle.org/docs/develop/documentation/zh/build_and_install/pip_install_cn.html)instruction upgrade PaddlePaddle install version。
 
 ---
 
@@ -15,9 +15,9 @@ $$ P(\omega_1^T) \approx \prod P(\omega_t|\omega_{t-n-1}^{t-1}) \tag{1}$$
 
 From the formula ($1$), we can using modeling condition probability $P(\omega_t|w_{t-n-1},...,\omega_{t-1})$ and calculate the entire sequence the probability of  $\omega_1,...,\omega_T$ 。So, we can simply summarize the task of language model solving:
 
-**给定词语序列的向量表示 $h$ ，称之为上下文（context），模型预测下一个目标词语 $\omega$ 的概率。**
+**The vector of the sequence of given words represents $h$, called the context, and the model predicts the probability of the next target word $\omega$.**
 
-在[$n$-gram 语言模型](https://github.com/PaddlePaddle/book/tree/develop/04.word2vec)中，上下文取固定的 $n-1$ 个词，[RNN 语言模型](https://github.com/PaddlePaddle/models/tree/develop/generate_sequence_by_rnn_lm)可以处理任意长度的上下文。
+In[$n$-gram language models](https://github.com/PaddlePaddle/book/tree/develop/04.word2vec)，上下文取固定的 $n-1$ 个词，[RNN 语言模型](https://github.com/PaddlePaddle/models/tree/develop/generate_sequence_by_rnn_lm)可以处理任意长度的上下文。
 
 给定上下文 $h$，NPLM 学习一个分值函数（scoring function）$s_\theta(\omega, h)$，$s$ 刻画了上下文 $h$ 向量和所有可能的下一个词的向量表示 $\omega'$ 之间的相似度，再通过在全词表空间对打分函数 $s$ 的取值进行归一化（除以归一化因子 $Z$），得到目标词 $\omega$ 的概率分布，其中：$\theta$ 是可学习参数，这一过程用式($2$)表示，也就是 `Softmax` 函数的计算过程。
 
