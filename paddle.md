@@ -17,7 +17,7 @@ From the formula ($1$), we can using modeling condition probability $P(\omega_t|
 
 **The vector of the sequence of given words represents $h$, called the context, and the model predicts the probability of the next target word $\omega$.**
 
-In[$n$-gram language models](https://github.com/PaddlePaddle/book/tree/develop/04.word2vec)，上下文取固定的 $n-1$ 个词，[RNN language models](https://github.com/PaddlePaddle/models/tree/develop/generate_sequence_by_rnn_lm)可以处理任意长度的上下文。
+In[$n$-gram language models](https://github.com/PaddlePaddle/book/tree/develop/04.word2vec)，The context takes a fixed $n-1$ words，[RNN language models](https://github.com/PaddlePaddle/models/tree/develop/generate_sequence_by_rnn_lm)Can handle any length of context.
 
 Given the context $h$, NPLM learns a scoring function $s_\theta(\omega, h)$, $s$ which characterizes the context $h$ vector and all possible next-word vectors representing $ The similarity between \omega'$ is then normalized by dividing the value of the scoring function $s$ in the whole word table space (divided by the normalization factor $Z$) to get the target word $\omega$ The probability distribution, where: $\theta$ is a learnable parameter, this process is expressed by the formula ($2$), which is the calculation of the `Softmax` function.
 
@@ -37,11 +37,11 @@ Given a context $h$ and any known noise distribution $P_n$, learn a second-class
 
 $$P(D=1|h,\omega) = \frac{P_\theta(h, \omega)}{P_\theta (h, \omega) + kP_n} \tag{3}$$
 
-我们直接用`Sigmoid`函数来刻画式($3$)这样一个二分类概率：
+We directly use the `Sigmoid` function to characterize a binary class ($3$)：
 
 $$P(D=1|h,\omega) = \sigma (\Delta s_\theta(w,h)) \tag{4}$$
 
-有了上面的问题设置便可以基于二分类来进行极大似然估计：增大正样本的概率同时降低负样本的概率[[2,3](#参考文献)]，也就是最小化下面这样一个损失函数：
+With the above problem set, maximum likelihood estimation can be performed based on the two classifications: increasing the probability of positive samples and reducing the probability of negative samples [[2,3] (#references)], that is, minimizing the following Loss function：
 
 $$
 J^h(\theta )=E_{ P_d^h }\left[ \log { P^h(D=1|w,\theta ) }  \right] +kE_{ P_n }\left[ \log P^h (D=0|w,\theta ) \right]$$
@@ -72,27 +72,26 @@ $$
 图1. 5-gram 网络配置结构
 </p>
 
-模型主要分为如下几个部分构成：
+The model is mainly divided into the following parts:
 
-1. **输入层**：输入样本由原始英文单词组成，每个英文单词首先被转换为字典中的 id 表示。
+1. **Input Layer**: The input sample consists of the original English words. Each English word is first converted to the id in the dictionary.
 
-2. **词向量层**：id 表示通过词向量层作用得到连续表示的词向量表示，能够更好地体现词与词之间的语义关系。训练完成之后，词语之间的语义相似度可以使用词向量之间的距离来表示，语义越相似，距离越近。
+2. **word vector layer**: id means that the word vector representation that is expressed continuously by the word vector layer function can better reflect the semantic relationship between words. After the training is completed, the semantic similarity between words can be expressed using the distance between the word vectors. The more similar the semantics, the closer the distance.
 
-3. **词向量拼接层**：将词向量进行串联，并将词向量首尾相接形成一个长向量。这样可以方便后面全连接层的处理。
+3. **Word vector splice layer**: Concatenate the word vectors and connect the word vectors end to end to form a long vector. This can facilitate the processing of the fully connected layer behind.
 
-4. **全连接隐层**：将上一层获得的长向量输入到一层隐层的神经网络，输出特征向量。全连接的隐层可以增强网络的学习能力。
+4. **FULL CONNECTION Hidden Layer**: Input the long vector obtained from the previous layer into a hidden layer of neural network and output the feature vector. A fully connected hidden layer can enhance the learning ability of the network.
 
-5. **NCE层**：训练时可以直接实用 PaddlePaddle 提供的 `paddle.layer.nce` 作为损失函数。
+5. **NCE layer**: `The paddle.layer.nce` provided by PaddlePaddle can be used directly as a loss function during training.
 
+## Training
+Run the command ``` python train.py ``` in the command line window to start the training task.
 
-## 训练
-在命令行窗口运行命令``` python train.py ```可以直接开启训练任务。
+- The first time the program runs, it will detect if the ptb data set is included in the user's cache folder. If it is not included, it will be downloaded automatically.
+- Every 10 batch prints the value of model training on the training set during the run
+- After each pass is completed, the loss on the test data set is calculated and the latest snapshot of the model is also saved.
 
-- 程序第一次运行会检测用户缓存文件夹中是否包含 ptb 数据集，如果未包含，则自动下载。
-- 运行过程中，每10个 batch 会打印模型训练在训练集上的代价值
-- 每个 pass 结束后，会计算测试数据集上的损失，并同时会保存最新的模型快照。
-
-在模型文件`network_conf.py`中 NCE 调用代码如下：
+The NCE call code in the model file `network_conf.py` is as follows:
 
 ```python
 return paddle.layer.nce(
