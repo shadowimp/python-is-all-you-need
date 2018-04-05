@@ -6,15 +6,14 @@ Running the following program need use PaddlePaddle v0.10.0 version。If your Pa
 
 ##  Why we need NCE
 
-语言模型是许多自然语言处理任务的基础，也是获得词向量表示的一种有效方法。神经概率语言模型（Neural Probabilistic Language Model, NPLM）刻画了词语序列 $\omega_1,...,\omega_T$ 属于某个固定语言的概率 $P(\omega_1^T)$ ：
+The language model is the basis of many natural language processing tasks, and it is also an effective method for obtaining word vector representations.Neural Probabilistic Language Model(NPLM）Describes the probability of the sequence of words $\omega_1,...,\omega_T$ belonging to a fixed language:
 $$P(\omega_1^T)= \prod_{t=1}^{T}P(\omega_t|\omega_1^{t-1})$$
 
-为了降低建模和求解的难度，通常会引入一定条件独立假设：词语$w_t$的概率只受之前$n-1$个词语的影响，于是有：
-In order to reduce the difficulty，we usually use some  
+In order to reduce the difficulty of modeling and solving, we often introduce certain conditional independent assumptions: the probability of the word $w_t$ is only affected by the previous $n-1$ words, so there are:
 
 $$ P(\omega_1^T) \approx \prod P(\omega_t|\omega_{t-n-1}^{t-1}) \tag{1}$$
 
-从式($1$)中看到，可以通过建模条件概率 $P(\omega_t|w_{t-n-1},...,\omega_{t-1})$ 进而计算整个序列  $\omega_1,...,\omega_T$ 的概率。于是，我们可以将语言模型求解的任务简单地概括为：
+From the formula ($1$), we can using modeling condition probability $P(\omega_t|w_{t-n-1},...,\omega_{t-1})$ and calculate the entire sequence the probability of  $\omega_1,...,\omega_T$ 。So, we can simply summarize the task of language model solving:
 
 **给定词语序列的向量表示 $h$ ，称之为上下文（context），模型预测下一个目标词语 $\omega$ 的概率。**
 
