@@ -1,15 +1,16 @@
-运行本目录下的程序示例需要使用PaddlePaddle v0.10.0 版本。如果您的PaddlePaddle安装版本低于此要求，请按照[安装文档](http://www.paddlepaddle.org/docs/develop/documentation/zh/build_and_install/pip_install_cn.html)中的说明更新PaddlePaddle安装版本。
+Running the following program need use PaddlePaddle v0.10.0 version。If your PaddlePaddle installed lower demand，Please following the [install document](http://www.paddlepaddle.org/docs/develop/documentation/zh/build_and_install/pip_install_cn.html)中的说明更新PaddlePaddle install version。
 
 ---
 
-# 使用噪声对比估计加速语言模型训练
+# Using the NCE(noise contrastive estimation)to accelerate the language model training 
 
-## 为什么需要噪声对比估计
+##  Why we need NCE
 
 语言模型是许多自然语言处理任务的基础，也是获得词向量表示的一种有效方法。神经概率语言模型（Neural Probabilistic Language Model, NPLM）刻画了词语序列 $\omega_1,...,\omega_T$ 属于某个固定语言的概率 $P(\omega_1^T)$ ：
 $$P(\omega_1^T)= \prod_{t=1}^{T}P(\omega_t|\omega_1^{t-1})$$
 
 为了降低建模和求解的难度，通常会引入一定条件独立假设：词语$w_t$的概率只受之前$n-1$个词语的影响，于是有：
+In order to reduce the difficulty，we usually use some  
 
 $$ P(\omega_1^T) \approx \prod P(\omega_t|\omega_{t-n-1}^{t-1}) \tag{1}$$
 
@@ -27,9 +28,9 @@ $$P_\theta^h(\omega) = \frac{\text{exp}{s_\theta(\omega, h)}}{Z}，Z=\sum_{\omeg
 
 models 的另一篇介绍了使用[Hsigmoid加速词向量训练](https://github.com/PaddlePaddle/models/tree/develop/hsigmoid) ，这里我们介绍另一种基于采样的提高语言模型训练速度的方法：使用噪声对比估计（Noise-contrastive estimation, NCE）\[[1](#参考文献)\]。
 
-## 什么是噪声对比估计
+## What is NCE
 
-噪声对比估计是一种基于采样思想的概率密度估计准则，用于估计/拟合：概率函数由非归一化的分值函数和归一化因子两部分构成，这样一类特殊的概率函数\[[1](#参考文献)\] 。噪声对比估计通过构造下面这样一个辅助问题避免在全词典空间计算归一化因子 $Z$ ，从而降低计算代价：
+NCE is a probability density estimation criterion based on the sampling idea and is used for estimation/fitting: the probability function is composed of a non-normalized score function and a normalization factor. Such a special probability function [[1](#References)\]. NCE avoids the calculation of the normalization factor $Z$ in the full dictionary space by constructing an auxiliary problem such as the following, which reduces the computational cost:
 
 给定上下文 $h$ 和任意已知的噪声分布 $P_n$ ，学习一个二类分类器来拟合：目标 $\omega$ 来自真实分布 $P_\theta$ ($D = 1$) 还是噪声分布 $P_n$（$D = 0$）的概率。假设来自噪声分布的负类样本的数量 $k$ 倍于目标样本，于是有：
 
@@ -148,7 +149,7 @@ NCE 层的一些重要参数解释如下：
     - 第三列：输入的 $n$ 个词语，内部以空格分隔。
 
 
-## 参考文献
+## Reference
 1. Gutmann M, Hyvärinen A. [Noise-contrastive estimation: A new estimation principle for unnormalized statistical models](http://proceedings.mlr.press/v9/gutmann10a/gutmann10a.pdf)[C]//Proceedings of the Thirteenth International Conference on Artificial Intelligence and Statistics. 2010: 297-304.
 
 1. Mnih A, Kavukcuoglu K. [Learning word embeddings efficiently with noise-contrastive estimation](https://papers.nips.cc/paper/5165-learning-word-embeddings-efficiently-with-noise-contrastive-estimation.pdf)[C]//Advances in neural information processing systems. 2013: 2265-2273.
