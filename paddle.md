@@ -1,4 +1,4 @@
-Running the following program need use PaddlePaddle v0.10.0 version。If your PaddlePaddle installed lower demand，Please following the [install  document](http://www.paddlepaddle.org/docs/develop/documentation/zh/build_and_install/pip_install_cn.html)instruction upgrade PaddlePaddle install version。
+Running the following program need use PaddlePaddle v0.10.0 version。If your PaddlePaddle installed lower demand，Please following the [install  document ](http://www.paddlepaddle.org/docs/develop/documentation/zh/build_and_install/pip_install_cn.html) instruction upgrade PaddlePaddle install version。
 
 ---
 
