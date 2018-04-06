@@ -1,4 +1,4 @@
-Running the following program need use PaddlePaddle v0.10.0 version。If your PaddlePaddle installed lower demand，Please following the [install document](http://www.paddlepaddle.org/docs/develop/documentation/zh/build_and_install/pip_install_cn.html)instruction upgrade PaddlePaddle install version。
+Running the following program need use PaddlePaddle v0.10.0 version。If your PaddlePaddle installed lower demand，Please following the [install  document](http://www.paddlepaddle.org/docs/develop/documentation/zh/build_and_install/pip_install_cn.html)instruction upgrade PaddlePaddle install version。
 
 ---
 
@@ -127,10 +127,9 @@ Some important parameters of the NCE layer are explained as follows:
     The parameters are as follows：
     - `model_path`：Specify the path where the trained model is located. required.
     - `batch_size`：The number of samples in parallel is predicted at one time. Optional, the default value is `1`.
-    - `use_gpu`：是否使用 GPU 进行预测。可选，默认值为 `False`。
-    - `trainer_count` : 预测使用的线程数目。可选，默认为 `1`。**注意：预测使用的线程数目必选大于一次预测并行的样本数目**。
+     - `use_gpu`：Whether use GPU for prediction。Optional，the default value is `False`。
+    - `trainer_count` : Number of thread for prediction。Optional，the default is  `1`。**Note: The number of threads used for prediction must be greater than the number of samples to be predicted in parallel**。
 
-2. 需要注意的是：**预测和训练的计算逻辑不同**。预测使用全连接矩阵乘法后接`softmax`激活，输出基于各类别的概率分布，需要替换训练中使用的`paddle.train.nce`层。在PaddlePaddle中，NCE层将可学习参数存储为一个 `[类别数目 × 上一层输出向量宽度]` 大小的矩阵，预测时，**全连接运算在加载NCE层学习到参数时，需要进行转置**，代码如下：
 
 2. It should be noted that: **The calculation logic for prediction and training is different**. Predictions using full-join matrix multiplication followed by `softmax` activation, output based on the probability distribution for each category, need to replace the `paddle.train.nce` layer used in training. In PaddlePaddle, the NCE layer stores the learnable parameters as a matrix of `[number of classes × output vector width of the previous layer]`. When predicting, **full-join operation needs to be transferred when loading the NCE layer to learn the parameters**, the code is as follows:
     ```python
