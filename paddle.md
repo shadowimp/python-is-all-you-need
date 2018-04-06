@@ -48,28 +48,29 @@ J^h(\theta )=E_{ P_d^h }\left[ \log { P^h(D=1|w,\theta ) }  \right] +kE_{ P_n }\
 $$
  \\\\\qquad =E_{ P_d^h }\left[ \log { \sigma (\Delta s_\theta(w,h)) }  \right] +kE_{ P_n }\left[ \log (1-\sigma (\Delta s_\theta(w,h)))  \right] \tag{5}$$
 
-式($5$)便是基于噪声对比估计而定义的NCE损失函数，至此，我们还剩下两个问题：
-1. 式($5$)中的 $s_\theta(w,h)$ 是什么？
-    - 在神经网络的实现中，$s_\theta(h,\omega)$ 是未归一化的分值。
-    - NCE cost 层的可学习参数 $W$ 是一个 $|V| \times d$ 维度的矩阵，$|V|$ 是词典大小，$d$ 是上下文向量$h$的维度；
-    - 训练时下一个词的真实类别 $t$ 是正类，从指定的噪声分布中采样 $k$ 个负类样本它们的类别分别记作： $\{n_1, ..., n_k\}$；
-    - 抽取 $W$ 中第 $\{t, n_1, ..., n_k\}$ 行（共计 $k + 1$ 行）分别与 $h$ 计算分值  $s_\theta(w,h)$ ，再通过($5$)式计算最终的损失；
-2. 噪声分布如何选择？
-    - 实践中，可以任意选择合适的噪声分布（噪声分布暗含着一定的先验）。
-    - 最常用选择有：使用基于全词典之上的`unigram`分布（词频统计），无偏的均匀分布。
-    - 在PaddlePaddle中用户如果用户未指定噪声分布，默认采用均匀分布。
 
-使用NCE准确训练时，最后一层的计算代价只与负采样数目线性相关，当负采样数目逐渐增大时，NCE 估计准则会收敛到极大似然估计。因此，在使用NCE准则训练时，可以通过控制负采样数目来控制对归一化的概率分布近似的质量。
+The formula ($5$) is the NCE loss function defined based on noise comparison estimation. At this point, we have two remaining questions:
+1. What is $s_\theta(w,h)$ in ($5$)?
+    - In a neural network implementation, $s_\theta(h,\omega)$ is an unnormalized score.
+    - The learnable parameter $W$ of the NCE cost layer is a matrix of $|V| \times d$ dimensions, $|V|$ is the dictionary size, and $d$ is the dimension of the context vector $h$;
+    - The actual category of the next word $t$ during training is a positive class. Samples of $k$ negative samples from the specified noise distribution are classified as follows: $\{n_1, ..., n_k\}$;
+    - Extract the $\{t, n_1, ..., n_k\}$ lines in $W$ (total $k + 1$ lines) and $h$ respectively Calculate the points $s_\theta(w,h)$ The final loss is calculated by ($5$).
+2. How to choose the noise distribution?
+    - In practice, the noise distribution can be arbitrarily chosen (the noise distribution implies a certain a priori).
+    - The most common choices are: Use the `unigram` distribution based on the entire dictionary (word frequency statistics), unbiased uniform distribution.
+    - If the user does not specify a noise distribution in the PaddlePaddle, the default is to use a uniform distribution.
 
-## 实验数据
-本例采用 Penn Treebank (PTB) 数据集（[Tomas Mikolov预处理版本](http://www.fit.vutbr.cz/~imikolov/rnnlm/simple-examples.tgz)）来训练一个 5-gram 语言模型。PaddlePaddle 提供了 [paddle.dataset.imikolov](https://github.com/PaddlePaddle/Paddle/blob/develop/python/paddle/v2/dataset/imikolov.py) 接口来方便地使用PTB数据。当没有找到下载好的数据时，脚本会自动下载并验证文件的完整性。语料语种为英文，共有42068句训练数据，3761句测试数据。
+When using NCE to accurately train, the calculation cost of the last layer is only linearly related to the number of negative samples. When the number of negative samples gradually increases, the NCE estimation criterion converges to the maximum likelihood estimation. Therefore, when training using the NCE criterion, the quality of the normalized probability distribution can be controlled by controlling the number of negative samples.
 
-## 网络结构
-在 5-gram 神经概率语言模型详细网络结构见图1：
+## Experimental data
+This example uses a Penn Treebank (PTB) data set ([Tomas Mikolov pre-processing version] (http://www.fit.vutbr.cz/~imikolov/rnnlm/simple-examples.tgz)) to train a 5-gram language model. PaddlePaddle provides the [paddle.dataset.imikolov](https://github.com/PaddlePaddle/Paddle/blob/develop/python/paddle/v2/dataset/imikolov.py) interface to conveniently use PTB data. When no downloaded data is found, the script automatically downloads and verifies the integrity of the file. The corpus language is English, with a total of 42068 sentence training data and 3761 sentence test data.
+
+## Network Structure
+The detailed network structure of the 5-gram neural probabilistic language model is shown in Figure 1:
 
 <p align="center">
 <img src="images/network_conf.png" width = "70%" align="center"/><br/>
-图1. 5-gram 网络配置结构
+Figure1. 5-gram Network configuration structure
 </p>
 
 The model is mainly divided into the following parts:
@@ -104,13 +105,15 @@ return paddle.layer.nce(
             neg_distribution=None)
 ```
 
-NCE 层的一些重要参数解释如下：
+Some important parameters of the NCE layer are explained as follows:
 
 | Parameter name                    | Parameter function                                 | Introduction                                                                                                                                               |
 | :----------------------- | :--------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------- |
-| param\_attr / bias\_attr | 用来设置参数名字                         | 方便预测阶段加载参数，具体在预测一节中介绍。                                                                                                         |
-| num\_neg\_samples        | 负样本采样个数                           | 可以控制正负样本比例，这个值取值区间为 [1, 字典大小-1]，负样本个数越多则整个模型的训练速度越慢，模型精度也会越高                                     |
-| neg\_distribution        | 生成负样例标签的分布，默认是一个均匀分布 | 可以自行控制负样本采样时各个类别的采样权重。例如：希望正样例为“晴天”时，负样例“洪水”在训练时更被着重区分，则可以将“洪水”这个类别的采样权重增加 |
+| param\_attr / bias\_attr | use to set parameter name  |  facilitates the loading of parameters during the forecast phase, as described in the prediction section                                                                                                   |
+| num\_neg\_samples        |  Number of Negative Samples                  |  You can control the proportion of positive and negative samples. The range of this value is [1, dictionary size -1]. The more negative samples, the slower the training of the whole model. The accuracy of the model will also be higher                                  |
+| neg\_distribution        |  Generates the distribution of negative sample tags. The default is a uniform distribution| You can control the sampling weights for each category when negative samples are sampled. For example, if you want the positive example to be “sunny,” and the negative example “flood” is highlighted more during training, you can increase the weight of the “flood” sample |
+
+
 
 ## Prediction
 1. Runing in command line :
@@ -128,6 +131,8 @@ NCE 层的一些重要参数解释如下：
     - `trainer_count` : 预测使用的线程数目。可选，默认为 `1`。**注意：预测使用的线程数目必选大于一次预测并行的样本数目**。
 
 2. 需要注意的是：**预测和训练的计算逻辑不同**。预测使用全连接矩阵乘法后接`softmax`激活，输出基于各类别的概率分布，需要替换训练中使用的`paddle.train.nce`层。在PaddlePaddle中，NCE层将可学习参数存储为一个 `[类别数目 × 上一层输出向量宽度]` 大小的矩阵，预测时，**全连接运算在加载NCE层学习到参数时，需要进行转置**，代码如下：
+
+2. It should be noted that: **The calculation logic for prediction and training is different**. Predictions using full-join matrix multiplication followed by `softmax` activation, output based on the probability distribution for each category, need to replace the `paddle.train.nce` layer used in training. In PaddlePaddle, the NCE layer stores the learnable parameters as a matrix of `[number of classes × output vector width of the previous layer]`. When predicting, **full-join operation needs to be transferred when loading the NCE layer to learn the parameters**, the code is as follows:
     ```python
     return paddle.layer.mixed(
           size=dict_size,
@@ -136,17 +141,17 @@ NCE 层的一些重要参数解释如下：
           act=paddle.activation.Softmax(),
           bias_attr=paddle.attr.Param(name="nce_b"))
     ```
-    上述代码片段中的 `paddle.layer.mixed` 必须以 PaddlePaddle 中 `paddle.layer.×_projection` 为输入。`paddle.layer.mixed` 将多个 `projection` （输入可以是多个）计算结果求和作为输出。`paddle.layer.trans_full_matrix_projection` 在计算矩阵乘法时会对参数$W$进行转置。
+    The `paddle.layer.mixed` in the above code snippet must be entered as `paddle.layer.×_projection` in PaddlePaddle. `paddle.layer.mixed` sums up multiple `projection` (input can be multiple) calculations as output. `paddle.layer.trans_full_matrix_projection` Transposes the parameter $W$ when calculating matrix multiplication.
 
-3. 预测的输出格式如下：
-    ```text
-    0.6734  their   may want to move
-    ```
+3. The forecasted output format is as follows:
+     ```text
+     0.6734  their   may want to move
+     ```
 
-    每一行是一条预测结果，内部以“\t”分隔，共计3列：
-    - 第一列：下一个词的概率。
-    - 第二列：模型预测的下一个词。
-    - 第三列：输入的 $n$ 个词语，内部以空格分隔。
+     Each row is a forecast result, internally separated by "\t", for a total of 3 columns:
+     - First column: Probability of the next word.
+     - Second column: The next word of the model prediction.
+     - Third column: $n$ words entered, separated by spaces.
 
 
 ## Reference
