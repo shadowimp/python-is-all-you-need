@@ -1,2 +1,4 @@
 - [binary_search](./binary_search.py) : 二分查找
+- [bubble_sort](./bubble_sort.py) : 冒泡排序
+- [merge_sort](./merge_sort.py) : 归并排序
 - [quick_sort](./quick_sort.py) : 快速排序
