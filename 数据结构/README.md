@@ -1,1 +1,2 @@
 - [binary_search](./binary_search.py) : 二分查找
+- [quick_sort](./quick_sort.py) : 快速排序
