@@ -7,10 +7,10 @@ python脚本 模糊查询文件名。
 
 '''
 import os  # os模块（operation system)与系统相关的库函数
-def find_path(path,name,type): 
+def find_path(path,name,type):
 	files = os.listdir(path)
-	for f in files:  
-		if name in f and f.endswith(type): 
+	for f in files:
+		if name in f and f.endswith(type):
 			print(f)
 
 

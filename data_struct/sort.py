@@ -22,17 +22,6 @@ def BubbleSort(nums):
 print BubbleSort([6,4,5,1,7,3])
 
 
-def SelectSort(nums):
-	for i in range(len(nums)):
-		max_num = nums[i]
-		for j in range(i):
-			if max_num < nums[j]:
-				max_num = nums[j]
-	return nums 
-
-print InsertSort([6,4,5,1,7,3])
-
-
 def MergeSort(nums):
 	if len(nums)<=1 :
 		return nums

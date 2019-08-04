@@ -47,9 +47,6 @@ class LinkList:
 			self.head.next = temp
 
 
-
-
-
 	#在尾部删除元素
 	def delete_tail(self):
 		if self.head == None : 
