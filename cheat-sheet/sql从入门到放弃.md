@@ -21,31 +21,33 @@ product_id CHAR(4) NOT NULL ;
 
 GROUP BY 子句对 SELECT 语句的输出进行分组， 分组中是匹配值的数据行。 Group BY 子句支持任意表达式， 包括指定列名或列序号（从1开始）。
 
-
-
-### 显示数据库列表 
-
 ```mysql
-show databases;
+show databases;   #显示数据库列表 
+use database d1;  #进入数据库
+show tables;  		#显示数据库中所有的表
+desc tabl_name;		#描述表结构
 ```
-
-进入数据库
-
-```mysql
-use database d1 ;
-```
-
-描述表结构
-
-```mysql
-desc tabl_name;
-```
-
-
-
-
 
 ### 建表
+
+```mysql
+CREATE TABLE table1 (ID INTEGER primary key, number int,data char(32)）
+```
+
+建立表格名为table1的表格，
+含有ID，这个ID是唯一的关键字(primary key)，类型为整形(INTEGER )，
+含有属性name，类型为整形(int)，
+含有属性data，类型为32为char型
+
+```mysql
+create table if not exists customers (id int, name varchar(255))
+```
+
+### 
+
+
+
+### 
 
 CREATE TABLE table1 (ID INTEGER primary key, number int,data char(32)）
 
