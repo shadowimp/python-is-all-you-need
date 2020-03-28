@@ -33,7 +33,7 @@ cntrol + B +D    退出tmux界面
 
 ```shell
 tmux new -s zyb       新建名为zyb的tmux
-tmux new at -t zyb    进入名为zyb的tmux
+tmux at -t zyb    进入名为zyb的tmux
 ```
 
 ### crontab
@@ -55,6 +55,14 @@ docer run -it -v $PWD:/work centos: latest /bin/bash     #docker启动centos
 ```shell
 brew services start mysql		# 启动mysql
 mysql -uroot -p	#以root方式进入mysql
+```
+
+### rsync
+
+```shell
+vi /etc/rsyncd.conf
+
+rsync -av test.py 10.41.24.195::yuanbo6
 ```
 
 

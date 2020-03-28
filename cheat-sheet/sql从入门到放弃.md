@@ -43,7 +43,20 @@ CREATE TABLE table1 (ID INTEGER primary key, number int,data char(32)）
 create table if not exists customers (id int, name varchar(255))
 ```
 
-### 
+### select 
+
+```mysql
+select * from city where population >100000 and countrycode = 'USA' 
+
+select name from employee order by name   #按名字的字母顺序排序
+
+select name from employee where salary > 2000 and months <10 order by employee_id asc 
+# 按employee_id排序 ，  desc 降序
+
+
+```
+
+
 
 
 
