@@ -7,11 +7,14 @@ ps  显示当前进程
 
 df -h   查看磁盘空间
 
-ll -h   查看文件大小
+ll -h   # 查看文件大小,代表human 以人类的方式看内存
 
 nohop
 
 nvidia-smi	# 查看GPU使用率
+
+sed -n '16900,17900p' log.txt   # 查看log文件的16900行到17900行
+sed -n '16900,17900p' log.txt >> log1.txt # 将log文件的16900行到17900行保存到log1.txt文件中
 ```
 
 ### tar
