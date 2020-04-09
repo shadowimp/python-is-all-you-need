@@ -76,31 +76,31 @@ cd -{N}             # 切换到目录栈中的第 N个目录，比如 cd -2 将�
 ls                  # 显示当前目录内容，后面可接目录名：ls {dir} 显示指定目录
 ls -l               # 列表方式显示目录内容，包括文件日期，大小，权限等信息
 ls -a               # 显示所有文件和目录，包括隐藏文件（.开头的文件/目录名）
-ln -s {fn} {link}   # 给指定文件创建一个软链接
+
 cp {src} {dest}     # 拷贝文件，cp -r dir1 dir2 可以递归拷贝（目录）
 rm {fn}             # 删除文件，rm -r 递归删除目录，rm -f 强制删除
 mv {src} {dest}     # 移动文件，如果 dest 是目录，则移动，是文件名则覆盖
 touch {fn}          # 创建或者更新一下制定文件
+
+
+
 cat {fn}            # 输出文件原始内容
-any_cmd > {fn}      # 执行任意命令并将标准输出重定向到指定文件
 more {fn}           # 逐屏显示某文件内容，空格翻页，q 退出
 less {fn}           # 更高级点的 more，更多操作，q 退出
 head {fn}           # 显示文件头部数行，可用 head -3 abc.txt 显示头三行
 tail {fn}           # 显示文件尾部数行，可用 tail -3 abc.txt 显示尾部三行
 tail -f {fn}        # 持续显示文件尾部数据，可用于监控日志
-nano {fn}           # 使用 nano 编辑器编辑文件
-vim {fn}            # 使用 vim 编辑文件
 diff {f1} {f2}      # 比较两个文件的内容
 wc {fn}             # 统计文件有多少行，多少个单词
-chmod 644 {fn}      # 修改文件权限为 644，可以接 -R 对目录循环改权限
-chgrp group {fn}    # 修改文件所属的用户组
-chown user1 {fn}    # 修改文件所有人为 user1, chown user1:group1 fn 可以修改组
+
 file {fn}           # 检测文件的类型和编码
-basename {fn}       # 查看文件的名字（不包括路径）
-dirname {fn}        # 查看文件的路径（不包括名字）
 grep {pat} {fn}     # 在文件中查找出现过 pat 的内容
 grep -r {pat} .     # 在当前目录下递归查找所有出现过 pat 的文件内容
 stat {fn}           # 显示文件的详细信息
+
+chmod 644 {fn}      # 修改文件权限为 644，可以接 -R 对目录循环改权限
+chgrp group {fn}    # 修改文件所属的用户组
+chown user1 {fn}    # 修改文件所有人为 user1, chown user1:group1 fn 可以修改组
 
 
 ##############################################################################
@@ -715,24 +715,23 @@ mkdir -p work/{project1,project2}/{src,bin,bak}
 # 按日期范围查找文件
 find . -type f -newermt "2010-01-01" ! -newermt "2010-06-01"
 
-# 显示当前正在使用网络的进程
-lsof -P -i -n | cut -f 1 -d " "| uniq | tail -n +2
 
-# Vim 中保存一个没有权限的文件
-:w !sudo tee > /dev/null %
 
-# 在 .bashrc / .bash_profile 中加载另外一个文件（比如你保存在 github 上的配置）
+```bash
+lsof -P -i -n | cut -f 1 -d " "| uniq | tail -n +2		#显示当前正在使用网络的进程
+:w !sudo tee > /dev/null % # Vim 中保存一个没有权限的文件
+```
+
+
+
+在 .bashrc / .bash_profile 中加载另外一个文件（比如你保存在 github 上的配置）
+
 source ~/github/profiles/my_bash_init.sh
 
-# 终端下正确设置 ALT 键和 BackSpace 键
-http://www.skywind.me/blog/archives/2021
 
 
-##############################################################################
-# 有用的函数
-##############################################################################
+自动解压：判断文件后缀名并调用相应解压命令
 
-# 自动解压：判断文件后缀名并调用相应解压命令
 function q-extract() {
     if [ -f $1 ] ; then
         case $1 in
