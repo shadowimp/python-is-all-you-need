@@ -53,7 +53,12 @@ select name from employee order by name   #按名字的字母顺序排序
 select name from employee where salary > 2000 and months <10 order by employee_id asc 
 # 按employee_id排序 ，  desc 降序
 
+ROUND(price,1) # price 保留一位小数
+ROUND(price,-1) # price 舍弃个位
 
+LEFT(name,2)  # 返回name 的前两个字符
+
+<> # !=
 ```
 
 
