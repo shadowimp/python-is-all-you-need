@@ -1,13 +1,46 @@
+### Terminal 快捷键
 
+control + a    jump to head 
+
+control + e    jump to tail 
+
+
+control + f    cursor forward 
+
+control + b    cursor backward 
+
+
+control + l    clear 
+
+
+control + h    delete 
+
+control + w    delete word 
+
+control + u    delete the front of cursor 
+
+control + k    delete the back if cursor 
+
+control + y    paste the delete word 
+
+
+control + p    the previous command
+
+control + n    the next command 
 
 ```shell
 ls /usr/bin | grep python		#列出/usr/bin  目录下 ，文件名中有python 的文件 
 ls | grep *.py  #筛选出当前文件夹所有的py后缀名的文件（| 是管道操作符，grep 是过滤操作符
 
+cd #change directory
 ps  显示当前进程
 
 df -h   查看磁盘空间
 du -h   查看当前各目录大小
+
+head + (filename)   #show the head lines of file 
+
+tail + (filename)    # show the tail lines of file 
 
 ll -h   # 查看文件大小,代表human 以人类的方式看内存
 
