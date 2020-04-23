@@ -24,10 +24,11 @@ r# LeetCode
                 return [buff_dict[nums[i]], i]
             else:
                 # ([1,10,8,13,25,2], 27),
-
+    
                 buff_dict[target - nums[i]] = i
 
-    
+### 链接 
+
 [知乎profile](https://www.zhihu.com/people/zhang-yuan-bo-76/activities)
 
 
@@ -40,4 +41,4 @@ r# LeetCode
                     return [buff_dict[nums[i],i]
                 else : 
                     buff_dict[target - nums[i]] = i 
-                
+

@@ -17,9 +17,7 @@ Delete 删除
 
 product_id CHAR(4) NOT NULL ;
 
-### GROUP BY子句
 
-GROUP BY 子句对 SELECT 语句的输出进行分组， 分组中是匹配值的数据行。 Group BY 子句支持任意表达式， 包括指定列名或列序号（从1开始）。
 
 ```mysql
 show databases;   #显示数据库列表 
@@ -61,7 +59,25 @@ LEFT(name,2)  # 返回name 的前两个字符
 <> # !=
 ```
 
+### GROUP BY
 
+GROUP BY 对 SELECT 语句的输出进行分组， 分组中是匹配值的数据行。 Group BY 子句支持任意表达式， 包括指定列名或列序号（从1开始）。
+
+GROUP BY 常与COUNT连用，用于统计每组的个数
+
+GROUP BY的结果是无序的
+
+```mysql
+SELECT type, COUNT(*) FROM Product GROUP BY type
+```
+
+### Having
+
+对聚合的数据指定条件
+
+```mysql
+SELECT type,AVG(price) FROM Product GROUP BY type HAVING AVG(price) > 200
+```
 
 
 
