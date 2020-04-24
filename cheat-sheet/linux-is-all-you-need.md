@@ -119,6 +119,7 @@ mysql -uroot -p	#以root方式进入mysql
 vi /etc/rsyncd.conf
 
 rsync -av test.py 10.41.24.195::yuanbo6
+#rsync -av 源目录 目的地目录
 ```
 
 
