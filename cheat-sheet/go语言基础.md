@@ -11,9 +11,45 @@
    ```
 
    - int   整型 , int 还有int8， iny16 ， int32， int64，
-
    - uint 无符号整型。 
    - %p 打印地址
+
+   ```go
+   //  自定数据数据类型
+   type Stu struct {
+       Name  string `json:"name"`
+       Age   int
+       HIgh  bool
+       sex   string
+       Class *Class `json:"class"`
+   }
+   
+   type Class struct {
+       Name  string
+       Grade int
+   }
+   
+   // 调用
+   stu := Stu{
+     Name: "张三",
+     Age:  18,
+     HIgh: true,
+     sex:  "男",
+   }
+   
+   //指针变量
+   c := new(Class)
+   c.Name = 'pony'
+   c.Grade = 3
+   stu.Class = c
+   
+   // 打印变量类型
+   fmt.Println(reflect.TypeOf(sa))
+   ```
+
+   
+
+   
 
 4. 所有的调用必须要在主函数中
 
@@ -120,6 +156,15 @@ func max(x int , y int)int{
     return y
   }
 }
+
+
+go func() {
+
+.....
+
+}()
+
+// 以并发的方式调用匿名函数func
 ```
 
 ### 打开文件
@@ -153,12 +198,13 @@ for scanner.Scan(){
 
 ```go
 import "encoding/json"
+// 读取json
 file, err := os.Open("test.txt")
 if err != nil{
   painc(err)
 }
 defer file.Close()
-
+// 解码json
 var map1 = map[string][string]
 decoder := json.NewDecoder(file)
 err = decoder.Decode(&person)
@@ -169,6 +215,29 @@ if err != nil{
 }
 ```
 
+### 写json
+
+```go
+dic := {}
+json_str, err := json.Marshal(dic)
+if err != nil{
+  fmt.Println('生成json出错')
+}
+fmt.Println(string(json_str))
+
+//1.Unmarshal的第一个参数是json字符串，第二个参数是接受json解析的数据结构。
+//第二个参数必须是指针，否则无法接收解析的数据，如stu仍为空对象StuRead{}
+//2.可以直接stu:=new(StuRead),此时的stu自身就是指针
+stu:=StuRead{}
+err:=json.Unmarshal(str,&stu)
+```
+
+
+
+
+
+
+
 ### strings
 
 TrimSpace， 去除字符串前后端空格。
@@ -176,3 +245,29 @@ TrimSpace， 去除字符串前后端空格。
 ```go
 line = strings.TrimSpace(line)
 ```
+
+
+
+### 安装第三方库
+
+```go
+go get xxx // 这条命令会把远端的第三方包下载并解压到你的GOPATH路径下的src文件夹里面去，并执行go install xxx命令来安装该包,结果是在GOPATH路径的pkg文件夹生成xxx.a文件
+
+go version
+
+go env
+
+// 安装 echo
+mkdir -p $GOPATH/src/golang.org/x
+cd $GOPATH/src/golang.org/x
+git clone https://github.com/golang/net.git
+git clone https://github.com/golang/sys.git
+git clone https://github.com/golang/unix.git
+git clone https://github.com/golang/crypto.git
+git clone https://github.com/golang/text.git
+```
+
+
+
+### echo
+

@@ -38,6 +38,8 @@ ps  显示当前进程
 df -h   查看磁盘空间
 du -h   查看当前各目录大小
 
+history 10 #查看历史10条命令
+
 head + (filename)   #show the head lines of file 
 
 tail + (filename)    # show the tail lines of file 
@@ -54,6 +56,14 @@ sed -n '16900,17900p' log.txt   # 查看log文件的16900行到17900行
 sed -n '16900,17900p' log.txt >> log1.txt # 将log文件的16900行到17900行保存到log1.txt文件
 
 nvidia-smi	# 查看GPU使用率
+
+cat eval.log | grep '\[dev' | sort # 查找日志中包含 '\[dev'的行 并排序
+
+cat train.tsv | cut -f 4,5,6 > train.tsv.cut # 将训练文件的4，5，6列提出来，并且存储
+
+paste file1.txt file2.txt # 横向拼接两个文件
+
+sort train.tsv.cut | uniq | shuf > train.tsv # 训练数据的去重和shuffle
 ```
 
 ### tar
