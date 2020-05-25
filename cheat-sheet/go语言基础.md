@@ -71,6 +71,14 @@ fmt.Printf("%T,%t\n",flag,flag) // bool 类型 为 %t , %T用于查看变量类�
 
 s1 = "shabi"
 fmt.Print("%s",s1) 
+
+
+// int to string 
+num = 12345
+num_string := strconv.Itoa(num)
+
+// string to int 
+strconv.Atoi()
 ```
 
 
@@ -196,6 +204,14 @@ for scanner.Scan(){
 
 ### 读 json数据
 
+golang json里的struct变量首字母需要大写的
+
+
+
+http://xiaorui.cc/archives/2858
+
+https://goinbigdata.com/how-to-correctly-serialize-json-string-in-golang/
+
 ```go
 import "encoding/json"
 // 读取json
@@ -244,6 +260,10 @@ TrimSpace， 去除字符串前后端空格。
 
 ```go
 line = strings.TrimSpace(line)
+
+
+// 去掉双引号
+s, _ := strconv.Unquote(string(str))
 ```
 
 
