@@ -81,8 +81,6 @@ num_string := strconv.Itoa(num)
 strconv.Atoi()
 ```
 
-
-
 7. 逻辑运算符 
 
    &&  与   ， || 或   ，  ！非
@@ -248,12 +246,6 @@ stu:=StuRead{}
 err:=json.Unmarshal(str,&stu)
 ```
 
-
-
-
-
-
-
 ### strings
 
 TrimSpace， 去除字符串前后端空格。
@@ -265,8 +257,6 @@ line = strings.TrimSpace(line)
 // 去掉双引号
 s, _ := strconv.Unquote(string(str))
 ```
-
-
 
 ### 安装第三方库
 
@@ -286,12 +276,6 @@ git clone https://github.com/golang/unix.git
 git clone https://github.com/golang/crypto.git
 git clone https://github.com/golang/text.git
 ```
-
-
-
-### echo
-
-
 
 ### 数组嵌套
 
