@@ -1,38 +1,31 @@
 ### Terminal 快捷键
 
+```
 control + a    jump to head 
-
 control + e    jump to tail 
-
-
 control + f    cursor forward 
-
 control + b    cursor backward 
-
-
 control + l    clear 
-
-
 control + h    delete 
-
-control + w    delete word 
-
+control + w    delete word   # 删除光标左边的一个单词
 control + u    delete the front of cursor 
-
 control + k    delete the back if cursor 
-
+control + Y              # 粘贴前面 CTRL+u/k/w 删除过的内容
 control + y    paste the delete word 
-
-
 control + p    the previous command
-
 control + n    the next command 
+contril + c    结束当前命令
+CTRL+_              # 撤销（undo）
+```
+
+### 常用命令
 
 ```shell
 ls /usr/bin | grep python		#列出/usr/bin  目录下 ，文件名中有python 的文件 
 ls | grep *.py  #筛选出当前文件夹所有的py后缀名的文件（| 是管道操作符，grep 是过滤操作符
 
 cd #change directory
+pwd               # 显示当前所在目录
 ps  显示当前进程
 
 df -h   查看磁盘空间
@@ -43,6 +36,8 @@ history 10 #查看历史10条命令
 head + (filename)   #show the head lines of file 
 
 tail + (filename)    # show the tail lines of file 
+
+大文件用 more 和 less 查看, 空格翻页 , q 退出
 
 ll -h   # 查看文件大小,代表human 以人类的方式看内存
 
@@ -64,6 +59,47 @@ cat train.tsv | cut -f 4,5,6 > train.tsv.cut # 将训练文件的4，5，6列提
 paste file1.txt file2.txt # 横向拼接两个文件
 
 sort train.tsv.cut | uniq | shuf > train.tsv # 训练数据的去重和shuffle
+
+ping + 机器名 # 测试是否连通
+```
+
+###  环境
+
+```bash
+exit                # 退出当前登陆
+env                 # 显示环境变量
+echo $SHELL         # 显示你在使用什么 SHELL
+which bash          # 搜索 $PATH，查找哪个程序对应命令 bash
+whereis bash        # 搜索可执行，头文件和帮助信息的位置，使用系统内建数据库
+whatis bash         # 查看某个命令的解释，一句话告诉你这是干什么的
+```
+
+
+
+
+
+### cut 截取
+
+```bash
+cut -c 1-16                        # 截取每行头16个字符
+cut -c 1-16 file                   # 截取指定文件中每行头 16个字符
+cut -c3-                           # 截取每行从第三个字符开始到行末的内容
+cut -d':' -f5                      # 截取用冒号分隔的第五列内容
+cut -d';' -f2,10                   # 截取用分号分隔的第二和第十列内容
+cut -d' ' -f3-7                    # 截取空格分隔的三到七列
+echo "hello" | cut -c1-3           # 显示 hel
+echo "hello sir" | cut -d' ' -f2   # 显示 sir
+ps | tr -s " " | cut -d " " -f 2,3,4  # cut 搭配 tr 压缩字符
+```
+
+### sort
+
+```bash
+sort file                          # 排序文件
+sort -r file                       # 反向排序（降序）
+sort -n file                       # 使用数字而不是字符串进行比较
+sort -t: -k 3n /etc/passwd         # 按 passwd 文件的第三列进行排序
+sort -u file                       # 去重排序
 ```
 
 ### tar
@@ -132,5 +168,42 @@ rsync -av test.py 10.41.24.195::yuanbo6
 #rsync -av 源目录 目的地目录
 ```
 
+### Git
 
+```shell
+git status #  查看当前 git状态
+git add . # 添加当前所有新增的文件
+git commit -m "注释"
+git push # 推送到github
+```
+
+###  常用脚本
+
+```bash
+history | awk '{a[$2]++}END{for(i in a){print a[i] " " i}}' | sort -rn | head  #列出最常使用的命令
+ps aux | sort -nk +4 | tail   ## 显示前十个运行的进程并按内存使用量排序
+dd if=/dev/zero of=/dev/null bs=1M count=32768 # 测试内存带宽
+```
+
+### 网络
+
+
+
+
+
+### 定义变量
+
+```bash
+
+```
+
+### 条件语句
+
+```bash
+for i in {1..10}; do echo $i ; done 
+for (( i=1; i<10 ; i++)) ; do echo $i ; done
+for file in /data0/yuanbo6/* ; do echo $file ; done  # for 循环打印某目录下面的所有文件
+
+i=1;while [ $i -le 10 ]; do echo $i; i=$(expr $i + 1); done
+```
 
