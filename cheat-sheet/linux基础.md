@@ -1,36 +1,4 @@
-
-CTRL+D              # 删除光标前的字符，同 <Delete> ，或者没有内容时，退出会话
-
-CTRL+G              # 退出当前编辑（比如正在 CTRL+R 搜索历史时）
-CTRL+O              # 类似回车，但是会显示下一行历史
-CTRL+R              # 历史命令反向搜索，使用 CTRL+G 退出搜索
-CTRL+S              # 历史命令正向搜索，使用 CTRL+G 退出搜索
-CTRL+T              # 交换前后两个字符
-CTRL+V              # 输入字符字面量，先按 CTRL+V 再按任意键
-
-
-mkdir {dirname}     # 创建目录
-mkdir -p {dirname}  # 递归创建目录
-pushd {dirname}     # 目录压栈并进入新目录
-popd                # 弹出并进入栈顶的目录
-dirs -v             # 列出当前目录栈
-cd -                # 回到之前的目录
-cd -{N}             # 切换到目录栈中的第 N个目录，比如 cd -2 将切换到第二个
-
-
-
 # 文件操作
-##############################################################################
-
-ls                  # 显示当前目录内容，后面可接目录名：ls {dir} 显示指定目录
-ls -l               # 列表方式显示目录内容，包括文件日期，大小，权限等信息
-ls -a               # 显示所有文件和目录，包括隐藏文件（.开头的文件/目录名）
-
-cp {src} {dest}     # 拷贝文件，cp -r dir1 dir2 可以递归拷贝（目录）
-rm {fn}             # 删除文件，rm -r 递归删除目录，rm -f 强制删除
-mv {src} {dest}     # 移动文件，如果 dest 是目录，则移动，是文件名则覆盖
-touch {fn}          # 创建或者更新一下制定文件
-
 
 
 cat {fn}            # 输出文件原始内容
@@ -42,17 +10,8 @@ diff {f1} {f2}      # 比较两个文件的内容
 wc {fn}             # 统计文件有多少行，多少个单词
 
 file {fn}           # 检测文件的类型和编码
-grep {pat} {fn}     # 在文件中查找出现过 pat 的内容
-grep -r {pat} .     # 在当前目录下递归查找所有出现过 pat 的文件内容
-stat {fn}           # 显示文件的详细信息
+用户管理
 
-chmod 644 {fn}      # 修改文件权限为 644，可以接 -R 对目录循环改权限
-chgrp group {fn}    # 修改文件所属的用户组
-chown user1 {fn}    # 修改文件所有人为 user1, chown user1:group1 fn 可以修改组
-
-
-##############################################################################
-# 用户管理
 ##############################################################################
 
 uname -a                  # 查看内核版本等信息
@@ -150,69 +109,15 @@ scp {fn} user@host:path   # 拷贝文件到远程主机
 scp user@host:path dest   # 从远程主机拷贝文件回来
 scp -P {port} ...         # 指定端口远程拷贝文件
 
-
-
-ping {host}               # ping 远程主机并显示结果，CTRL+C 退出
-ping -c N {host}          # ping 远程主机 N 次
-traceroute {host}         # 侦测路由连通情况
-mtr {host}                # 高级版本 traceroute
-host {domain}             # DNS 查询，{domain} 前面可加 -a 查看详细信息
-whois {domain}            # 取得域名 whois 信息
-dig {domain}              # 取得域名 dns 信息
-route -n                  # 查看路由表
-netstat -a                # 列出所有端口
-netstat -an               # 查看所有连接信息，不解析域名
-netstat -anp              # 查看所有连接信息，包含进程信息（需要 sudo）
-netstat -l                # 查看所有监听的端口
-netstat -t                # 查看所有 TCP 链接
-netstat -lntu             # 显示所有正在监听的 TCP 和 UDP 信息
-netstat -lntup            # 显示所有正在监听的 socket 及进程信息
-netstat -i                # 显示网卡信息
-netstat -rn               # 显示当前系统路由表，同 route -n
-ss -an                    # 比 netstat -an 更快速更详细
-ss -s                     # 统计 TCP 的 established, wait 等
-
-wget {url}                # 下载文件，可加 --no-check-certificate 忽略 ssl 验证
-wget -qO- {url}           # 下载文件并输出到标准输出（不保存）
-curl -sL {url}            # 同 wget -qO- {url} 没有 wget 的时候使用
-
 sz {file}                 # 发送文件到终端，zmodem 协议
 rz                        # 接收终端发送过来的文件
 
 
 ##############################################################################
-# 网络管理：ip / ifconfig / nmap ...
 
-##############################################################################
 
-ip a                               # 显示所有网络地址，同 ip address
-ip a show eth1                     # 显示网卡 IP 地址
-ip a add 172.16.1.23/24 dev eth1   # 添加网卡 IP 地址
-ip a del 172.16.1.23/24 dev eth1   # 删除网卡 IP 地址
-ip link show dev eth0              # 显示网卡设备属性
-ip link set eth1 up                # 激活网卡
-ip link set eth1 down              # 关闭网卡
-ip link set eth1 address {mac}     # 修改 MAC 地址
-ip neighbour                       # 查看 ARP 缓存
-ip route                           # 查看路由表
-ip route add 10.1.0.0/24 via 10.0.0.253 dev eth0    # 添加静态路由
-ip route del 10.1.0.0/24           # 删除静态路由
 
-ifconfig                           # 显示所有网卡和接口信息
-ifconfig -a                        # 显示所有网卡（包括开机没启动的）信息
-ifconfig eth0                      # 指定设备显示信息
-ifconfig eth0 up                   # 激活网卡
-ifconfig eth0 down                 # 关闭网卡
-ifconfig eth0 192.168.120.56       # 给网卡配置 IP 地址
-ifconfig eth0 10.0.0.8 netmask 255.255.255.0 up     # 配置 IP 并启动
-ifconfig eth0 hw ether 00:aa:bb:cc:dd:ee            # 修改 MAC 地址
 
-nmap 10.0.0.12                     # 扫描主机 1-1000 端口
-nmap -p 1024-65535 10.0.0.12       # 扫描给定端口
-nmap 10.0.0.0/24                   # 给定网段扫描局域网内所有主机
-nmap -O -sV 10.0.0.12              # 探测主机服务和操作系统版本
-
-##############################################################################
 
 # 变量操作
 
@@ -227,10 +132,7 @@ echo $?                   # 查看最近一条命令的返回码
 export VARNAME=value      # 设置环境变量（将会影响到子进程）
 
 array[0]=valA             # 定义数组
-array[1]=valB
-array[2]=valC
-array=([0]=valA [1]=valB [2]=valC)   # 另一种方式
-array=(valA valB valC)               # 另一种方式
+
 
 ${array[i]}               # 取得数组中的元素
 ${#array[@]}              # 取得数组的长度
@@ -294,7 +196,7 @@ function myfunc() {
     # $0 代表被调用者自身的名字
     # $@ 代表所有参数，类型是个数组，想传递所有参数给其他命令用 cmd "$@"
     # $* 空格链接起来的所有参数，类型是字符串
-    {shell commands ...}
+​    {shell commands ...}
 }
 
 myfunc                    # 调用函数 myfunc
@@ -305,8 +207,8 @@ shift                     # 参数左移
 unset -f myfunc           # 删除函数
 declare -f                # 列出函数定义
 
-
 ##############################################################################
+
 # 条件判断（兼容 posix sh 的条件判断）：man test
 ##############################################################################
 
@@ -364,25 +266,16 @@ test cond && cmd1         # 判断条件为真时执行 cmd1
 [ cond ] && cmd1          # 和上面完全等价
 [ cond ] && cmd1 || cmd2  # 条件为真执行 cmd1 否则执行 cmd2
 
-# 经典的 if 语句就是判断后面的命令返回值为0的话，认为条件为真，否则为假
+### 经典的 if 语句就是判断后面的命令返回值为0的话，认为条件为真，否则为假
+
 if test -e /etc/passwd; then
     echo "alright it exists ... "
 else
     echo "it doesn't exist ... "
 fi
 
-# 和上面完全等价，[ 是个和 test 一样的可执行程序，但最后一个参数必须为 ]
-# 这个名字为 "[" 的可执行程序一般就在 /bin 或 /usr/bin 下面，比 test 优雅些
-if [ -e /etc/passwd ]; then   
-    echo "alright it exists ... "
-else
-    echo "it doesn't exist ... "
-fi
+判断变量的值
 
-# 和上面两个完全等价，其实到 bash 时代 [ 已经是内部命令了，用 enable 可以看到
-[ -e /etc/passwd ] && echo "alright it exists" || echo "it doesn't exist"
-
-# 判断变量的值
 if [ "$varname" = "foo" ]; then
     echo "this is foo"
 elif [ "$varname" = "bar" ]; then
@@ -391,8 +284,9 @@ else
     echo "neither"
 fi
 
-# 复杂条件判断，注意 || 和 && 是完全兼容 POSIX 的推荐写法
-if [ $x -gt 10 ] && [ $x -lt 20 ]; then
+条件的与和或  ： || 和 && 
+
+ if [ $x -gt 10 ] && [ $x -lt 20 ]; then
     echo "yes, between 10 and 20"
 fi
 
@@ -486,16 +380,8 @@ sed -n '2,5p' file                 # 打印文件第二到第五行
 
 man hier                           # 查看文件系统的结构和含义
 man test                           # 查看 posix sh 的条件判断帮助
-man ascii                          # 显示 ascii 表
-getconf LONG_BIT                   # 查看系统是 32 位还是 64 位
-bind -P                            # 列出所有 bash 的快捷键
-mount | column -t                  # 漂亮的列出当前加载的文件系统
-curl ip.cn                         # 取得外网 ip 地址和服务商信息
-disown -a && exit                  # 关闭所有后台任务并退出
-cat /etc/issue                     # 查看 Linux 发行版信息
-lsof -i port:80                    # 哪个程序在使用 80 端口？
-showkey -a                         # 取得按键的 ASCII 码
-svn diff | view -                  # 使用 Vim 来显示带色彩的 diff 输出
+
+
 mv filename.{old,new}              # 快速文件改名
 time read                          # 使用 CTRL-D 停止，最简单的计时功能
 cp file.txt{,.bak}                 # 快速备份文件
@@ -505,7 +391,7 @@ curl wttr.in/~beijing              # 查看北京的天气预报
 echo ${SSH_CLIENT%% *}             # 取得你是从什么 IP 链接到当前主机上的
 echo $[RANDOM%X+1]                 # 取得 1 到 X 之间的随机数
 bind -x '"\C-l":ls -l'             # 设置 CTRL+l 为执行 ls -l 命令
-find / -type f -size +5M           # 查找大于 5M 的文件
+
 chmod --reference f1 f2            # 将 f2 的权限设置成 f1 一模一样的
 curl -L cheat.sh                   # 速查表大全
 

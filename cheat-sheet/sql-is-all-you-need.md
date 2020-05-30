@@ -164,3 +164,12 @@ select * from some_table where str='ABC';
 ### 区分大小写 ： 加binary字段
 select * from some_table where binary str='abc'
 select * from some_table where binary str='ABC'
+
+
+
+### Hive
+
+```bash
+hive -e 'select * from  ods_dim_tblog_obj_info_adv where dt=20200520;' > hot_lv3_20200520.txt
+```
+

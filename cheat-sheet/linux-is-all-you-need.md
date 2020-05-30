@@ -16,15 +16,30 @@ control + p    the previous command
 control + n    the next command 
 contril + c    结束当前命令
 CTRL+_              # 撤销（undo）
+
+CTRL+D              # 同 <Delete> ，或者没有内容时，退出会话
+CTRL+R              # 历史命令反向搜索，使用 CTRL+G 退出搜索
+CTRL+S              # 历史命令正向搜索，使用 CTRL+G 退出搜索
+
+CTRL+G              # 退出当前编辑（比如正在 CTRL+R 搜索历史时）
+
+CTRL+T              # 交换前后两个字符
+CTRL+O              # 类似回车，但是会显示下一行历史
 ```
 
 ### 常用命令
 
 ```shell
-ls /usr/bin | grep python		#列出/usr/bin  目录下 ，文件名中有python 的文件 
+ls /usr/bin | grep python		#列出/usr/bin  目录下 ，文p名中有python 的文件 
 ls | grep *.py  #筛选出当前文件夹所有的py后缀名的文件（| 是管道操作符，grep 是过滤操作符
 
+cp # 拷贝文件
+mv # 移动文件和重命名
+touch # 创建新文件
+mkdir   # 创建文件夹
+
 cd #change directory
+cd -                # 回到之前的目录
 pwd               # 显示当前所在目录
 ps  显示当前进程
 
@@ -32,6 +47,10 @@ df -h   查看磁盘空间
 du -h   查看当前各目录大小
 
 history 10 #查看历史10条命令
+
+
+cat #显示文件内容
+stat #显示文件详细信息
 
 head + (filename)   #show the head lines of file 
 
@@ -60,7 +79,9 @@ paste file1.txt file2.txt # 横向拼接两个文件
 
 sort train.tsv.cut | uniq | shuf > train.tsv # 训练数据的去重和shuffle
 
-ping + 机器名 # 测试是否连通
+man ascii                          # 显示 ascii 表
+
+
 ```
 
 ###  环境
@@ -73,8 +94,6 @@ which bash          # 搜索 $PATH，查找哪个程序对应命令 bash
 whereis bash        # 搜索可执行，头文件和帮助信息的位置，使用系统内建数据库
 whatis bash         # 查看某个命令的解释，一句话告诉你这是干什么的
 ```
-
-
 
 
 
@@ -113,6 +132,10 @@ tar -zcvf test.tar.gz test  # 压缩文件test到test.tar.hz
 
 ```shell
 sudo chmod 777 + 文件名	#给每个人读和写以及执行的权限
+
+chmod 644 {fn}      # 修改文件权限为 644，可以接 -R 对目录循环改权限
+chgrp group {fn}    # 修改文件所属的用户组
+chown user1 {fn}    # 修改文件所有人为 user1, chown user1:group1 fn 可以修改组
 ```
 
 ### tmux 
@@ -183,18 +206,24 @@ git push # 推送到github
 history | awk '{a[$2]++}END{for(i in a){print a[i] " " i}}' | sort -rn | head  #列出最常使用的命令
 ps aux | sort -nk +4 | tail   ## 显示前十个运行的进程并按内存使用量排序
 dd if=/dev/zero of=/dev/null bs=1M count=32768 # 测试内存带宽
+find /data0/yuanbo6  -type f -size +500M  #  查找目录下大于 500M 的文件
 ```
 
 ### 网络
 
-
+```bash
+wget {url}                # 下载文件，可加 --no-check-certificate 忽略 ssl 验证
+wget -qO- {url}           # 下载文件并输出到标准输出（不保存）
+curl -sL {url}            # 同 wget -qO- {url} 没有 wget 的时候使用
+ping + 机器名 # 测试是否连通
+```
 
 
 
 ### 定义变量
 
 ```bash
-
+a = 1 
 ```
 
 ### 条件语句
@@ -205,5 +234,9 @@ for (( i=1; i<10 ; i++)) ; do echo $i ; done
 for file in /data0/yuanbo6/* ; do echo $file ; done  # for 循环打印某目录下面的所有文件
 
 i=1;while [ $i -le 10 ]; do echo $i; i=$(expr $i + 1); done
+
+# 如果存在 /root 中存在 a.txt ，则返回1 ， 否则返回0 ， if的[ ] , 前后都有空格
+# linux 中 0代表条件为真，1代表为假
+if [ -f /root/a.txt ]; then echo 1 ; else echo 0; fi
 ```
 
