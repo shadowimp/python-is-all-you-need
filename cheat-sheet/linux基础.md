@@ -126,13 +126,10 @@ rz                        # 接收终端发送过来的文件
 varname=value             # 定义变量
 varname=value command     # 定义子进程变量并执行子进程
 echo $varname             # 查看变量内容
-echo $$                   # 查看当前 shell 的进程号
-echo $!                   # 查看最近调用的后台任务进程号
-echo $?                   # 查看最近一条命令的返回码
+
 export VARNAME=value      # 设置环境变量（将会影响到子进程）
 
 array[0]=valA             # 定义数组
-
 
 ${array[i]}               # 取得数组中的元素
 ${#array[@]}              # 取得数组的长度
@@ -186,160 +183,10 @@ num=$((1 + (2 + 3) * 2))  # 复杂计算
 
 
 ##############################################################################
-# 函数
-##############################################################################
-
-# 定义一个新函数
-function myfunc() {
-    # $1 代表第一个参数，$N 代表第 N 个参数
-    # $# 代表参数个数
-    # $0 代表被调用者自身的名字
-    # $@ 代表所有参数，类型是个数组，想传递所有参数给其他命令用 cmd "$@"
-    # $* 空格链接起来的所有参数，类型是字符串
-​    {shell commands ...}
-}
-
-myfunc                    # 调用函数 myfunc
-myfunc arg1 arg2 arg3     # 带参数的函数调用
-myfunc "$@"               # 将所有参数传递给函数
-shift                     # 参数左移
-
-unset -f myfunc           # 删除函数
-declare -f                # 列出函数定义
-
-##############################################################################
-
-# 条件判断（兼容 posix sh 的条件判断）：man test
-##############################################################################
-
-statement1 && statement2  # and 操作符
-statement1 || statement2  # or 操作符
-
-exp1 -a exp2              # exp1 和 exp2 同时为真时返回真（POSIX XSI扩展）
-exp1 -o exp2              # exp1 和 exp2 有一个为真就返回真（POSIX XSI扩展）
-( expression )            # 如果 expression 为真时返回真，输入注意括号前反斜杆
-! expression              # 如果 expression 为假那返回真
-
-str1 = str2               # 判断字符串相等，如 [ "$x" = "$y" ] && echo yes
-str1 != str2              # 判断字符串不等，如 [ "$x" != "$y" ] && echo yes
-str1 < str2               # 字符串小于，如 [ "$x" \< "$y" ] && echo yes
-str2 > str2               # 字符串大于，注意 < 或 > 是字面量，输入时要加反斜杆
--n str1                   # 判断字符串不为空（长度大于零）
--z str1                   # 判断字符串为空（长度等于零）
-
--a file                   # 判断文件存在，如 [ -a /tmp/abc ] && echo "exists"
--d file                   # 判断文件存在，且该文件是一个目录
--e file                   # 判断文件存在，和 -a 等价
--f file                   # 判断文件存在，且该文件是一个普通文件（非目录等）
--r file                   # 判断文件存在，且可读
--s file                   # 判断文件存在，且尺寸大于0
--w file                   # 判断文件存在，且可写
--x file                   # 判断文件存在，且执行
--N file                   # 文件上次修改过后还没有读取过
--O file                   # 文件存在且属于当前用户
--G file                   # 文件存在且匹配你的用户组
-file1 -nt file2           # 文件1 比 文件2 新
-file1 -ot file2           # 文件1 比 文件2 旧
-
-num1 -eq num2             # 数字判断：num1 == num2
-num1 -ne num2             # 数字判断：num1 != num2
-num1 -lt num2             # 数字判断：num1 < num2
-num1 -le num2             # 数字判断：num1 <= num2
-num1 -gt num2             # 数字判断：num1 > num2
-num1 -ge num2             # 数字判断：num1 >= num2
-
-
-##############################################################################
-# 分支控制：if 和经典 test，兼容 posix sh 的条件判断语句
-##############################################################################
-
-test {expression}         # 判断条件为真的话 test 程序返回0 否则非零
-[ expression ]            # 判断条件为真的话返回0 否则非零
-
-test "abc" = "def"        # 查看返回值 echo $? 显示 1，因为条件为假
-test "abc" != "def"       # 查看返回值 echo $? 显示 0，因为条件为真
-
-test -a /tmp; echo $?     # 调用 test 判断 /tmp 是否存在，并打印 test 的返回值
-[ -a /tmp ]; echo $?      # 和上面完全等价，/tmp 肯定是存在的，所以输出是 0
-
-test cond && cmd1         # 判断条件为真时执行 cmd1
-[ cond ] && cmd1          # 和上面完全等价
-[ cond ] && cmd1 || cmd2  # 条件为真执行 cmd1 否则执行 cmd2
-
-### 经典的 if 语句就是判断后面的命令返回值为0的话，认为条件为真，否则为假
-
-if test -e /etc/passwd; then
-    echo "alright it exists ... "
-else
-    echo "it doesn't exist ... "
-fi
-
-判断变量的值
-
-if [ "$varname" = "foo" ]; then
-    echo "this is foo"
-elif [ "$varname" = "bar" ]; then
-    echo "this is bar"
-else
-    echo "neither"
-fi
-
-条件的与和或  ： || 和 && 
-
- if [ $x -gt 10 ] && [ $x -lt 20 ]; then
-    echo "yes, between 10 and 20"
-fi
-
-# 可以用 && 命令连接符来做和上面完全等价的事情
-[ $x -gt 10 ] && [ $x -lt 20 ] && echo "yes, between 10 and 20"
-
-# 小括号和 -a -o 是 POSIX XSI 扩展写法，小括号是字面量，输入时前面要加反斜杆
-if [ \( $x -gt 10 \) -a \( $x -lt 20 \) ]; then
-    echo "yes, between 10 and 20"
-fi
-
-# 同样可以用 && 命令连接符来做和上面完全等价的事情
-[ \( $x -gt 10 \) -a \( $x -lt 20 \) ] && echo "yes, between 10 and 20"
-
-
-# 判断程序存在的话就执行
-[ -x /bin/ls ] && /bin/ls -l
-
-# 如果不考虑兼容 posix sh 和 dash 这些的话，可用 bash 独有的 ((..)) 和 [[..]]:
-https://www.ibm.com/developerworks/library/l-bash-test/index.html
-
-
-##############################################################################
-# 流程控制：while / for / case / until
-##############################################################################
-
-# case 判断
-case expression in
-    pattern1 )
-        statements ;;
-    pattern2 )
-        statements ;;
-    * )
-        otherwise ;;
-esac
-
-# until 语句
-until condition; do
-    statements
-done
-
-# select 语句
-select name [in list]; do
-  statements that can use $name
-done
-
-
-##############################################################################
 
 
 
 
-##############################################################################
 # 文本处理 - awk / sed
 ##############################################################################
 
@@ -371,32 +218,6 @@ sed -n '2,5p' file                 # 打印文件第二到第五行
 
 
 
-
-
-
-
-# 有趣的命令
-##############################################################################
-
-man hier                           # 查看文件系统的结构和含义
-man test                           # 查看 posix sh 的条件判断帮助
-
-
-mv filename.{old,new}              # 快速文件改名
-time read                          # 使用 CTRL-D 停止，最简单的计时功能
-cp file.txt{,.bak}                 # 快速备份文件
-sudo touch /forcefsck              # 强制在下次重启时扫描磁盘
-find ~ -mmin 60 -type f            # 查找 $HOME 目录中，60 分钟内修改过的文件
-curl wttr.in/~beijing              # 查看北京的天气预报
-echo ${SSH_CLIENT%% *}             # 取得你是从什么 IP 链接到当前主机上的
-echo $[RANDOM%X+1]                 # 取得 1 到 X 之间的随机数
-bind -x '"\C-l":ls -l'             # 设置 CTRL+l 为执行 ls -l 命令
-
-chmod --reference f1 f2            # 将 f2 的权限设置成 f1 一模一样的
-curl -L cheat.sh                   # 速查表大全
-
-
-##############################################################################
 # 下载一个网站的所有图片
 wget -r -l1 --no-parent -nH -nd -P/tmp -A".gif,.jpg" http://example.com/images
 

@@ -207,6 +207,7 @@ history | awk '{a[$2]++}END{for(i in a){print a[i] " " i}}' | sort -rn | head  #
 ps aux | sort -nk +4 | tail   ## 显示前十个运行的进程并按内存使用量排序
 dd if=/dev/zero of=/dev/null bs=1M count=32768 # 测试内存带宽
 find /data0/yuanbo6  -type f -size +500M  #  查找目录下大于 500M 的文件
+find ~ -mmin 60 -type f            # 查找 $HOME 目录中，60 分钟内修改过的文件
 ```
 
 ### 网络
@@ -232,11 +233,22 @@ a = 1
 for i in {1..10}; do echo $i ; done 
 for (( i=1; i<10 ; i++)) ; do echo $i ; done
 for file in /data0/yuanbo6/* ; do echo $file ; done  # for 循环打印某目录下面的所有文件
+for loop in 1 2 3 ;do  echo $loop ; done
+
 
 i=1;while [ $i -le 10 ]; do echo $i; i=$(expr $i + 1); done
+
 
 # 如果存在 /root 中存在 a.txt ，则返回1 ， 否则返回0 ， if的[ ] , 前后都有空格
 # linux 中 0代表条件为真，1代表为假
 if [ -f /root/a.txt ]; then echo 1 ; else echo 0; fi
+```
+
+### 函数
+
+```bash
+function test {
+    #函数内容
+}
 ```
 
