@@ -37,6 +37,7 @@ cp # 拷贝文件
 mv # 移动文件和重命名
 touch # 创建新文件
 mkdir   # 创建文件夹
+mkdir -p  #递归创建目录，即使上级目录不存在，会按目录层级自动创建目录
 
 cd #change directory
 cd -                # 回到之前的目录
@@ -51,6 +52,7 @@ history 10 #查看历史10条命令
 
 cat #显示文件内容
 stat #显示文件详细信息
+file {fn}           # 检测文件的类型和编码
 
 head + (filename)   #show the head lines of file 
 
@@ -93,6 +95,9 @@ echo $SHELL         # 显示你在使用什么 SHELL
 which bash          # 搜索 $PATH，查找哪个程序对应命令 bash
 whereis bash        # 搜索可执行，头文件和帮助信息的位置，使用系统内建数据库
 whatis bash         # 查看某个命令的解释，一句话告诉你这是干什么的
+uname -a                  # 查看内核版本等信息
+date                      # 显示日期
+cal                       # 显示日历
 ```
 
 
@@ -208,6 +213,7 @@ ps aux | sort -nk +4 | tail   ## 显示前十个运行的进程并按内存使�
 dd if=/dev/zero of=/dev/null bs=1M count=32768 # 测试内存带宽
 find /data0/yuanbo6  -type f -size +500M  #  查找目录下大于 500M 的文件
 find ~ -mmin 60 -type f            # 查找 $HOME 目录中，60 分钟内修改过的文件
+find . -type f -newermt "2020-05-01"  #按日期范围查找文件
 ```
 
 ### 网络
@@ -217,6 +223,17 @@ wget {url}                # 下载文件，可加 --no-check-certificate 忽略 
 wget -qO- {url}           # 下载文件并输出到标准输出（不保存）
 curl -sL {url}            # 同 wget -qO- {url} 没有 wget 的时候使用
 ping + 机器名 # 测试是否连通
+
+ssh user@host             # 以用户 user 登陆到远程主机 host
+ssh -p {port} user@host   # 指定端口登陆主机
+ssh-copy-id user@host     # 拷贝你的 ssh key 到远程主机，避免重复输入密码
+scp {fn} user@host:path   # 拷贝文件到远程主机
+scp user@host:path dest   # 从远程主机拷贝文件回来
+scp -P {port} ...         # 指定端口远程拷贝文件
+
+sz {file}                 # 发送文件到终端，zmodem 协议
+rz                        # 接收终端发送过来的文件
+
 ```
 
 
@@ -225,6 +242,7 @@ ping + 机器名 # 测试是否连通
 
 ```bash
 a = 1 
+echo $varname             # 查看变量内容
 ```
 
 ### 条件语句
@@ -247,8 +265,67 @@ if [ -f /root/a.txt ]; then echo 1 ; else echo 0; fi
 ### 函数
 
 ```bash
-function test {
-    #函数内容
-}
+function fun1 () { echo 'a' }
+
+unset -f fun1  # 删除函数
+
+declare -f                # 查看所有函数
+```
+
+### 进程
+
+```bash
+ps                        # 查看当前会话进程
+ps -e                  # 查看所有进程
+
+ps -u {user}              # 查看某用户进程
+
+ps aux | grep httpd       # 查看名为 httpd 的所有进程
+
+pstree                    # 树形列出所有进程，pstree 默认一般不带，需安装
+
+kill {pid}                # 结束进程
+
+top                       # 查看最活跃的进程
+top -u {user}             # 查看某用户最活跃的进程
+```
+
+### 用户管理
+
+```bash
+vmstat                    # 显示内存和 CPU 使用情况
+free                      # 显示内存和交换区使用情况
+df                        # 显示磁盘使用情况
+uname                     # 显示系统版本号
+hostname                  # 显示主机名称
+whoami              # 显示我的用户名
+who                 # 显示已登陆用户信息，w / who / users 内容略有不同
+su                  # 切换到 root 用户
+sudo {command}      # 以 root 权限执行某命令
+```
+
+### 文本处理 - awk / sed
+
+```bash	
+awk '{print $5}' file              # 打印文件中以空格分隔的第五列
+awk -F ',' '{print $5}' file       # 打印文件中以逗号分隔的第五列
+awk '/str/ {print $2}' file        # 打印文件中包含 str 的所有行的第二列
+awk -F ',' '{print $NF}' file      # 打印逗号分隔的文件中的每行最后一列
+awk '{s+=$1} END {print s}' file   # 计算所有第一列的合
+awk 'NR%3==1' file                 # 从第一行开始，每隔三行打印一行
+
+sed 's/find/replace/' file         # 替换文件中首次出现的字符串并输出结果
+sed '10s/find/replace/' file       # 替换文件第 10 行内容
+sed '10,20s/find/replace/' file    # 替换文件中 10-20 行内容
+sed -r 's/regex/replace/g' file    # 替换文件中所有出现的字符串
+sed -i 's/find/replace/g' file     # 替换文件中所有出现的字符并且覆盖文件
+sed '/line/s/find/replace/' file   # 先搜索行特征再执行替换
+sed -e 's/f/r/' -e 's/f/r' file    # 执行多次替换
+sed 's#find#replace#' file         # 使用 # 替换 / 来避免 pattern 中有斜杆
+sed -i -r 's/^\s+//g' file         # 删除文件每行头部空格
+sed '/^$/d' file                   # 删除文件空行并打印
+sed -i 's/\s\+$//' file            # 删除文件每行末尾多余空格
+sed -n '2p' file                   # 打印文件第二行
+sed -n '2,5p' file                 # 打印文件第二到第五行
 ```
 

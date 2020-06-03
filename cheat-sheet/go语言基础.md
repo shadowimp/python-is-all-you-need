@@ -49,8 +49,6 @@
 
    
 
-   
-
 4. 所有的调用必须要在主函数中
 
 5. 打印与键盘输入语句
@@ -81,67 +79,61 @@ num_string := strconv.Itoa(num)
 strconv.Atoi()
 ```
 
-7. 逻辑运算符 
+### 条件语句 ： else if
 
-   &&  与   ， || 或   ，  ！非
+```go
+if a == 1 || b==2{
+  fmt.Print('a')
+}
 
-8. 条件语句 ： else if
+// 逻辑运算符   &&  与   ， || 或   ，  ！非
+```
 
-   ```go
-   if a == 1 || b==2{
-     fmt.Print('a')
-   }
-   ```
+### 循环 语句 For
 
-   
+```go
+for i:=1 ; i <= 5 ; i++ {
+  fmt.Println(i)
+}
 
-9. For 语句
+i := 1  
+for i <=5 {
+  fmt.Println(i)
+  i++ 
+}
+```
 
-   ```go
-   for i:=1 ; i <= 5 ; i++ {
-     fmt.Println(i)
-   }
-   
-   i := 1  
-   for i <=5 {
-     fmt.Println(i)
-     i++ 
-   }
-   ```
-
-10. 随机数
+1. 随机数
 
     ```go
     rand.Intn(10)
     ```
 
-11. Array 
+### Array 
 
-    ```go
-    var nums [10] int32 
-    nums = append(nums, 1)  // 添加元素,nums.append(1)
-    l = l[:len(l)-1]  // l.pop()
-    ```
+```go
+var nums [10] int32 
+nums = append(nums, 1)  // 添加元素,nums.append(1)
+l = l[:len(l)-1]  // l.pop()
+```
 
-    定义数组时定义长度，默认值为0。
+定义数组时定义长度，默认值为0。
 
-12. 字典
+### 字典
 
-    ```go
-    var map1 = map[int]int{}
-    ```
+```go
+var map1 = map[int]int{}
+```
 
-    ```go
-    map2 = make(map[int]string)
-    
-    dic := map[uint8]uint8{
-            '(':')',
-            '{':'}',
-            '[':']',
-        }
-    ```
+```go
+map2 = make(map[int]string)
 
-    
+dic := map[uint8]uint8{
+        '(':')',
+        '{':'}',
+        '[':']',
+    }
+```
 
 ### 函数
 
@@ -188,8 +180,6 @@ rd := bufio.NewReader(file)
 for scanner.Scan(){
   fmt.Println(strings.TrimSpace(scanner.Text))
 }
-
-
 
 ```
 
@@ -248,11 +238,9 @@ err:=json.Unmarshal(str,&stu)
 
 ### strings
 
-TrimSpace， 去除字符串前后端空格。
-
 ```go
+//TrimSpace， 去除字符串前后端空格。
 line = strings.TrimSpace(line)
-
 
 // 去掉双引号
 s, _ := strconv.Unquote(string(str))
