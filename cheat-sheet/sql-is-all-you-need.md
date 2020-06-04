@@ -173,3 +173,10 @@ select * from some_table where binary str='ABC'
 hive -e 'select * from  ods_dim_tblog_obj_info_adv where dt=20200520;' > hot_lv3_20200520.txt
 ```
 
+### Hadoop
+
+```bash
+hadoop fs -ls # 列出指定目录下的内容
+hadoop fs  -lsr  # 递归列出该路径下所有子目录信息
+```
+

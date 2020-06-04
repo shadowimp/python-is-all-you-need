@@ -101,6 +101,10 @@ for i <=5 {
   fmt.Println(i)
   i++ 
 }
+
+for _, v := range nums{
+  fmt.Println(v)
+}
 ```
 
 1. 随机数
