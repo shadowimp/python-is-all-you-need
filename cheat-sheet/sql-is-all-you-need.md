@@ -2,22 +2,23 @@
 
 ### DDL (data definition language) 数据定义语言
 
+```
 Create 创建
 Drop 删除
 Alter 修改
+```
 
 ### DML
 
+```
  (data manipulation language)数据操纵语言
 Select 查询
 Insert 插入
 Update 更新
 Delete 删除
 
-
 product_id CHAR(4) NOT NULL ;
-
-
+```
 
 ```mysql
 show databases;   #显示数据库列表 
@@ -178,5 +179,11 @@ hive -e 'select * from  ods_dim_tblog_obj_info_adv where dt=20200520;' > hot_lv3
 ```bash
 hadoop fs -ls # 列出指定目录下的内容
 hadoop fs  -lsr  # 递归列出该路径下所有子目录信息
+hadoop fs -copyFromLoca /opt/test/xx.zip  /user/data #从本地系统拷贝文件到dfs中
+hadoop fs -cat  /user/wcinput/wc.input # 显示文件内容
+hadoop fs -copyToLocal /user/input/小王子.txt /opt/download/tonghua.txt #从hdfs拷贝到本地
+hadoop fs -df -h  # 统计文件系统的可用空间信息
+hadoop fs -du -s -h # 统计文件夹的大小信息
+
 ```
 
