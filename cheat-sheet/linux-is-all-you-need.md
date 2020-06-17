@@ -307,12 +307,22 @@ sudo {command}      # 以 root 权限执行某命令
 ### 文本处理 - awk / sed
 
 ```bash	
+awk '{pattern + action}' {filenames}
+# 默认以空格为分隔， 自定义分割符加 -F 参数
+
+head lol.txt | awk '{print $1}'		# 打印 lol.txt head的第一列 
 awk '{print $5}' file              # 打印文件中以空格分隔的第五列
+
 awk -F ',' '{print $5}' file       # 打印文件中以逗号分隔的第五列
-awk '/str/ {print $2}' file        # 打印文件中包含 str 的所有行的第二列
 awk -F ',' '{print $NF}' file      # 打印逗号分隔的文件中的每行最后一列
+
+awk '/str/ {print $2}' file        # 打印文件中包含 str 的所有行的第二列
 awk '{s+=$1} END {print s}' file   # 计算所有第一列的合
 awk 'NR%3==1' file                 # 从第一行开始，每隔三行打印一行
+
+
+sed -n '2p' file                   # 打印文件第二行
+sed -n '2,5p' file                 # 打印文件第二到第五行
 
 sed 's/find/replace/' file         # 替换文件中首次出现的字符串并输出结果
 sed '10s/find/replace/' file       # 替换文件第 10 行内容
@@ -325,7 +335,6 @@ sed 's#find#replace#' file         # 使用 # 替换 / 来避免 pattern 中有�
 sed -i -r 's/^\s+//g' file         # 删除文件每行头部空格
 sed '/^$/d' file                   # 删除文件空行并打印
 sed -i 's/\s\+$//' file            # 删除文件每行末尾多余空格
-sed -n '2p' file                   # 打印文件第二行
-sed -n '2,5p' file                 # 打印文件第二到第五行
+
 ```
 

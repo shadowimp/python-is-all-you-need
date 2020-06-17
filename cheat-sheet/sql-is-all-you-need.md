@@ -1,4 +1,4 @@
-## SQL 语言种类
+## SQL 
 
 ### DDL (data definition language) 数据定义语言
 
@@ -8,10 +8,9 @@ Drop 删除
 Alter 修改
 ```
 
-### DML
+### DML (data manipulation language)数据操纵语言
 
 ```
- (data manipulation language)数据操纵语言
 Select 查询
 Insert 插入
 Update 更新
@@ -19,6 +18,8 @@ Delete 删除
 
 product_id CHAR(4) NOT NULL ;
 ```
+
+### 操作数据库
 
 ```mysql
 show databases;   #显示数据库列表 
@@ -40,14 +41,32 @@ CREATE TABLE table1 (ID INTEGER primary key, number int,data char(32)）
 
 ```mysql
 create table if not exists customers (id int, name varchar(255))
+
+create table test2 as select * from test1;	# 用表test2中的数据创建一个新表test1
 ```
 
-### select 
+### Insert
+
+```mysql
+insert into test1 values(16 , 25 , 'car' ) ; #向表test1中插入数据
+
+插入两行：
+insert into test1 values(16 , 25 , 'car' ) ,(15 , 25, 'bus');
+
+### 从其他表插入数据
+Insert into table1(number,bno,data) select * from table2
+插入从table2读出的所有数据插入table1。
+ID是唯一关键字，会自己增加，无需插入。但是如果删除记录,则会从当前记录的ID最大值+1继续记录.
+```
+
+### Select 
 
 ```mysql
 select * from city where population >100000 and countrycode = 'USA' 
 
 select name from employee order by name   #按名字的字母顺序排序
+
+select * from test1 order by id ;	# 按id的顺序显示
 
 select name from employee where salary > 2000 and months <10 order by employee_id asc 
 # 按employee_id排序 ，  desc 降序
@@ -62,11 +81,11 @@ LEFT(name,2)  # 返回name 的前两个字符
 
 ### GROUP BY
 
-GROUP BY 对 SELECT 语句的输出进行分组， 分组中是匹配值的数据行。 Group BY 子句支持任意表达式， 包括指定列名或列序号（从1开始）。
+-   GROUP BY 对 SELECT 语句的输出进行分组， 分组中是匹配值的数据行。 Group BY 子句支持任意表达式， 包括指定列名或列序号（从1开始）。
 
-GROUP BY 常与COUNT连用，用于统计每组的个数
+-   GROUP BY 常与COUNT连用，用于统计每组的个数
 
-GROUP BY的结果是无序的
+-   GROUP BY的结果是无序的
 
 ```mysql
 SELECT type, COUNT(*) FROM Product GROUP BY type
@@ -80,56 +99,27 @@ SELECT type, COUNT(*) FROM Product GROUP BY type
 SELECT type,AVG(price) FROM Product GROUP BY type HAVING AVG(price) > 200
 ```
 
+### 建立索引和视图
 
+```mysql
+create index dtin_aicode on table1(name1) #在表table上建立以name1字段的索引,索引名为dtin_aicode
 
-### 
-
-CREATE TABLE table1 (ID INTEGER primary key, number int,data char(32)）
-
-建立表格名为table1的表格，
-含有ID，这个ID是唯一的关键字(primary key)，类型为整形(INTEGER )，
-含有属性name，类型为整形(int)，
-含有属性data，类型为32为char型
-
-### 用表test2中的数据创建一个新表test1
-create table test2 as select * from test1;
-
-
-### 从其他表插入数据
-
-Insert into table1(number,bno,data) select * from table2
-插入从table2读出的所有数据插入table1。
-ID是唯一关键字，会自己增加，无需插入。但是如果删除记录,则会从当前记录的ID最大值+1继续记录.
-
-### 建立索引
-
-create index dtin_aicode on table1(name1)
-
-在表table上建立以name1字段的索引,索引名为dtin_aicode
-
-
-### 修改表名
-ALTER TABLE name RENAME TO new_name
-
-### 用test1中的数据创建一个视图 test_view
-create view  test_view as select * from test1;
+create view  test_view as select * from test1;	#用test1中的数据创建一个视图 test_view
 视图是一个逻辑表， 可以在将来的查询中使用。视图不包含任何数据。
 每当视图被其他查询语句使用时， 存储在视图中的查询语句都会被执行
+```
 
-### 向表test1中插入数据
-insert into test1 values(16 , 25 , 'car' ) ;
+### 修改表名
 
-插入两行：
- insert into test1 values(16 , 25 , 'car' ) ,(15 , 25, 'bus');
-
-### 按id的顺序显示
-select * from test1 order by id ;
+```mysql
+ALTER TABLE name RENAME TO new_name
+```
 
 
 
 ## mysql_tutorial
 
-### 创建一个个人表： 个人id，姓，名
+### 创建一个persion表： 包括个人id，姓，名
 ```MySQL
 Create table Person (PersonId int , FirstName varchar(255) , LastName varchar(255))
 ```
