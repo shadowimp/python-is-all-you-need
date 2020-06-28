@@ -1,68 +1,21 @@
 ## go 语言
 
+```
 1. go 不需要写分号
-
 2. 定义必须调用，引用必须调用
-
 3. 需声明变量类型
+所有的调用必须要在主函数中
+```
 
-   ```go
-   var num int 
-   ```
-
-   - int   整型 , int 还有int8， iny16 ， int32， int64，
-   - uint 无符号整型。 
-   - %p 打印地址
-
-   ```go
-   //  自定数据数据类型
-   type Stu struct {
-       Name  string `json:"name"`
-       Age   int
-       HIgh  bool
-       sex   string
-       Class *Class `json:"class"`
-   }
-   
-   type Class struct {
-       Name  string
-       Grade int
-   }
-   
-   // 调用
-   stu := Stu{
-     Name: "张三",
-     Age:  18,
-     HIgh: true,
-     sex:  "男",
-   }
-   
-   //指针变量
-   c := new(Class)
-   c.Name = 'pony'
-   c.Grade = 3
-   stu.Class = c
-   
-   // 打印变量类型
-   fmt.Println(reflect.TypeOf(sa))
-   ```
-
-   
-
-4. 所有的调用必须要在主函数中
-
-5. 打印与键盘输入语句
-
-   ```go
-   import "fmt"
-   fmt.Println("")  // PrintLn 打印之后换行 ， 
-   fmt.Scan()
-   fmt.Scanln() // 读取一行
-   ```
-
-6. 数据类型
+### 数据类型
 
 ```go
+var num int 
+int   整型 , int 还有int8， iny16 ， int32， int64，
+- uint 无符号整型。 
+- %p 打印地址
+
+
 var flag bool
 flag = true 
 fmt.Printf("%T,%t\n",flag,flag) // bool 类型 为 %t , %T用于查看变量类型
@@ -77,6 +30,55 @@ num_string := strconv.Itoa(num)
 
 // string to int 
 strconv.Atoi()
+
+// string to float64
+strconv.ParseFloat(arg, 64)
+
+// float to sting 
+v := 3.1415926535
+s1 := strconv.FormatFloat(v, 'E', -1, 64)  // v type :float64
+
+rand.Intn(10) //随机数
+
+//  自定数据数据类型
+type Stu struct {
+    Name  string `json:"name"`
+    Age   int
+    HIgh  bool
+    sex   string
+    Class *Class `json:"class"`
+}
+
+type Class struct {
+    Name  string
+    Grade int
+}
+
+// 调用
+stu := Stu{
+  Name: "张三",
+  Age:  18,
+  HIgh: true,
+  sex:  "男",
+}
+
+//指针变量
+c := new(Class)
+c.Name = 'pony'
+c.Grade = 3
+stu.Class = c
+
+// 打印变量类型
+fmt.Println(reflect.TypeOf(sa))
+```
+
+### 打印与键盘输入语句
+
+```go
+import "fmt"
+fmt.Println("")  // PrintLn 打印之后换行 ， 
+fmt.Scan()
+fmt.Scanln() // 读取一行
 ```
 
 ### 条件语句 ： else if
@@ -104,24 +106,41 @@ for i <=5 {
 
 for _, v := range nums{
   fmt.Println(v)
-}
+} 
 ```
-
-1. 随机数
-
-    ```go
-    rand.Intn(10)
-    ```
 
 ### Array 
 
 ```go
+// 定义数组，定义数组时定义长度，默认值为0。
 var nums [10] int32 
+var numbers []float64
+
+// l.pop()
+l = l[:len(l)-1]  
+
+// 遍历数组
+for _, num := range nums{
+  fmt.Println(num)
+}
+
+// append 
 nums = append(nums, 1)  // 添加元素,nums.append(1)
-l = l[:len(l)-1]  // l.pop()
+numbers = append(numbers, n)
 ```
 
-定义数组时定义长度，默认值为0。
+### 字符串
+
+```go
+//TrimSpace， 去除字符串前后端空格。
+line = strings.TrimSpace(line)
+
+// 去掉双引号
+s, _ := strconv.Unquote(string(str))
+
+// 根据空格对字符串进行分割
+arr:=strings.Fields(s)
+```
 
 ### 字典
 
@@ -137,6 +156,22 @@ dic := map[uint8]uint8{
         '{':'}',
         '[':']',
     }
+
+// 遍历字典的key
+for key := range map1{
+  fmt.Println(key, map1[key])
+}
+
+for key, value := range map1{
+	fmt.Println(key, value)
+}
+
+// 查看key是否在字典中存在
+value, ok := map1[key]
+if ok{
+  fmt.Println("true")
+}
+
 ```
 
 ### 函数
@@ -198,8 +233,6 @@ for scanner.Scan(){
 
 golang json里的struct变量首字母需要大写的
 
-
-
 http://xiaorui.cc/archives/2858
 
 https://goinbigdata.com/how-to-correctly-serialize-json-string-in-golang/
@@ -238,16 +271,6 @@ fmt.Println(string(json_str))
 //2.可以直接stu:=new(StuRead),此时的stu自身就是指针
 stu:=StuRead{}
 err:=json.Unmarshal(str,&stu)
-```
-
-### strings
-
-```go
-//TrimSpace， 去除字符串前后端空格。
-line = strings.TrimSpace(line)
-
-// 去掉双引号
-s, _ := strconv.Unquote(string(str))
 ```
 
 ### 安装第三方库
@@ -304,5 +327,9 @@ if err := json.Unmarshal([]byte(class6), &keys);err != nil{
 }
 ```
 
+### echo
 
+```go
+
+```
 
