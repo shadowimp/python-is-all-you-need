@@ -54,6 +54,12 @@ type Class struct {
     Grade int
 }
 
+type StuRead struct {
+	Name interface{}
+}
+data := new(StuRead)
+data.Name = "nb"
+
 // 调用
 stu := Stu{
   Name: "张三",
@@ -76,9 +82,21 @@ fmt.Println(reflect.TypeOf(sa))
 
 ```go
 import "fmt"
+
+
 fmt.Println("")  // PrintLn 打印之后换行 ， 
+
+fmt.Println("hello world", "hello")	//print中可以包含多个变量以逗号隔开
+
+fmt.Printf("number1等于:%d\n", num1)
+
+var f1 float32
+f1 = 3.1415926
+fmt.Printf("%.3f\n", f1) // 三位小数print
+
 fmt.Scan()
 fmt.Scanln() // 读取一行
+
 ```
 
 ### 条件语句 ： else if
@@ -109,20 +127,37 @@ for _, v := range nums{
 } 
 ```
 
-### Array 
+### Array 数组
 
 ```go
-// 定义数组，定义数组时定义长度，默认值为0。
+// 定义数组，定义数组时定义长度，默认值为0。The list can't change length .
 var nums [10] int32 
 var numbers []float64
+
+
+// 赋值
+nums1 := [...]int{1,2,3,4,5} // [...] means not given the length
+fmt.Println(nums1)
 
 // l.pop()
 l = l[:len(l)-1]  
 
 // 遍历数组
+for i:= 0 ;i <len(nums1); i++ {
+  fmt.Println(nums1[i])
+}
+
 for _, num := range nums{
   fmt.Println(num)
 }
+
+arr1 := [4] int {1,2,3,4}
+for i ,v := range arr1{
+  fmt.Println(i,v)
+}
+
+
+
 
 // append 
 nums = append(nums, 1)  // 添加元素,nums.append(1)
@@ -140,12 +175,21 @@ s, _ := strconv.Unquote(string(str))
 
 // 根据空格对字符串进行分割
 arr:=strings.Fields(s)
+
+// join
+strings.Join(words, "/")
+
+// 去掉字符串中的引号
+str := "\"adf\""
+s, _ := strconv.Unquote(string(str))
+fmt.Println(s)
 ```
 
 ### 字典
 
 ```go
 var map1 = map[int]int{}
+map1[2] = 3
 ```
 
 ```go
@@ -181,6 +225,12 @@ if ok{
 声明括号里面写input形参及变量类型， 括号外写output类型
 
 ```go
+// 定义加法函数
+func getSum(x1 int, x2 int)(y int){
+	y = x1 + x2
+	return y
+}
+
 func fun(a1 int, a2 int)int{
   b = a1+ a2
   return a1+a2
@@ -213,12 +263,28 @@ if err != nil{
 }
 defer file.Close()
 scanner := bufio.NewScanner(file)
-或者
-rd := bufio.NewReader(file)
-
 for scanner.Scan(){
   fmt.Println(strings.TrimSpace(scanner.Text))
 }
+
+// read file
+file, err := os.Open("test.txt")
+if err != nil {
+  panic(err)
+}
+defer file.Close()
+rd := bufio.NewReader(file)
+for {
+  line, err := rd.ReadString('\n')
+  line = strings.TrimSpace(line) // 去除字符串前后空格
+  fmt.Println(line)
+  if err != nil || io.EOF == err {
+    break
+  }
+  l := strings.Split(line, ":")
+  fmt.Println(l)
+}
+
 
 ```
 
@@ -254,23 +320,41 @@ if err != nil{
 }else{
   fmt.Println(person)
 }
+
+
+json_str := `{"version": {"id": 3,"data": "2016-03-11","detail": [{"ops": "add my email"}]}}`
+js, err := simplejson.NewJson([]byte(json_str)) //反序列化
+if err != nil {
+  fmt.Printf("%v\n", err)
+  return
+}
+fmt.Println(js.Get("version").Get("id"))
+
 ```
 
-### 写json
-
 ```go
-dic := {}
-json_str, err := json.Marshal(dic)
-if err != nil{
-  fmt.Println('生成json出错')
-}
-fmt.Println(string(json_str))
 
+type Student struct {
+	Name interface{}
+}
+
+data = new(Student)
+data.Name = "snow"
+json_str, err := json.Marshal(data)	//序列化
+if err != nil{
+  print('生成json出错')
+}
+
+stu = new(Student)
+err = json.Unmarshal([]byte(json_str), &stu) //反序列化
+if err != nil{
+  fmt.Println(err)
+}
+fmt.Println(stu)
 //1.Unmarshal的第一个参数是json字符串，第二个参数是接受json解析的数据结构。
 //第二个参数必须是指针，否则无法接收解析的数据，如stu仍为空对象StuRead{}
-//2.可以直接stu:=new(StuRead),此时的stu自身就是指针
-stu:=StuRead{}
-err:=json.Unmarshal(str,&stu)
+//2.可以直接stu = new(Student),此时的stu自身就是指针
+
 ```
 
 ### 安装第三方库

@@ -168,7 +168,7 @@ hive -e 'select * from  ods_dim_tblog_obj_info_adv where dt=20200520;' > hot_lv3
 
 ```bash
 hadoop fs -ls # 列出指定目录下的内容
-hadoop fs  -lsr  # 递归列出该路径下所有子目录信息
+hadoop fs -lsr  # 递归列出该路径下所有子目录信息
 hadoop fs -copyFromLoca /opt/test/xx.zip  /user/data #从本地系统拷贝文件到dfs中
 hadoop fs -cat  /user/wcinput/wc.input # 显示文件内容
 hadoop fs -copyToLocal /user/input/小王子.txt /opt/download/tonghua.txt #从hdfs拷贝到本地
