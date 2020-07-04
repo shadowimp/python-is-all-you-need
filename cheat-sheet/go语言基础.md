@@ -1,4 +1,4 @@
-## go 语言
+### go 语言Basic
 
 ```
 1. go 不需要写分号
@@ -76,6 +76,9 @@ stu.Class = c
 
 // 打印变量类型
 fmt.Println(reflect.TypeOf(sa))
+
+
+//全局变量定义在函数外部,全局变量在任何地方都能使用
 ```
 
 ### 打印与键盘输入语句
@@ -411,9 +414,146 @@ if err := json.Unmarshal([]byte(class6), &keys);err != nil{
 }
 ```
 
-### echo
+### Goroutines
+
+在函数或方法调用前面加上关键字go，您将会同时运行一个新的Goroutine。
+
+```go
+func hello() {  
+    fmt.Println("Hello world goroutine")
+}
+func main() {  
+    go hello() 
+    fmt.Println("main function")
+}
+```
+
+### channel
+
+操作符是箭头 <-
+
+(箭头的指向就是数据的流向)
+
+```go
+ch <- v    // 发送值v到Channel ch中
+v := <-ch  // 从Channel ch中接收数据，并将数据赋值给v
+
+// channel必须先创建再使用:
+ch := make(chan int)
+
+make(chan int, 100) //容量(capacity)代表Channel容纳的最多的元素的数量，代表Channel的缓存的大小。
+
+
+```
+
+### time
+
+```go
+now := time.Now()
+day := now.Day()
+hour := now.Hour()
+minute := now.Minute()
+second := now.Second()
+fmt.Println(day)
+fmt.Println(hour)
+fmt.Println(minute)
+fmt.Println(second)
+
+
+// time.after和time.Timer需要对通道进行释放才能达到定时的效果
+// 睡眠10秒
+time.Sleep(time.Second * 10) 
+
+//实现周期定时 
+tiker := time.NewTicker(time.Minute) // 每隔一分钟,
+for i := 0; i < 3; i++ {
+  fmt.Println(<-tiker.C) //ticker.C中每隔一分钟会有一个内容加入
+}
+
+
+```
+
+### 安装库
+
+```shell
+echo $GOPATH // 打印go环境地址
+
+// 创建文件夹
+mkdir -p $GOPATH/src/golang.org/x
+
+// 安装依赖的库
+git clone https://github.com/golang/crypto.git
+git clone https://github.com/golang/unix.git
+git clone https://github.com/golang/text.git
+
+// 安装 echo
+go get -v -u github.com/labstack/echo
+```
+
+### 多线程
+
+我们想在继续执行goroutine之前等待所有的goroutines执行完毕
+
+```go
+waitgroup 用来阻塞主协程，可以等待所有协程执行完
+
+Add(n)【n为总共要等待的协程数】，
+Done【在协程中调，相当于Add(-1)】
+wg.Wait()  // 等待所有goroutine执行完毕
+
+var wg sync.WaitGroup // wg := sync.WaitGroup{}
+wg.Add(1) 
+go foo(wg)
+fmt.Println("before wait")
+wg.Wait()
+fmt.Println("after wait")
+
+func foo(wg sync.WaitGroup) {
+	fmt.Println("before sleep")
+	time.Sleep(2 * time.Second)
+	fmt.Println("after sleep")
+	wg.Done()
+}
+
+
+// example 2 ， 等待N个进行完成操作
+func main() {
+    var wg sync.WaitGroup
+    for i := 0; i < 10; i++ {
+        wg.Add(1)
+        go func(j int) {
+            fmt.Println("你好，世界" + fmt.Sprintf("%v", j))
+            wg.Done()
+        }(i)
+    }
+    wg.Wait()
+}
+
+
+channel 等待
+
+```
+
+### 标准库
+
+os.Stat()方法用于获取文件属性
 
 ```go
 
+func main() {
+	fileInfo, err := os.Stat(`C:\Users\Administrator\Desktop\应用商店.txt`)
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println(fileInfo.Name())    //应用商店.txt
+	fmt.Println(fileInfo.IsDir())   //false  判断是否是目录
+	fmt.Println(fileInfo.ModTime()) //2019-12-05 16:59:36.8832788 +0800 CST   文件的修改时间
+	fmt.Println(fileInfo.Size())    //3097  文件大小
+  fmt.Println(fileInfo.Mode())    // -rw-rw-rw-  读写属性
+}
+
+
 ```
+
+
 

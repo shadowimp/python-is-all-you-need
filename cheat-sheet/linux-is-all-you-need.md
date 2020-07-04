@@ -203,6 +203,10 @@ git status #  查看当前 git状态
 git add . # 添加当前所有新增的文件
 git commit -m "注释"
 git push # 推送到github
+
+git log # 查看所有提交历史
+git log –p my_file # 查看某文件的提交历史
+
 ```
 
 ###  常用脚本
