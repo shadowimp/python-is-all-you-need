@@ -186,6 +186,9 @@ strings.Join(words, "/")
 str := "\"adf\""
 s, _ := strconv.Unquote(string(str))
 fmt.Println(s)
+
+// 中文字符串的长度 ， len中文的长度为3
+utf8.RuneCountInString("狗")
 ```
 
 ### 字典
@@ -219,6 +222,11 @@ if ok{
   fmt.Println("true")
 }
 
+
+//map赋值前要先初始化
+var words_and_tag map[string]string
+words_and_tag = make(map[string]string)
+words_and_tag[word] = tag
 ```
 
 ### 函数
@@ -532,6 +540,8 @@ func main() {
 
 channel 等待
 
+//CPU核数
+runtime.NumCPU()
 ```
 
 ### 标准库

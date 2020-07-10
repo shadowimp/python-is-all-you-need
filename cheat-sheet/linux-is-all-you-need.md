@@ -83,7 +83,9 @@ sort train.tsv.cut | uniq | shuf > train.tsv # 训练数据的去重和shuffle
 
 man ascii                          # 显示 ascii 表
 
-
+# 软连接 , 都要写绝对路径
+ln -s 源文件 目标文件
+ls -al user.dict.utf8 # 查看软连接的真实源文件
 ```
 
 ###  环境
@@ -150,21 +152,15 @@ cntrol + B +D    退出tmux界面
 ```shell
 tmux new -s zyb      #新建名为zyb的tmux
 tmux at -t zyb    # 进入名为zyb的tmux
+tmux ls	# 查看目前开启的tmux
+tmux kill-session -t session-name # 关闭session
+tmux rename-session -t old-name new-name # session 重命名
 ```
 
 ### date
 
 ```shell
 date -d "-1days" +%Y-%m-%d  #显示日期 形式 ： 2020-04-02
-```
-
-### ssh
-
-```bash
-#ssh 不掉线,服务器切换到root账户，在/etc/ssh/ssh_config里加入
-ServerAliveInterval 30
-ServerAliveCountMax 720
-# 客户端每隔 30 秒向服务端发送消息保持会话连接，累积 720 次以后服务端依然没有回应，就断开连接。这样配置可以使连接保持 6 小时（720 * 30 = 21600 秒）
 ```
 
 ### crontab
@@ -237,6 +233,18 @@ scp -P {port} ...         # 指定端口远程拷贝文件
 
 sz {file}                 # 发送文件到终端，zmodem 协议
 rz                        # 接收终端发送过来的文件
+
+
+#ssh 不掉线,服务器切换到root账户，在/etc/ssh/ssh_config里加入
+ServerAliveInterval 30
+ServerAliveCountMax 720
+# 客户端每隔 30 秒向服务端发送消息保持会话连接，累积 720 次以后服务端依然没有回应，就断开连接。这样配置可以使连接保持 6 小时（720 * 30 = 21600 秒）
+
+
+
+curl 不带有任何参数时，curl 就是发出 GET 请求，服务器返回的内容会在命令行输出。
+
+-H参数直接指定标头，更改User-Agent
 
 ```
 
@@ -315,7 +323,7 @@ awk '{pattern + action}' {filenames}
 # 默认以空格为分隔， 自定义分割符加 -F 参数
 
 head lol.txt | awk '{print $1}'		# 打印 lol.txt head的第一列 
-awk '{print $5}' file              # 打印文件中以空格分隔的第五列
+awk '{print $5}' file              # 打印文件中以空格分隔的第五列 ,从1开始而不是0
 
 awk -F ',' '{print $5}' file       # 打印文件中以逗号分隔的第五列
 awk -F ',' '{print $NF}' file      # 打印逗号分隔的文件中的每行最后一列
@@ -353,4 +361,25 @@ uniq —— 去重，-c再输出重复次数。结果就是 ”4 abc“ abc出�
 sort -r —— 反向排序，也就是从大到小。得到按频率高低的结果
 awk ——格式化输出，规定输出是先字符串再重复次数，所以先$2再$1，中间空格分隔
 ```
+
+### wrk2 压测工具
+
+```bash
+git clone https://github.com/giltene/wrk2.git
+cd wrk2 && make
+./wrk -t2 -c100 -d30s -R2000 http://www.baidu.com
+
+```
+
+### 正则表达式
+
+```bash
+
+```
+
+
+
+
+
+
 
