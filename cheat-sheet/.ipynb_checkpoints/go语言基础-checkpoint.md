@@ -509,8 +509,6 @@ Add(n)【n为总共要等待的协程数】，
 Done【在协程中调，相当于Add(-1)】
 wg.Wait()  // 等待所有goroutine执行完毕
 
-defer wg.Done() //当goroutine执行完毕前，需要告诉WaitGroup执行完毕，调用对应代码
-
 var wg sync.WaitGroup // wg := sync.WaitGroup{}
 wg.Add(1) 
 go foo(wg)
@@ -540,11 +538,10 @@ func main() {
 }
 
 
+channel 等待
 
 //CPU核数
 runtime.NumCPU()
-
-
 ```
 
 ### 标准库

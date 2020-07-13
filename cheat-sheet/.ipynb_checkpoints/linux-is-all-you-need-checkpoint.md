@@ -241,27 +241,14 @@ ServerAliveCountMax 720
 # 客户端每隔 30 秒向服务端发送消息保持会话连接，累积 720 次以后服务端依然没有回应，就断开连接。这样配置可以使连接保持 6 小时（720 * 30 = 21600 秒）
 
 
+
 curl 不带有任何参数时，curl 就是发出 GET 请求，服务器返回的内容会在命令行输出。
-http://www.ruanyifeng.com/blog/2019/09/curl-reference.html
 
 -H参数直接指定标头，更改User-Agent
-curl -H 'User-Agent: php/1.0' https://google.com
 
-curl -d '{"login": "emma", "pass": "123"}' -H 'Content-Type: application/json' https://google.com/login
-# HTTP 请求的标头是Content-Type: application/json，然后用-d参数发送 JSON 数据
-# 并且会自动将请求转为 POST 方法，因此可以省略-X POST
-
-curl -b 'foo=bar' https://google.com 	#-b 参数 发送 Cookie到服务器	
-curl -b cookies.txt https://www.google.com
-
-curl -c cookies.txt https://www.google.com	#-c参数 cookie写入文件
-
-curl -X POST https://google.com/login -d 'login=emma＆password=123' 	
-# -d 参数发送 POST 请求的数据体，-X 参数指定 HTTP 请求的方法
-
--u参数用来设置服务器认证的用户名和密码
-curl -u 'bob:12345' https://google.com/login
 ```
+
+
 
 ### 定义变量
 
@@ -387,31 +374,20 @@ cd wrk2 && make
 ### 正则表达式
 
 ```bash
-\w 	匹配一个常用字符，包括字母、数字、下划线
-\s  匹配空格	
+\w 
+\s 
 \d	数字,qual to [0-9]
-. 可以匹配任意字符
 ^ 开头
 & 结尾
 {10}	重复10次
-{5, 10}	重复5-10次
-{5, }	重复5次以上
+
 
 匹配4位数字的号码：
 ^\d\d\d\d$
 
 匹配1开头11位数字的手机号码：
  ^1\d{10}$
- 
- 数字1-9或字母a-e
- [1-9a-e]
 
-将字母换成大写，就表示相反的意思。用 \d 你可以匹配一个数字，\D 则表示匹配一个非数字
-
-
-
-+ 表示 至少匹配出现一次的字符。它等价于 {1,}
-"d+"  匹配任意的数字
 ```
 
 
