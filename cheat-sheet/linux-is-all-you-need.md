@@ -32,6 +32,7 @@ CTRL+O              # 类似回车，但是会显示下一行历史
 ```shell
 ls /usr/bin | grep python		#列出/usr/bin  目录下 ，文p名中有python 的文件 
 ls | grep *.py  #筛选出当前文件夹所有的py后缀名的文件（| 是管道操作符，grep 是过滤操作符
+ll -t 	# 按修改时间排序
 
 cp # 拷贝文件
 mv # 移动文件和重命名
@@ -83,7 +84,7 @@ sort train.tsv.cut | uniq | shuf > train.tsv # 训练数据的去重和shuffle
 
 man ascii                          # 显示 ascii 表
 
-# 软连接 , 都要写绝对路径
+# 建立文件的软连接 , 都要写绝对路径
 ln -s 源文件 目标文件
 ls -al user.dict.utf8 # 查看软连接的真实源文件
 ```
