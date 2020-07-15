@@ -86,7 +86,6 @@ fmt.Println(reflect.TypeOf(sa))
 ```go
 import "fmt"
 
-
 fmt.Println("")  // PrintLn 打印之后换行 ， 
 
 fmt.Println("hello world", "hello")	//print中可以包含多个变量以逗号隔开
