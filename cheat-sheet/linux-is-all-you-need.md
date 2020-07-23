@@ -52,6 +52,11 @@ history 10 #查看历史10条命令
 
 
 cat #显示文件内容
+cat -n	# 打印内容的同时，打印行号
+
+# 文件去重
+cat keywords_pusou.txt |sort|uniq >  keywords_pusou1.txt
+
 stat #显示文件详细信息
 file {fn}           # 检测文件的类型和编码
 
@@ -102,6 +107,9 @@ uname -a                  # 查看内核版本等信息
 date                      # 显示日期
 date +%Y%m%d							# 20200716
 date +%Y_%m_%d%t%H:%M:%S	# 2020_07_16	17:10:15
+date -d 'last day' #昨天
+date -d 'next day' #明天
+date -d '-2 day ago' #两天前
 cal                       # 显示日历
 ```
 
@@ -205,6 +213,23 @@ git push # 推送到github
 
 git log # 查看所有提交历史
 git log –p my_file # 查看某文件的提交历史
+
+git branch yuanbo6	#创建分支yuanbo6
+git checkout yuanbo6	#切换到分支yuanbo6
+git push origin branchname	#将分支yuanbo6上的代码push上去
+
+# 代码还未add
+git checkout -- a.txt   # 丢弃某个文件
+git checkout -- .   #丢弃全部文件，新增的文件会被删除、删除的文件会恢复回来、修改的文件会回去。
+
+# 代码git add到缓存区，并未commit提交
+
+
+
+git reset --hard	# 重置暂存区与工作区，与上一次 commit 保持一致
+git reset --hard commit_id 	# 将代码回滚到当前commit_id的版本
+
+
 
 ```
 

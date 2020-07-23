@@ -178,6 +178,9 @@ s, _ := strconv.Unquote(string(str))
 // 根据空格对字符串进行分割
 arr:=strings.Fields(s)
 
+// 使用指定分割
+strings.Split(s, "\t")
+
 // join
 strings.Join(words, "/")
 
