@@ -219,17 +219,16 @@ git checkout yuanbo6	#切换到分支yuanbo6
 git push origin branchname	#将分支yuanbo6上的代码push上去
 
 # 代码还未add
-git checkout -- a.txt   # 丢弃某个文件
+git checkout -- a.txt   # 丢弃某个文件， 撤销修改
 git checkout -- .   #丢弃全部文件，新增的文件会被删除、删除的文件会恢复回来、修改的文件会回去。
 
-# 代码git add到缓存区，并未commit提交
+# 文件git add到缓存区，并未commit提交
+git reset HEAD a.txt	# 取消暂存
+git reset HEAD . 
 
-
-
+# git commit到本地分支、但没有git push到远程
 git reset --hard	# 重置暂存区与工作区，与上一次 commit 保持一致
 git reset --hard commit_id 	# 将代码回滚到当前commit_id的版本
-
-
 
 ```
 
@@ -440,7 +439,14 @@ cd wrk2 && make
 + 表示 至少匹配出现一次的字符。它等价于 {1,} , "d+"  匹配任意的数字
 ```
 
+### shell处理json
 
+```bash
+yum install -y jq	#下载安装jq
+echo '{"key": "syw"}' | jq '.key'
+echo '{"key": {"key2": "val"}}' | jq '.key.key2'
+echo '{"key": {"key2": ["val1", "val2"]}}' | jq '.key.key2[1]'
+```
 
 
 
