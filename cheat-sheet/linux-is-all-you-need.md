@@ -25,6 +25,12 @@ CTRL+G              # 退出当前编辑（比如正在 CTRL+R 搜索历史时�
 
 CTRL+T              # 交换前后两个字符
 CTRL+O              # 类似回车，但是会显示下一行历史
+
+
+i # 进入编辑模式
+x #删除一个字符
+r #替换一个字符
+
 ```
 
 ### 常用命令
@@ -56,6 +62,10 @@ cat -n	# 打印内容的同时，打印行号
 
 # 文件去重
 cat keywords_pusou.txt |sort|uniq >  keywords_pusou1.txt
+
+# 当前目录下的所有文件合并
+cat * > log.txt
+cat data/* > log.txt  # 将data0目录下的所有文件合并
 
 stat #显示文件详细信息
 file {fn}           # 检测文件的类型和编码
@@ -110,6 +120,9 @@ date +%Y_%m_%d%t%H:%M:%S	# 2020_07_16	17:10:15
 date -d 'last day' #昨天
 date -d 'next day' #明天
 date -d '-2 day ago' #两天前
+DT=`date -d 'last day' +%Y%m%d`
+DT2=`date -d '-2 days' +%Y%m%d`
+
 cal                       # 显示日历
 ```
 
@@ -211,6 +224,9 @@ git add . # 添加当前所有新增的文件
 git commit -m "注释"
 git push # 推送到github
 
+
+git config --list #  显示当前的Git配置
+
 git log # 查看所有提交历史
 git log –p my_file # 查看某文件的提交历史
 
@@ -218,6 +234,9 @@ git branch yuanbo6	#创建分支yuanbo6
 git checkout yuanbo6	#切换到分支yuanbo6
 git push origin branchname	#将分支yuanbo6上的代码push上去
 
+git push origin master
+
+# 撤销
 # 代码还未add
 git checkout -- a.txt   # 丢弃某个文件， 撤销修改
 git checkout -- .   #丢弃全部文件，新增的文件会被删除、删除的文件会恢复回来、修改的文件会回去。
@@ -230,6 +249,12 @@ git reset HEAD .
 git reset --hard	# 重置暂存区与工作区，与上一次 commit 保持一致
 git reset --hard commit_id 	# 将代码回滚到当前commit_id的版本
 
+
+git stash	# 将目前改动的代码暂存起来
+git pull origin master	# 从master拉代码
+git stash pop	# 将之前的暂存改动与master上的代码合并， 并删除暂存的stash内容
+
+git stash apply# 恢复，恢复后，stash内容并不删除，你要使用命令git stash drop来删除
 ```
 
 ###  常用脚本
@@ -442,13 +467,11 @@ cd wrk2 && make
 ### shell处理json
 
 ```bash
-yum install -y jq	#下载安装jq
+sudo yum install -y jq	#下载安装jq
 echo '{"key": "syw"}' | jq '.key'
 echo '{"key": {"key2": "val"}}' | jq '.key.key2'
 echo '{"key": {"key2": ["val1", "val2"]}}' | jq '.key.key2[1]'
 ```
-
-
 
 
 
