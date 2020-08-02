@@ -570,5 +570,48 @@ func main() {
 
 ```
 
+### http
+
+https://www.cnblogs.com/zhaof/p/11346412.html
+
+```go	
+  respond, err := http.Get("http://www.baidu.com")
+  if err != nil{
+    panic(err)
+  }
+  body, err := ioutil.ReadAll(respond.Body)
+  fmt.Println(string(body))
+```
+
+自定参数变量
+
+```go
+	params := url.Values{}
+	Url, err := url.Parse("http://10.41.24.195:8080/KeywordExtend/Cos")
+	if err != nil {
+		return
+	}
+
+	query := "蔡徐坤"
+	params.Set("topn","30")
+	params.Set("keywords", query)
+	//如果参数中有中文参数,这个方法会进行URLEncode
+	Url.RawQuery = params.Encode()
+	urlPath := Url.String()
+	fmt.Println(urlPath) 
+	respond,err := http.Get(urlPath)
+	defer respond.Body.Close()
+	body, _ := ioutil.ReadAll(respond.Body)
+	fmt.Println(string(body))
+```
+
+
+
+
+
+
+
+
+
 
 

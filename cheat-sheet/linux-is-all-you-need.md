@@ -102,6 +102,8 @@ man ascii                          # 显示 ascii 表
 # 建立文件的软连接 , 都要写绝对路径
 ln -s 源文件 目标文件
 ls -al user.dict.utf8 # 查看软连接的真实源文件
+
+
 ```
 
 ###  环境
@@ -114,16 +116,7 @@ which bash          # 搜索 $PATH，查找哪个程序对应命令 bash
 whereis bash        # 搜索可执行，头文件和帮助信息的位置，使用系统内建数据库
 whatis bash         # 查看某个命令的解释，一句话告诉你这是干什么的
 uname -a                  # 查看内核版本等信息
-date                      # 显示日期
-date +%Y%m%d							# 20200716
-date +%Y_%m_%d%t%H:%M:%S	# 2020_07_16	17:10:15
-date -d 'last day' #昨天
-date -d 'next day' #明天
-date -d '-2 day ago' #两天前
-DT=`date -d 'last day' +%Y%m%d`
-DT2=`date -d '-2 days' +%Y%m%d`
 
-cal                       # 显示日历
 ```
 
 
@@ -185,6 +178,17 @@ tmux rename-session -t old-name new-name # session 重命名
 
 ```shell
 date -d "-1days" +%Y-%m-%d  #显示日期 形式 ： 2020-04-02
+
+date                      # 显示日期
+date +%Y%m%d							# 20200716
+date +%Y_%m_%d%t%H:%M:%S	# 2020_07_16	17:10:15
+date -d 'last day' #昨天
+date -d 'next day' #明天
+date -d '-2 day ago' #两天前
+DT=`date -d 'last day' +%Y%m%d`
+DT2=`date -d '-2 days' +%Y%m%d`
+
+cal                       # 显示日历
 ```
 
 ### crontab
@@ -218,6 +222,14 @@ rsync -av test.py 10.41.24.195::yuanbo6
 
 ### Git
 
+git的工作流
+
+工作区：即自己当前分支所修改的代码，git add xx 之前的！不包括 git add xx 和 git commit xxx 之后的。
+
+暂存区：已经 git add xxx 进去，且未 git commit xxx 的。
+
+本地分支：已经git commit -m xxx 提交到本地分支的。
+
 ```shell
 git status #  查看当前 git状态
 git add . # 添加当前所有新增的文件
@@ -236,25 +248,33 @@ git push origin branchname	#将分支yuanbo6上的代码push上去
 
 git push origin master
 
-# 撤销
+# 撤销，代码回滚
 # 代码还未add
 git checkout -- a.txt   # 丢弃某个文件， 撤销修改
 git checkout -- .   #丢弃全部文件，新增的文件会被删除、删除的文件会恢复回来、修改的文件会回去。
 
 # 文件git add到缓存区，并未commit提交
-git reset HEAD a.txt	# 取消暂存
-git reset HEAD . 
+git reset HEAD a.txt	# 取消暂存 
+git reset HEAD .   # 这个命令仅改变暂存区，并不改变工作区，
 
 # git commit到本地分支、但没有git push到远程
 git reset --hard	# 重置暂存区与工作区，与上一次 commit 保持一致
 git reset --hard commit_id 	# 将代码回滚到当前commit_id的版本
+git reset --hard HEAD^  # 回到最新的一次提交
+
+# 已经用 git push把修改提交到远程仓库
+git reset --hard <commit_id>
+git push origin HEAD --force # 强制提交一次，之前错误的提交就从远程仓库删除
+
 
 
 git stash	# 将目前改动的代码暂存起来
 git pull origin master	# 从master拉代码
 git stash pop	# 将之前的暂存改动与master上的代码合并， 并删除暂存的stash内容
-
 git stash apply# 恢复，恢复后，stash内容并不删除，你要使用命令git stash drop来删除
+
+
+git revert # 放弃指定提交的修改，但是会生成一次新的提交，需要填写提交注释，以前的历史记录都在；
 ```
 
 ###  常用脚本
@@ -359,12 +379,34 @@ ps -u {user}              # 查看某用户进程
 
 ps aux | grep httpd       # 查看名为 httpd 的所有进程
 
+ps -ef | grep search_ad.go	#查看名为search_ad.go 的所有进程
+
 pstree                    # 树形列出所有进程，pstree 默认一般不带，需安装
 
 kill {pid}                # 结束进程
 
 top                       # 查看最活跃的进程
 top -u {user}             # 查看某用户最活跃的进程
+
+
+# 后台运行 
+nohup go run search_ad.go & 
+nohup 加在一个命令的最前面，表示不挂断的运行命令
+&  # 表示放在后台执行，即使terminal（终端）关闭，或者电脑死机程序依然运行
+
+ jobs  #查看后台运行的命令
+
+ps -ef|grep test.sh  # 查找名为test.sh的进程
+ 
+ 2>&1 # 这个意思是把标准错误（2）重定向到标准输出中（1）而标准输出又导入文件output里面，所以结果是标准错误和标准输出都导入文件output里面了 。可以很好的将错误信息保存，帮助我们定位问题。
+ 
+  
+ test.sh  > log.txt 2>&1 	#  将test.sh的输出重定向到log.txt文件中，同时将标准错误也重定向到log.txt文件中
+ 
+ 0：标准输入流 stdin
+1：标准输出流 stdout
+2：标准错误流 stderr
+
 ```
 
 ### 用户管理
@@ -386,6 +428,10 @@ sudo {command}      # 以 root 权限执行某命令
 ```bash	
 awk '{pattern + action}' {filenames}
 # 默认以空格为分隔， 自定义分割符加 -F 参数
+
+awk '{a+=$2}END{print a}'	#对文件的第二列求和
+
+awk -F,  '{sum += $3};END {print sum}' test	#求文件test第三列的和
 
 head lol.txt | awk '{print $1}'		# 打印 lol.txt head的第一列 
 awk '{print $5}' file              # 打印文件中以空格分隔的第五列 ,从1开始而不是0
