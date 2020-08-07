@@ -30,6 +30,10 @@ num_string := strconv.Itoa(num)
 
 // string to int 
 strconv.Atoi()
+i, err := strconv.Atoi("12345")
+if err != nil {
+  panic(err)
+}
 
 // string to float64
 strconv.ParseFloat(arg, 64)
@@ -164,6 +168,11 @@ for i ,v := range arr1{
 // append 
 nums = append(nums, 1)  // 添加元素,nums.append(1)
 numbers = append(numbers, n)
+
+// 将两个列表合并
+words1 :=[] int {1,2,3,4,6,6}
+words2 :=[] int {1,2,3,4,6,6}
+words1 = append(words1,words2...)
 ```
 
 ### 字符串
@@ -255,6 +264,24 @@ func max(x int , y int)int{
   }else{
     return y
   }
+}
+
+// 去重
+func RemoveRepeat(slc []string) []string {
+	result := []string{}  // 存放结果
+	for i := range slc{
+		flag := true
+		for j := range result{
+			if slc[i] == result[j] {
+				flag = false  // 存在重复元素，标识为false
+				break
+			}
+		}
+		if flag {  // 标识为false，不添加进结果
+			result = append(result, slc[i])
+		}
+	}
+	return result
 }
 
 

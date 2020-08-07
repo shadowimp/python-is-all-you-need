@@ -184,9 +184,11 @@ date +%Y%m%d							# 20200716
 date +%Y_%m_%d%t%H:%M:%S	# 2020_07_16	17:10:15
 date -d 'last day' #昨天
 date -d 'next day' #明天
-date -d '-2 day ago' #两天前
+date -d '-2 day ago' #两天后
 DT=`date -d 'last day' +%Y%m%d`
-DT2=`date -d '-2 days' +%Y%m%d`
+DT2=`date -d '-2 days' +%Y%m%d` # 两天前
+
+DT7 = `date -d '-7 days' +%Y%m%d` #七天前
 
 cal                       # 显示日历
 ```
