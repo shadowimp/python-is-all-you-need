@@ -117,6 +117,25 @@ ALTER TABLE name RENAME TO new_name
 
 
 
+### nvl
+
+```mysql
+NVL（表达式1，表达式2）
+如果表达式1为空值，NVL返回值为表达式2的值，否则返回表达式1的值
+
+NVL2(表达式1，表达式2，表达式3）
+如果表达式1为空，返回值为表达式3的值。如果表达式1不为空，返回值为表达式2的值。
+     
+     
+if (a is not null, 1, 0) as label 
+```
+
+
+
+
+
+
+
 ## mysql_tutorial
 
 ### 创建一个persion表： 包括个人id，姓，名
