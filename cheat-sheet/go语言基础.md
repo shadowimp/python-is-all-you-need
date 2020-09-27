@@ -200,6 +200,11 @@ fmt.Println(s)
 
 // 中文字符串的长度 ， len中文的长度为3
 utf8.RuneCountInString("狗")
+
+// 大小写转换
+strings.ToLower("iPad")
+strings.ToUpper("hello world")
+
 ```
 
 ### 字典
@@ -326,6 +331,25 @@ for {
 }
 
 
+
+// 写文件
+// 先创建文件
+f, err := os.Create("/Users/yuanbo6/Downloads/word_count_test.txt")
+if err != nil{
+  panic(err)
+}
+defer f.Close()
+
+write_line := strings.Join(valid_words, " ")
+write_line += "\n"
+_, err = f.Write([]byte(write_line))
+if err != nil{
+  panic(err)
+}
+
+
+
+n, err1 := io.WriteString(f, wireteString) 
 ```
 
 ### defer 延迟语句 ， 在函数最后执行

@@ -18,9 +18,28 @@ res_uniq = []
 for item in res_dic.keys():
     item = eval(item)
     res_uniq.append(item)
+    
+    
 ```
 
 
 
+str.lower( ) # 字符串大写变小写
 
+### flash
+
+```python
+from flask import Flask, jsonify
+
+app = Flask(__name__)
+
+@app.route('/index')
+def index():
+    return jsonify(msg='hello world')
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=8000)
+
+
+```
 

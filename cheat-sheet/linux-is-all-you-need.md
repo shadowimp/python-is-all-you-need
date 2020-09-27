@@ -107,6 +107,9 @@ ls -al user.dict.utf8 # 查看软连接的真实源文件
 
 
 sleep 3 #睡眠3秒
+
+
+tail /var/log/messages  # 程序被kill，查看linux 系统日志
 ```
 
 ###  环境
@@ -469,6 +472,8 @@ sed -i -r 's/^\s+//g' file         # 删除文件每行头部空格
 sed '/^$/d' file                   # 删除文件空行并打印
 sed -i 's/\s\+$//' file            # 删除文件每行末尾多余空格
 
+
+cat testfile |tr a-z A-Z  #将文件testfile中的小写字母全部转换成大写字母
 ```
 
 ```bash
