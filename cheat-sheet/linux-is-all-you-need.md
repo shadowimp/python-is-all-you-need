@@ -110,6 +110,11 @@ sleep 3 #睡眠3秒
 
 
 tail /var/log/messages  # 程序被kill，查看linux 系统日志
+
+
+md5sum yuanbo.txt 	# md5校验文件的唯一性
+
+
 ```
 
 ###  环境
@@ -299,6 +304,10 @@ find . -type f -newermt "2020-05-01"  #按日期范围查找文件
 ### 网络
 
 ```bash
+# 传文件
+python2 -m SimpleHTTPServer 9000	#在发送端启动 HTTPServer
+wget http://机器ip/yuanbo.txt	# 接收端接收，yuanbo.txt为发送端目录下的文件
+
 wget {url}                # 下载文件，可加 --no-check-certificate 忽略 ssl 验证
 wget -qO- {url}           # 下载文件并输出到标准输出（不保存）
 curl -sL {url}            # 同 wget -qO- {url} 没有 wget 的时候使用
