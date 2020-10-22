@@ -1,4 +1,4 @@
-### Terminal 快捷键
+Terminal 快捷键
 
 ```
 control + a    jump to head 
@@ -41,6 +41,9 @@ ls | grep *.py  #筛选出当前文件夹所有的py后缀名的文件（| 是�
 ll -t 	# 按修改时间排序
 
 cp # 拷贝文件
+# 拷贝文件夹
+cp  -r 
+
 mv # 移动文件和重命名
 touch # 创建新文件
 mkdir   # 创建文件夹
@@ -50,6 +53,7 @@ cd #change directory
 cd -                # 回到之前的目录
 pwd               # 显示当前所在目录
 ps  显示当前进程
+ps -aux #现实所有进程
 
 df -h   查看磁盘空间
 du -h   查看当前各目录大小
@@ -215,6 +219,10 @@ sudo service crond restart 	#重启crontab服务
 
 ```shell
 docer run -it -v $PWD:/work centos: latest /bin/bash     #docker启动centos
+
+docker pull nvidia/cuda:10.1-devel-ubuntu18.04	# doucker 拉镜像
+
+docker save 7e66518b68a8 > nvidia.tar	#docker dao
 ```
 
 ### mysql
@@ -232,6 +240,18 @@ vi /etc/rsyncd.conf
 rsync -av test.py 10.41.24.195::yuanbo6
 #rsync -av 源目录 目的地目录
 ```
+
+### xargs
+
+xargs 一般是和管道一起使用,可以把多行变成一行
+
+```bash
+ps -ef | grep httpserver_cust_indus | cut -c 9-15 | xargs kill -9
+```
+
+
+
+
 
 ### Git
 

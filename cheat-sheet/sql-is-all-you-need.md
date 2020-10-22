@@ -194,5 +194,7 @@ hadoop fs -copyToLocal /user/input/小王子.txt /opt/download/tonghua.txt #从h
 hadoop fs -df -h  # 统计文件系统的可用空间信息
 hadoop fs -du -s -h # 统计文件夹的大小信息
 
+
+hadoop fs -get
 ```
 

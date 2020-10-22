@@ -20,13 +20,19 @@ for item in res_dic.keys():
     res_uniq.append(item)
     
     
+    
+# os 检测是否有目录下有    
+if not os.path.exists(output_home):
+    logger.info('Output path does not exists and created.')
+    os.makedirs(output_home)
+    
 ```
 
 
 
 str.lower( ) # 字符串大写变小写
 
-### flash
+### flask
 
 ```python
 from flask import Flask, jsonify
@@ -42,4 +48,6 @@ if __name__ == '__main__':
 
 
 ```
+
+
 

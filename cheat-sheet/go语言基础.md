@@ -11,9 +11,10 @@
 
 ```go
 var num int 
-int   整型 , int 还有int8， iny16 ， int32， int64，
+int 整型 , int 还有int8， iny16 ， int32， int64，
 - uint 无符号整型。 
 - %p 打印地址
+
 
 
 var flag bool
@@ -23,7 +24,7 @@ fmt.Printf("%T,%t\n",flag,flag) // bool 类型 为 %t , %T用于查看变量类�
 s1 = "shabi"
 fmt.Print("%s",s1) 
 
-
+//strconv库 进行 string类型与其他类型间的转换
 // int to string 
 num = 12345
 num_string := strconv.Itoa(num)
@@ -43,6 +44,9 @@ v := 3.1415926535
 s1 := strconv.FormatFloat(v, 'E', -1, 64)  // v type :float64
 
 rand.Intn(10) //随机数
+
+// list to string
+string(result)
 
 //  自定数据数据类型
 type Stu struct {
@@ -128,6 +132,11 @@ for i <=5 {
   i++ 
 }
 
+// 遍历字符串中的每个元素
+for i := range str{
+  fmt.Print(i)
+}
+
 for _, v := range nums{
   fmt.Println(v)
 } 
@@ -139,6 +148,9 @@ for _, v := range nums{
 // 定义数组，定义数组时定义长度，默认值为0。The list can't change length .
 var nums [10] int32 
 var numbers []float64
+
+// 初始化数组
+s := []byte{}
 
 
 // 赋值
@@ -161,8 +173,6 @@ arr1 := [4] int {1,2,3,4}
 for i ,v := range arr1{
   fmt.Println(i,v)
 }
-
-
 
 
 // append 
