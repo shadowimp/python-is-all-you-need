@@ -26,6 +26,12 @@ if not os.path.exists(output_home):
     logger.info('Output path does not exists and created.')
     os.makedirs(output_home)
     
+    
+    
+    
+    
+# python 全局变量
+在函数内使用 global
 ```
 
 
@@ -51,3 +57,4 @@ if __name__ == '__main__':
 
 
 
+which python #看目前使用的什么python环境

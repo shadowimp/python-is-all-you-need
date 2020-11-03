@@ -31,6 +31,8 @@ i # 进入编辑模式
 x #删除一个字符
 r #替换一个字符
 
+vim -d 
+# 看两个文件
 ```
 
 ### 常用命令
@@ -77,6 +79,7 @@ file {fn}           # 检测文件的类型和编码
 head + (filename)   #show the head lines of file 
 
 tail + (filename)    # show the tail lines of file 
+tail -f  #能显示还在更新的文件
 
 大文件用 more 和 less 查看, 空格翻页 , q 退出
 
@@ -245,13 +248,16 @@ rsync -av test.py 10.41.24.195::yuanbo6
 
 xargs 一般是和管道一起使用,可以把多行变成一行
 
+换行和空白将被空格取代
+
 ```bash
 ps -ef | grep httpserver_cust_indus | cut -c 9-15 | xargs kill -9
+
+# 下载多个链接
+cat url-list.txt | xargs wget -c
+
+
 ```
-
-
-
-
 
 ### Git
 
@@ -326,7 +332,7 @@ find . -type f -newermt "2020-05-01"  #按日期范围查找文件
 ```bash
 # 传文件
 python2 -m SimpleHTTPServer 9000	#在发送端启动 HTTPServer
-wget http://机器ip/yuanbo.txt	# 接收端接收，yuanbo.txt为发送端目录下的文件
+wget http://机器ip:9000/yuanbo.txt	# 接收端接收，yuanbo.txt为发送端目录下的文件
 
 wget {url}                # 下载文件，可加 --no-check-certificate 忽略 ssl 验证
 wget -qO- {url}           # 下载文件并输出到标准输出（不保存）
@@ -449,6 +455,11 @@ ps -ef|grep test.sh  # 查找名为test.sh的进程
 1：标准输出流 stdout
 2：标准错误流 stderr
 
+
+lsof 显示系统打开的文件 lists openfiles
+yum install lsof
+lsof -i:8125 	#看进程
+lsof abc.txt 显示开启文件abc.txt的进程
 ```
 
 ### 用户管理
