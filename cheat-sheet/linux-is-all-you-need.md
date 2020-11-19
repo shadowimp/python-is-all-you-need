@@ -216,6 +216,8 @@ cal                       # 显示日历
 ```shell
 0 11 * * *   # 每天11点执行
 sudo service crond restart 	#重启crontab服务
+
+
 ```
 
 ### docker
@@ -238,10 +240,19 @@ mysql -uroot -p	#以root方式进入mysql
 ### rsync
 
 ```shell
-vi /etc/rsyncd.conf
+vi /etc/rsyncd.conf #配置rsync
+
+[yuanbo6]
+path= /data0/yuanbo6/
+uid=root
+gid=root
+read only=no
+hosts allow=*
 
 rsync -av test.py 10.41.24.195::yuanbo6
 #rsync -av 源目录 目的地目录
+
+
 ```
 
 ### xargs
@@ -285,7 +296,7 @@ git branch yuanbo6	#创建分支yuanbo6
 git checkout yuanbo6	#切换到分支yuanbo6
 git push origin branchname	#将分支yuanbo6上的代码push上去
 
-git push origin master
+git push origin master  #push 代码
 
 # 撤销，代码回滚
 # 代码还未add
@@ -417,8 +428,6 @@ declare -f                # 查看所有函数
 
 ### 进程
 
-
-
 ```bash
 ps                        # 查看当前会话进程
 ps -e                  # 查看所有进程
@@ -495,6 +504,8 @@ awk -F ',' '{print $NF}' file      # 打印逗号分隔的文件中的每行最�
 awk '/str/ {print $2}' file        # 打印文件中包含 str 的所有行的第二列
 awk '{s+=$1} END {print s}' file   # 计算所有第一列的合
 awk 'NR%3==1' file                 # 从第一行开始，每隔三行打印一行
+awk    'NR==m {print $k}'  path/filename # 打印第m行
+
 
 
 sed -n '2p' file                   # 打印文件第二行
@@ -514,6 +525,12 @@ sed -i 's/\s\+$//' file            # 删除文件每行末尾多余空格
 
 
 cat testfile |tr a-z A-Z  #将文件testfile中的小写字母全部转换成大写字母
+
+# tr (translate)
+cat /data0/yuanbo6/pusou_log_2.txt |tr a-z A-Z
+
+
+cat pusou_log.txt |tr [:upper:] [:lower:] >> pusou_lower.txt  #将文件中的大写字母全部转换成笑写字母
 ```
 
 ```bash
@@ -534,7 +551,11 @@ awk ——格式化输出，规定输出是先字符串再重复次数，所以�
 git clone https://github.com/giltene/wrk2.git
 cd wrk2 && make
 ./wrk -t2 -c100 -d30s -R2000 http://www.baidu.com
-
+压测时间持续30秒，并发12线程，保持400个HTTP连接请求。
+-t2: 并发2线程 (threads)
+-c100 : 保持100个HTTP连接请求 (connections)
+-d30s : 压测时间持续30秒 (duration)
+-R2000 : 每秒2k个请求
 ```
 
 ### 正则表达式
