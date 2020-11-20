@@ -8,7 +8,7 @@ git的工作流
 
 本地分支：已经git commit -m xxx 提交到本地分支的。
 
-```shell
+```bash
 git status #  查看当前 git状态
 git add . # 添加当前所有新增的文件
 git commit -m "注释"
@@ -48,9 +48,42 @@ git push origin HEAD --force # 强制提交一次，之前错误的提交就从�
 git stash	# 将目前改动的代码暂存起来
 git pull origin master	# 从master拉代码
 git stash pop	# 将之前的暂存改动与master上的代码合并， 并删除暂存的stash内容
-git stash apply# 恢复，恢复后，stash内容并不删除，你要使用命令git stash drop来删除
+git stash apply # 恢复，恢复后，stash内容并不删除，你要使用命令git stash drop来删除
 
 
 git revert # 放弃指定提交的修改，但是会生成一次新的提交，需要填写提交注释，以前的历史记录都在；
 ```
 
+
+
+##### Create a new repository
+
+```bash
+git clone http://git.intra.weibo.com/yuanbo6/ziding_handover.git
+cd ziding_handover
+touch README.md
+git add README.md
+git commit -m "add README"
+git push -u origin master
+```
+
+##### Push an existing folder
+
+```bash
+cd existing_folder
+git init
+git remote add origin http://git.intra.weibo.com/yuanbo6/ziding_handover.git
+git add .
+git commit -m "Initial commit"
+git push -u origin master
+```
+
+##### Push an existing Git repository
+
+```bash
+cd existing_repo
+git remote rename origin old-origin
+git remote add origin http://git.intra.weibo.com/yuanbo6/ziding_handover.git
+git push -u origin --all
+git push -u origin --tags
+```

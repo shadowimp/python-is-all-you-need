@@ -32,6 +32,12 @@ if not os.path.exists(output_home):
     
 # python 全局变量
 在函数内使用 global
+
+
+保留两位小数
+n = 3.14159
+print('%.2f'%n)
+>> 3.14
 ```
 
 
@@ -58,4 +64,8 @@ if __name__ == '__main__':
 
 
 which python #看目前使用的什么python环境
+
+
+
+
 
