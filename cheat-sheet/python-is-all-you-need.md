@@ -26,7 +26,11 @@ if not os.path.exists(output_home):
     logger.info('Output path does not exists and created.')
     os.makedirs(output_home)
     
-    
+在python中运行linux脚本
+os.system('go run hash_code.go >> word_hash.txt')
+返回0表示执行成功,返回其他代表失败
+
+
     
     
     
@@ -38,6 +42,10 @@ if not os.path.exists(output_home):
 n = 3.14159
 print('%.2f'%n)
 >> 3.14
+
+
+
+# -*- coding:utf-8 -*-
 ```
 
 
@@ -69,3 +77,14 @@ which python #看目前使用的什么python环境
 
 
 
+#### python get ip 地址
+
+```python
+import socket 
+hostname = socket.gethostname()
+ip = socket.gethostbyname()
+```
+
+
+
+which python #查看当前的python环境

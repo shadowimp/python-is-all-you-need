@@ -2,22 +2,63 @@
 
 ### DDL (data definition language) 数据定义语言
 
-```
+```mysql
 Create 创建
 Drop 删除
 Alter 修改
+truncate 清空一张表
+
+# 删除表
+DROP TABLE ads_lv3_hash
+
+# TRUNCATE TABLE 快速清空一个表m,数据无法找回
+TRUNCATE TABLE table_name
 ```
 
 ### DML (data manipulation language)数据操纵语言
 
-```
+```mysql
 Select 查询
 Insert 插入
 Update 更新
 Delete 删除
 
+delete 是一行一行删的，可以恢复，无法释放磁盘空间
+
+update table_name set 
+
 product_id CHAR(4) NOT NULL ;
+
 ```
+
+### DCL  数据控制语言
+
+```mysql
+GRANT 授权
+
+ROLLBACK 回滚
+
+
+# 授予权限
+grant select on table table_name_1 to user user_name;
+
+# 撤回权限
+revoke select on table table_name_1 to user user_name;
+
+```
+
+### 事务 Transaction
+
+是需要在同一个处理单元中执行的一系列更新处理的集合
+
+```mysql
+start transaction;
+dml_1
+dml_2
+commit;
+```
+
+
 
 ### 操作数据库
 
@@ -31,15 +72,20 @@ desc tabl_name;		#描述表结构
 ### 建表
 
 ```mysql
-CREATE TABLE table1 (ID INTEGER primary key, number int,data char(32)）
+CREATE TABLE table_name1  (word string, hash_number string）  
+
+# 建表 设置partition 和 列间的分隔符                           
+create table if not exists table_name1 (word string, hash_number string, class string) PARTITIONED BY (dt string) row format delimited fields terminated by '\t';                           
 ```
 
+
+
+```mysql
+CREATE TABLE table1 (ID INTEGER primary key, number int,data char(32)）
 建立表格名为table1的表格，
 含有ID，这个ID是唯一的关键字(primary key)，类型为整形(INTEGER )，
 含有属性name，类型为整形(int)，
 含有属性data，类型为32为char型
-
-```mysql
 create table if not exists customers (id int, name varchar(255))
 
 create table test2 as select * from test1;	# 用表test2中的数据创建一个新表test1
@@ -77,6 +123,10 @@ ROUND(price,-1) # price 舍弃个位
 LEFT(name,2)  # 返回name 的前两个字符
 
 <> # !=
+
+# 统计行数
+select count(*) from ads_lv3_hash where dt = '20201204';
+
 ```
 
 ### GROUP BY
@@ -138,7 +188,7 @@ if (a is not null, 1, 0) as label
 
 ## mysql_tutorial
 
-### 创建一个persion表： 包括个人id，姓，名
+### 创建一个person表： 包括个人id，姓，名
 ```MySQL
 Create table Person (PersonId int , FirstName varchar(255) , LastName varchar(255))
 ```
@@ -155,9 +205,6 @@ Insert into Person (PersonId,Lastname , Firstname) values ('1','Wang','Allen')
 Truncate table Address
 Insert into Address(AddressId ,PersonId , City , State) value ( '1', '2','New York City', 'New York' )
 ```
-The TRUNCATE TABLE statement is used to remove all records from a table in MySQL.
-It performs the same function as a DELETE statement without a WHERE clause.
-
 
 ### question:
 Write a SQL query for a report that provides the following information for each person in the Person table, regardless if there is an address for each of those people: FirstName, LastName, City, State
@@ -198,3 +245,17 @@ hadoop fs -du -s -h # 统计文件夹的大小信息
 hadoop fs -get
 ```
 
+
+
+### 向hive表中插入数据，从文件中导入
+
+```mysql
+load data local inpath 'data_path' overwrite into table table_name1 partition (dt = '20201204');  
+
+# 多 partition
+load data local inpath 'data_path' overwrite into table table_name1  partition ( dt = '2018-05-27',hour = '14' );
+
+# 定义行分割方式
+load data local inpath 'data_path' overwrite into table table_name1 row format delimited fields terminated by '\t';                           
+                         
+```

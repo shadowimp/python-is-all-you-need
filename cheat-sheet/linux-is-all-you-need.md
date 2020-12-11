@@ -84,7 +84,14 @@ tail /var/log/messages  # 程序被kill，查看linux 系统日志
 
 md5sum yuanbo.txt 	# md5校验文件的唯一性
 
+cat ads_type.txt|tail -n +10000|head -10 #看文件从第1w行起的10行
 
+# 删除ads下修改时间超过7天的文件
+find /data0/yuanbo6/ads/ -type f -mtime +7 -exec rm -f {} \;
+-exec： find命令对匹配的文件执行该参数所给出的shell命令
+-ctime： 创建时间
+-name： 
+-name ap* ： 以ap开头的文件
 ```
 
 ###  环境
@@ -96,7 +103,7 @@ echo $SHELL         # 显示你在使用什么 SHELL
 which bash          # 搜索 $PATH，查找哪个程序对应命令 bash
 whereis bash        # 搜索可执行，头文件和帮助信息的位置，使用系统内建数据库
 whatis bash         # 查看某个命令的解释，一句话告诉你这是干什么的
-uname -a                  # 查看内核版本等信息
+uname -a            # 查看内核版本等信息
 
 ```
 
@@ -181,6 +188,11 @@ cal                       # 显示日历
 sudo service crond restart 	#重启crontab服务
 
 
+## crontab 误删恢复
+sudo cat /var/log/cron*|grep "(yuanbo6) CMD"| awk -F '(' '{print $3}'|awk -F ')' '{print $1}'|sort|uniq > crontab_temp.txt
+
+
+sudo cat /var/log/cron*|grep "(yuanbo6) CMD"|sort|uniq
 ```
 
 ### docker
@@ -203,7 +215,7 @@ mysql -uroot -p	#以root方式进入mysql
 ### rsync
 
 ```shell
-vi /etc/rsyncd.conf #配置rsync
+sudo vi /etc/rsyncd.conf #配置rsync
 
 [yuanbo6]
 path= /data0/yuanbo6/
@@ -230,64 +242,6 @@ ps -ef | grep httpserver_cust_indus | cut -c 9-15 | xargs kill -9
 # 下载多个链接
 cat url-list.txt | xargs wget -c
 
-
-```
-
-### Git
-
-git的工作流
-
-工作区：即自己当前分支所修改的代码，git add xx 之前的！不包括 git add xx 和 git commit xxx 之后的。
-
-暂存区：已经 git add xxx 进去，且未 git commit xxx 的。
-
-本地分支：已经git commit -m xxx 提交到本地分支的。
-
-```shell
-git status #  查看当前 git状态
-git add . # 添加当前所有新增的文件
-git commit -m "注释"
-git push # 推送到github
-
-
-git config --list #  显示当前的Git配置
-
-git log # 查看所有提交历史
-git log –p my_file # 查看某文件的提交历史
-
-git branch yuanbo6	#创建分支yuanbo6
-git checkout yuanbo6	#切换到分支yuanbo6
-git push origin branchname	#将分支yuanbo6上的代码push上去
-
-git push origin master  #push 代码
-
-# 撤销，代码回滚
-# 代码还未add
-git checkout -- a.txt   # 丢弃某个文件， 撤销修改
-git checkout -- .   #丢弃全部文件，新增的文件会被删除、删除的文件会恢复回来、修改的文件会回去。
-
-# 文件git add到缓存区，并未commit提交
-git reset HEAD a.txt	# 取消暂存 
-git reset HEAD .   # 这个命令仅改变暂存区，并不改变工作区，
-
-# git commit到本地分支、但没有git push到远程
-git reset --hard	# 重置暂存区与工作区，与上一次 commit 保持一致
-git reset --hard commit_id 	# 将代码回滚到当前commit_id的版本
-git reset --hard HEAD^  # 回到最新的一次提交
-
-# 已经用 git push把修改提交到远程仓库
-git reset --hard <commit_id>
-git push origin HEAD --force # 强制提交一次，之前错误的提交就从远程仓库删除
-
-
-
-git stash	# 将目前改动的代码暂存起来
-git pull origin master	# 从master拉代码
-git stash pop	# 将之前的暂存改动与master上的代码合并， 并删除暂存的stash内容
-git stash apply# 恢复，恢复后，stash内容并不删除，你要使用命令git stash drop来删除
-
-
-git revert # 放弃指定提交的修改，但是会生成一次新的提交，需要填写提交注释，以前的历史记录都在；
 ```
 
 ###  常用脚本
@@ -460,6 +414,7 @@ awk -F,  '{sum += $3};END {print sum}' test	#求文件test第三列的和
 
 head lol.txt | awk '{print $1}'		# 打印 lol.txt head的第一列 
 awk '{print $5}' file              # 打印文件中以空格分隔的第五列 ,从1开始而不是0
+awk '{print $1,$2,$3,$4}' # 四列
 
 awk -F ',' '{print $5}' file       # 打印文件中以逗号分隔的第五列
 awk -F ',' '{print $NF}' file      # 打印逗号分隔的文件中的每行最后一列
