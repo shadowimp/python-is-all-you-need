@@ -668,7 +668,15 @@ https://www.cnblogs.com/zhaof/p/11346412.html
 
 
 
+### go 在crontab里面运行报错 解决方案
 
+直接写sh脚本 run.sh
+
+```bash
+#!/bin/sh  
+cd /root/test/
+go run main.go
+```
 
 
 
