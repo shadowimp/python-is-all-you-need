@@ -29,6 +29,9 @@ fmt.Print("%s",s1)
 num = 12345
 num_string := strconv.Itoa(num)
 
+// uint64 to string 
+strconv.FormatUint()
+
 // string to int 
 strconv.Atoi()
 i, err := strconv.Atoi("12345")
@@ -42,6 +45,7 @@ strconv.ParseFloat(arg, 64)
 // float to sting 
 v := 3.1415926535
 s1 := strconv.FormatFloat(v, 'E', -1, 64)  // v type :float64
+
 
 rand.Intn(10) //随机数
 
@@ -215,6 +219,11 @@ utf8.RuneCountInString("狗")
 strings.ToLower("iPad")
 strings.ToUpper("hello world")
 
+// 判断字符串中是否包含某个字符/子串 ， 包含返回true ， 不包含返回false
+strings.Contains(s, ' ')
+
+// 字符串中包含某个字符的个数
+strings.Count(s, "!")
 ```
 
 ### 字典

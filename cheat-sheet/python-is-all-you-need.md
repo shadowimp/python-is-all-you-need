@@ -43,9 +43,23 @@ n = 3.14159
 print('%.2f'%n)
 >> 3.14
 
+word = "apple"
+print(f"word:{word}")
 
 
 # -*- coding:utf-8 -*-
+
+
+import os
+os.remove(temporary_filepath)
+
+import io
+# 限定读的字符数
+size = 100
+with open('brandname.csv','r') as f:
+    lines_100 = io.StringIO(f.read(size))
+for line in lines_100:
+    print(line)
 ```
 
 
@@ -87,4 +101,21 @@ ip = socket.gethostbyname()
 
 
 
+
+
+```
 which python #查看当前的python环境
+
+pip show numpy #查看python库信息
+
+
+
+
+```
+
+
+
+
+
+
+

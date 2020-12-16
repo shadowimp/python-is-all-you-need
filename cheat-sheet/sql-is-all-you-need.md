@@ -224,6 +224,15 @@ select * from some_table where binary str='ABC'
 
 
 
+### mysql
+
+```shell
+brew services start mysql		# 启动mysql
+mysql -uroot -p	#以root方式进入mysql
+```
+
+
+
 ### Hive
 
 ```bash

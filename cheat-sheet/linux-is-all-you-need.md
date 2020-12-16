@@ -17,11 +17,7 @@ mkdir -p  #递归创建目录，即使上级目录不存在，会按目录层级
 cd #change directory
 cd -                # 回到之前的目录
 pwd               # 显示当前所在目录
-ps  显示当前进程
-ps -aux #现实所有进程
 
-df -h   查看磁盘空间
-du -h   查看当前各目录大小
 
 history 10 #查看历史10条命令
 
@@ -75,7 +71,6 @@ ln -s 源文件 目标文件
 ls -al user.dict.utf8 # 查看软连接的真实源文件
 
 
-
 sleep 3 #睡眠3秒
 
 
@@ -84,14 +79,7 @@ tail /var/log/messages  # 程序被kill，查看linux 系统日志
 
 md5sum yuanbo.txt 	# md5校验文件的唯一性
 
-cat ads_type.txt|tail -n +10000|head -10 #看文件从第1w行起的10行
 
-# 删除ads下修改时间超过7天的文件
-find /data0/yuanbo6/ads/ -type f -mtime +7 -exec rm -f {} \;
--exec： find命令对匹配的文件执行该参数所给出的shell命令
--ctime： 创建时间
--name： 
--name ap* ： 以ap开头的文件
 ```
 
 ###  环境
@@ -105,23 +93,64 @@ whereis bash        # 搜索可执行，头文件和帮助信息的位置，使�
 whatis bash         # 查看某个命令的解释，一句话告诉你这是干什么的
 uname -a            # 查看内核版本等信息
 
+df -h   						# 查看磁盘空间使用情况
+du -h   						#查看当前各目录大小 disk usage
+vmstat              # 显示内存和 CPU 使用情况
+free                # 显示内存和交换区使用情况
+uname               # 显示系统版本号
+hostname            # 显示主机名称
+whoami              # 显示我的用户名
+who                 # 显示已登陆用户信息，w / who / users 内容略有不同
+su                  # 切换到 root 用户
+sudo {command}      # 以 root 权限执行某命令
 ```
 
-
-
-### cut 截取
+### 进程
 
 ```bash
-cut -c 1-16                        # 截取每行头16个字符
-cut -c 1-16 file                   # 截取指定文件中每行头 16个字符
-cut -c3-                           # 截取每行从第三个字符开始到行末的内容
-cut -d':' -f5                      # 截取用冒号分隔的第五列内容
-cut -d';' -f2,10                   # 截取用分号分隔的第二和第十列内容
-cut -d' ' -f3-7                    # 截取空格分隔的三到七列
-echo "hello" | cut -c1-3           # 显示 hel
-echo "hello sir" | cut -d' ' -f2   # 显示 sir
-ps | tr -s " " | cut -d " " -f 2,3,4  # cut 搭配 tr 压缩字符
+ps                        # 当前会话进程
+ps -aux 									# 显示所有进程
+ps -e                  		# 查看所有进程
+
+ps -u {user}              # 查看某用户进程
+
+ps aux | grep httpd       # 查看名为 httpd 的所有进程
+
+ps -ef | grep search_ad.go	#查看名为search_ad.go 的所有进程
+ps -ef| grep test.sh  # 查找名为test.sh的进程
+
+pstree                    # 树形列出所有进程，pstree 默认一般不带，需安装
+
+kill {pid}                # 结束进程
+
+top                       # 查看最活跃的进程
+top -u {user}             # 查看某用户最活跃的进程
+
+jobs  #查看后台运行的命令
+
+
+# 后台运行 
+nohup go run search_ad.go & 
+nohup 加在一个命令的最前面，表示不挂断的运行命令
+&  # 表示放在后台执行，即使terminal（终端）关闭，或者电脑死机程序依然运行
+
+ 
+2>&1 # 这个意思是把标准错误（2）重定向到标准输出中（1）而标准输出又导入文件output里面，所以结果是标准错误和标准输出都导入文件output里面了 。可以很好的将错误信息保存，帮助我们定位问题。
+ 
+test.sh  > log.txt 2>&1 	#  将test.sh的输出重定向到log.txt文件中，同时将标准错误也重定向到log.txt文件中
+ 
+0：标准输入流 stdin
+1：标准输出流 stdout
+2：标准错误流 stderr
+
+
+lsof 显示系统打开的文件 lists openfiles
+yum install lsof
+lsof -i:8125 	#看进程
+lsof abc.txt 显示开启文件abc.txt的进程
 ```
+
+
 
 ### sort
 
@@ -133,14 +162,14 @@ sort -t: -k 3n /etc/passwd         # 按 passwd 文件的第三列进行排序
 sort -u file                       # 去重排序
 ```
 
-### tar
+### tar 压缩
 
 ```shell
 tar -zcvf file.tar.gz	# 解压文件
 tar -zcvf test.tar.gz test  # 压缩文件test到test.tar.hz
 ```
 
-### chmod
+### chmod 权限
 
 ```shell
 sudo chmod 777 + 文件名	#给每个人读和写以及执行的权限
@@ -205,14 +234,7 @@ docker pull nvidia/cuda:10.1-devel-ubuntu18.04	# doucker 拉镜像
 docker save 7e66518b68a8 > nvidia.tar	#docker dao
 ```
 
-### mysql
-
-```shell
-brew services start mysql		# 启动mysql
-mysql -uroot -p	#以root方式进入mysql
-```
-
-### rsync
+### rsync 文件传输
 
 ```shell
 sudo vi /etc/rsyncd.conf #配置rsync
@@ -224,13 +246,11 @@ gid=root
 read only=no
 hosts allow=*
 
-rsync -av test.py 10.41.24.195::yuanbo6
+rsync -av test.py 10.41.12.123::yuanbo6
 #rsync -av 源目录 目的地目录
-
-
 ```
 
-### xargs
+### xargs 
 
 xargs 一般是和管道一起使用,可以把多行变成一行
 
@@ -241,7 +261,6 @@ ps -ef | grep httpserver_cust_indus | cut -c 9-15 | xargs kill -9
 
 # 下载多个链接
 cat url-list.txt | xargs wget -c
-
 ```
 
 ###  常用脚本
@@ -253,6 +272,16 @@ dd if=/dev/zero of=/dev/null bs=1M count=32768 # 测试内存带宽
 find /data0/yuanbo6  -type f -size +500M  #  查找目录下大于 500M 的文件
 find ~ -mmin 60 -type f            # 查找 $HOME 目录中，60 分钟内修改过的文件
 find . -type f -newermt "2020-05-01"  #按日期范围查找文件
+
+cat ads_type.txt|tail -n +10000|head -10 #看文件从第1w行起的10行
+
+# 删除ads下修改时间超过7天的文件
+find /data0/yuanbo6/ads/ -type f -mtime +7 -exec rm -f {} \;
+-exec： find命令对匹配的文件执行该参数所给出的shell命令
+-ctime： 创建时间
+-name： 
+-name ap* ： 以ap开头的文件
+
 ```
 
 ### 网络
@@ -306,105 +335,55 @@ curl -X POST https://google.com/login -d 'login=emma＆password=123'
 curl -u 'bob:12345' https://google.com/login
 ```
 
-### 定义变量
+
+
+### Shell 编程
 
 ```bash
+# 定义变量
 a = 1 
 echo $varname             # 查看变量内容
-```
 
-### 条件语句
+# 条件语句
+# 如果存在 /root 中存在 a.txt ，则返回1 ， 否则返回0 ， if的[ ] , 前后都有空格
+# linux 中 0代表条件为真，1代表为假
+if [ -f /root/a.txt ]; then echo 1 ; else echo 0; fi
 
-```bash
+# 循环语句
 for i in {1..10}; do echo $i ; done 
 for (( i=1; i<10 ; i++)) ; do echo $i ; done
 for file in /data0/yuanbo6/* ; do echo $file ; done  # for 循环打印某目录下面的所有文件
 for loop in 1 2 3 ;do  echo $loop ; done
 
-
 i=1;while [ $i -le 10 ]; do echo $i; i=$(expr $i + 1); done
 
 
-# 如果存在 /root 中存在 a.txt ，则返回1 ， 否则返回0 ， if的[ ] , 前后都有空格
-# linux 中 0代表条件为真，1代表为假
-if [ -f /root/a.txt ]; then echo 1 ; else echo 0; fi
-
-
-
-```
-
-### 函数
-
-```bash
+# 函数
 function fun1 () { echo 'a' }
 
 unset -f fun1  # 删除函数
 
-declare -f                # 查看所有函数
+declare -f     # 查看所有函数
 ```
 
-### 进程
-
-```bash
-ps                        # 查看当前会话进程
-ps -e                  # 查看所有进程
-
-ps -u {user}              # 查看某用户进程
-
-ps aux | grep httpd       # 查看名为 httpd 的所有进程
-
-ps -ef | grep search_ad.go	#查看名为search_ad.go 的所有进程
-
-pstree                    # 树形列出所有进程，pstree 默认一般不带，需安装
-
-kill {pid}                # 结束进程
-
-top                       # 查看最活跃的进程
-top -u {user}             # 查看某用户最活跃的进程
+### 
 
 
-# 后台运行 
-nohup go run search_ad.go & 
-nohup 加在一个命令的最前面，表示不挂断的运行命令
-&  # 表示放在后台执行，即使terminal（终端）关闭，或者电脑死机程序依然运行
 
- jobs  #查看后台运行的命令
-
-ps -ef|grep test.sh  # 查找名为test.sh的进程
- 
- 2>&1 # 这个意思是把标准错误（2）重定向到标准输出中（1）而标准输出又导入文件output里面，所以结果是标准错误和标准输出都导入文件output里面了 。可以很好的将错误信息保存，帮助我们定位问题。
- 
-  
- test.sh  > log.txt 2>&1 	#  将test.sh的输出重定向到log.txt文件中，同时将标准错误也重定向到log.txt文件中
- 
- 0：标准输入流 stdin
-1：标准输出流 stdout
-2：标准错误流 stderr
-
-
-lsof 显示系统打开的文件 lists openfiles
-yum install lsof
-lsof -i:8125 	#看进程
-lsof abc.txt 显示开启文件abc.txt的进程
-```
-
-### 用户管理
-
-```bash
-vmstat                    # 显示内存和 CPU 使用情况
-free                      # 显示内存和交换区使用情况
-df                        # 显示磁盘使用情况
-uname                     # 显示系统版本号
-hostname                  # 显示主机名称
-whoami              # 显示我的用户名
-who                 # 显示已登陆用户信息，w / who / users 内容略有不同
-su                  # 切换到 root 用户
-sudo {command}      # 以 root 权限执行某命令
-```
-
-### 文本处理 - awk / sed
+### 文本处理 - cut/awk / sed
 
 ```bash	
+cut -c 1-16                        # 截取每行头16个字符
+cut -c 1-16 file                   # 截取指定文件中每行头 16个字符
+cut -c3-                           # 截取每行从第三个字符开始到行末的内容
+cut -d':' -f5                      # 截取用冒号分隔的第五列内容
+cut -d';' -f2,10                   # 截取用分号分隔的第二和第十列内容
+cut -d' ' -f3-7                    # 截取空格分隔的三到七列
+echo "hello" | cut -c 1-3           # 显示 hel
+echo "hello sir" | cut -d ' ' -f2   # 显示 sir
+ps | tr -s " " | cut -d " " -f 2,3,4  # cut 搭配 tr 压缩字符
+
+
 awk '{pattern + action}' {filenames}
 # 默认以空格为分隔， 自定义分割符加 -F 参数
 
@@ -445,13 +424,9 @@ sed -i 's/\s\+$//' file            # 删除文件每行末尾多余空格
 cat testfile |tr a-z A-Z  #将文件testfile中的小写字母全部转换成大写字母
 
 # tr (translate)
-cat /data0/yuanbo6/pusou_log_2.txt |tr a-z A-Z
+cat /data0/yuanbo6/pusou_log_2.txt |tr a-z A-Z  #大写变小写
+cat pusou_log.txt |tr [:upper:] [:lower:] >> pusou_lower.txt  #将文件中的大写字母全部转换成小写字母
 
-
-cat pusou_log.txt |tr [:upper:] [:lower:] >> pusou_lower.txt  #将文件中的大写字母全部转换成笑写字母
-```
-
-```bash
 # 统计词频
 cat words.txt | tr -s ' ' '\n'|sort|uniq -c |sort -r|awk '{print $2" "$1}'
 
@@ -462,6 +437,8 @@ uniq —— 去重，-c再输出重复次数。结果就是 ”4 abc“ abc出�
 sort -r —— 反向排序，也就是从大到小。得到按频率高低的结果
 awk ——格式化输出，规定输出是先字符串再重复次数，所以先$2再$1，中间空格分隔
 ```
+
+
 
 ### wrk2 压测工具
 
@@ -474,34 +451,6 @@ cd wrk2 && make
 -c100 : 保持100个HTTP连接请求 (connections)
 -d30s : 压测时间持续30秒 (duration)
 -R2000 : 每秒2k个请求
-```
-
-### 正则表达式
-
-```bash
-\w 	匹配一个常用字符，包括字母、数字、下划线
-\s  匹配空格	
-\d	数字,qual to [0-9]
-. 可以匹配任意字符
-^ 开头
-& 结尾
-{10}	重复10次
-{5, 10}	重复5-10次
-{5, }	重复5次以上
-
-匹配4位数字的号码：
-^\d\d\d\d$
-
-匹配1开头11位数字的手机号码：
- ^1\d{10}$
- 
- 数字1-9或字母a-e
- [1-9a-e]
-
-将字母换成大写，就表示相反的意思。用 \d 你可以匹配一个数字，\D 则表示匹配一个非数字
-
-
-+ 表示 至少匹配出现一次的字符。它等价于 {1,} , "d+"  匹配任意的数字
 ```
 
 ### shell处理json
