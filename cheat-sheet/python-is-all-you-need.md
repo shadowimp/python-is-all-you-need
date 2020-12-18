@@ -30,10 +30,7 @@ if not os.path.exists(output_home):
 os.system('go run hash_code.go >> word_hash.txt')
 返回0表示执行成功,返回其他代表失败
 
-
-    
-    
-    
+        
 # python 全局变量
 在函数内使用 global
 

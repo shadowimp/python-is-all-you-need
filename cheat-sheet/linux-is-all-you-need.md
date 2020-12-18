@@ -349,6 +349,8 @@ echo $varname             # 查看变量内容
 # linux 中 0代表条件为真，1代表为假
 if [ -f /root/a.txt ]; then echo 1 ; else echo 0; fi
 
+if ["$1" == 100]; then 
+
 # 循环语句
 for i in {1..10}; do echo $i ; done 
 for (( i=1; i<10 ; i++)) ; do echo $i ; done
@@ -371,6 +373,13 @@ declare -f     # 查看所有函数
 
 
 ### 文本处理 - cut/awk / sed
+
+```bash	
+${#string_name} #获得字符串长度
+str="111"
+echo ${#str}
+
+```
 
 ```bash	
 cut -c 1-16                        # 截取每行头16个字符
