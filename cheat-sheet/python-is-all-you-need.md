@@ -112,6 +112,18 @@ pip show numpy #查看python库信息
 
 
 
+Non-ASCII character '\xe5' in file word2vec_api.py on line 1, but no encoding declared 报错
+
+```python
+首行附加：
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+
+```
+
+
+
 
 
 
