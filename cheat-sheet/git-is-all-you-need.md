@@ -87,3 +87,21 @@ git remote add origin http://git.intra.weibo.com/yuanbo6/ziding_handover.git
 git push -u origin --all
 git push -u origin --tags
 ```
+
+
+
+### 免密码push
+
+
+
+```bash
+git config  --global credential.helper store
+
+#查看配置:
+git config --list
+#如果有下面的行，说明配置成功了:
+credential.helper=store
+
+#后面操作的时候只需要输入一次密码之后，就可以免密码操作了。
+```
+
