@@ -270,6 +270,7 @@ dd if=/dev/zero of=/dev/null bs=1M count=32768 # 测试内存带宽
 find /data0/yuanbo6  -type f -size +500M  #  查找目录下大于 500M 的文件
 find ~ -mmin 60 -type f            # 查找 $HOME 目录中，60 分钟内修改过的文件
 find . -type f -newermt "2020-05-01"  #按日期范围查找文件
+sudo find ./ -type f -name "jieba*"  #查找当前目录下以jieba开头的文件
 
 cat ads_type.txt|tail -n +10000|head -10 #看文件从第1w行起的10行
 
