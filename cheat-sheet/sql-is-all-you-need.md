@@ -127,6 +127,9 @@ LEFT(name,2)  # 返回name 的前两个字符
 # 统计行数
 select count(*) from ads_lv3_hash where dt = '20201204';
 
+
+# 查找时去重  DISTINCT
+
 ```
 
 ### GROUP BY
@@ -137,8 +140,16 @@ select count(*) from ads_lv3_hash where dt = '20201204';
 
 -   GROUP BY的结果是无序的
 
+-   #### group by 必须出现在where之后 order by 之前
+
 ```mysql
 SELECT type, COUNT(*) FROM Product GROUP BY type
+
+如何对分组后的结果进行查询？
+关键字：group_concat()
+select department,group_concat(name),count(*) from employee group by department;
+
+Hive不允许直接访问非group by字段,对于非group by字段，可以用Hive的collect_set函数收集这些字段，返回一个数组；.使用数字下标，可以直接访问数组中的元素；
 ```
 
 ### Having
@@ -148,6 +159,15 @@ SELECT type, COUNT(*) FROM Product GROUP BY type
 ```mysql
 SELECT type,AVG(price) FROM Product GROUP BY type HAVING AVG(price) > 200
 ```
+
+### Like
+
+```mysql
+# 找以Y开头的名字
+SELECT name FROM world WHERE name LIKE 'Y%'
+```
+
+
 
 ### 建立索引和视图
 

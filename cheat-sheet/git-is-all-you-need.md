@@ -76,6 +76,10 @@ git remote add origin http://git.intra.weibo.com/yuanbo6/ziding_handover.git
 git add .
 git commit -m "Initial commit"
 git push -u origin master
+
+
+# 如果远程仓库已经有readme.md 首先运行
+git pull origin master --allow-unrelated-histories
 ```
 
 ##### Push an existing Git repository
@@ -91,8 +95,6 @@ git push -u origin --tags
 
 
 ### 免密码push
-
-
 
 ```bash
 git config  --global credential.helper store

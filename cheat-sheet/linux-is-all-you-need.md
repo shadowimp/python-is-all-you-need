@@ -4,6 +4,7 @@
 ls /usr/bin | grep python		#列出/usr/bin  目录下 ，文p名中有python 的文件 
 ls | grep *.py  #筛选出当前文件夹所有的py后缀名的文件（| 是管道操作符，grep 是过滤操作符
 ll -t 	# 按修改时间排序
+grep -r message ./  #递归的查找当前目录下包含字符串message 的文件
 
 cp # 拷贝文件
 # 拷贝文件夹
@@ -94,6 +95,8 @@ whatis bash         # 查看某个命令的解释，一句话告诉你这是干�
 uname -a            # 查看内核版本等信息
 
 df -h   						# 查看磁盘空间使用情况
+sudo du -h --max-depth=0 yuanbo6 # 查看yuanbo6目录的大小
+du -sh ./*  # 获得当前文件夹下所有文件和文件夹的大小，使用
 du -h   						#查看当前各目录大小 disk usage
 vmstat              # 显示内存和 CPU 使用情况
 free                # 显示内存和交换区使用情况
@@ -394,6 +397,9 @@ ps | tr -s " " | cut -d " " -f 2,3,4  # cut 搭配 tr 压缩字符
 
 awk '{pattern + action}' {filenames}
 # 默认以空格为分隔， 自定义分割符加 -F 参数
+
+# 获得字符串长度
+awk '{ print length($0) }' pusou_shabi.txt|head 
 
 awk '{a+=$2}END{print a}'	#对文件的第二列求和
 
