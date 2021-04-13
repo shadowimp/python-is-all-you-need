@@ -64,6 +64,7 @@ cat train.tsv | cut -f 4,5,6 > train.tsv.cut # 将训练文件的4，5，6列提
 paste file1.txt file2.txt # 横向拼接两个文件
 
 sort train.tsv.cut | uniq | shuf > train.tsv # 训练数据的去重和shuffle
+awk ' !x[$0]++'  test_file # 去重不改变顺序
 
 man ascii                          # 显示 ascii 表
 
@@ -167,7 +168,10 @@ sort -u file                       # 去重排序
 
 ```shell
 tar -zcvf file.tar.gz	# 解压文件
+tar -zxvf file.tar.gz -C ./test # 解压文件到test文件夹下
+
 tar -zcvf test.tar.gz test  # 压缩文件test到test.tar.hz
+
 ```
 
 ### chmod 权限
@@ -249,6 +253,11 @@ hosts allow=*
 
 rsync -av test.py 10.41.12.123::yuanbo6
 #rsync -av 源目录 目的地目录
+
+
+rsync重启：
+rsync error: error in socket IO (code 10) at clientserver.c(122) [sender=3.0.9]
+sudo rsync --daemon --config=/etc/rsyncd.conf
 ```
 
 ### xargs 
@@ -283,6 +292,18 @@ find /data0/yuanbo6/ads/ -type f -mtime +7 -exec rm -f {} \;
 -ctime： 创建时间
 -name： 
 -name ap* ： 以ap开头的文件
+
+
+# 将日志保存，清空现有日志，并删除7天前的日志
+sed -n '2,$p' logger_industry/nohup_log.out > logger_industry/nohup_log.out.$(date +%Y.%m.%d.%H.%M.%S)
+sudo  truncate -s 0 logger_industry/nohup_log.out
+find logger_industry/ -mtime +7 -name "nohup_log.out.*" -exec rm -rf {} \;
+
+
+# 重启脚本 , 找到端口号为8888的进程, 保存日志，nohup后台启动
+ps -ef | grep gunicorn | grep 8888 | cut -c 9-15 | xargs kill -9
+mv ./logger_industry/nohup_log.out ./logger_industry/nohup_log.out.$(date +%Y.%m.%d.%H.%M.%S)
+nohup conda3/bin/gunicorn httpserver:app -b 0.0.0.0:8888 -w 2 > ./logger_industry/nohup_log.out &
 
 ```
 
@@ -381,6 +402,9 @@ ${#string_name} #获得字符串长度
 str="111"
 echo ${#str}
 
+
+# 文件中的空格 变成 tab
+cat word_hash.txt | tr " " "\t" > word_hash_tab.txt
 ```
 
 ```bash	

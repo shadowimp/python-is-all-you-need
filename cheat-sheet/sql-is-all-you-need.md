@@ -130,6 +130,15 @@ select count(*) from ads_lv3_hash where dt = '20201204';
 
 # 查找时去重  DISTINCT
 
+
+CONCAT_WS(separator, str1, str2,...) 
+# 第一个参数剩余参数间的分隔符
+select CONCAT_WS(name,age) 
+
+select 嵌套 用as设定新表名
+select name from (select * from student where age=16) as t1 where score >90;
+
+
 ```
 
 ### GROUP BY
@@ -150,14 +159,23 @@ SELECT type, COUNT(*) FROM Product GROUP BY type
 select department,group_concat(name),count(*) from employee group by department;
 
 Hive不允许直接访问非group by字段,对于非group by字段，可以用Hive的collect_set函数收集这些字段，返回一个数组；.使用数字下标，可以直接访问数组中的元素；
+
+Hive中collect相关的函数有collect_list和collect_set。
+它们都是将分组中的某列转为一个数组返回，不同的是collect_list不去重而collect_set去重。
+
 ```
 
 ### Having
 
-对聚合的数据指定条件
+WHERE是对数据表直接查询，只有having能对聚合的数据指定条件, having 在group by 后面使用,
+
+使用HAVING的时候，只用在跟GROUP BY相关结果的处理上。
+
+HAVING从筛选的结果再筛选，WHERE直接筛选
 
 ```mysql
 SELECT type,AVG(price) FROM Product GROUP BY type HAVING AVG(price) > 200
+# avg 计算每种type的平均价格
 ```
 
 ### Like
