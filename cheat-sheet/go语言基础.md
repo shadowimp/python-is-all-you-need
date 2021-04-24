@@ -689,6 +689,37 @@ go run main.go
 
 
 
+### hash
+
+```golang
+package main
+
+import (
+        "fmt"
+        "hash/fnv"
+)
+
+func hash(s string) uint32 {
+        h := fnv.New32a()
+        h.Write([]byte(s))
+        return h.Sum32()
+}
+
+func main() {
+        fmt.Println(hash("HelloWorld"))
+        fmt.Println(hash("HelloWorld."))
+}
+
+
+
+// or 
+func FNV32a(text string) uint32 {
+    algorithm := fnv.New32a()
+    algorithm.Write([]byte(text))
+    return algorithm.Sum32()
+}
+```
+
 
 
 

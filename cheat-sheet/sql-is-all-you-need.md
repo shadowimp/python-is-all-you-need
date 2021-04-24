@@ -306,3 +306,16 @@ load data local inpath 'data_path' overwrite into table table_name1  partition (
 load data local inpath 'data_path' overwrite into table table_name1 row format delimited fields terminated by '\t';                           
                          
 ```
+
+
+
+## redis
+
+```python
+import redis
+
+redis_conn = redis.Redis(host='127.0.0.1', port= 6379, password= 'your pw', db= 0)
+```
+
+
+
