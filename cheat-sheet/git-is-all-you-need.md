@@ -107,3 +107,19 @@ credential.helper=store
 #后面操作的时候只需要输入一次密码之后，就可以免密码操作了。
 ```
 
+
+
+### git ignore 
+
+```bash
+# 创建文件 .gitignore  ,vim .gitignore或touch .gitignore命令
+向其中添加不想上传到git 的文件
+
+
+以斜杠/开头表示目录
+
+*.zip 过滤所有.zip文件
+
+# 最后一步就是把.gitignore也提交到Git
+```
+

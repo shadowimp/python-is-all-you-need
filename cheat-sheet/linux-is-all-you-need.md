@@ -82,6 +82,8 @@ tail /var/log/messages  # 程序被kill，查看linux 系统日志
 md5sum yuanbo.txt 	# md5校验文件的唯一性
 
 
+# 查找
+grep -rn "Hello" ./  #查找当前目录下包含"Hello"的文件
 ```
 
 ###  环境
