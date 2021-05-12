@@ -7,8 +7,8 @@ ll -t 	# 按修改时间排序
 grep -r message ./  #递归的查找当前目录下包含字符串message 的文件
 
 cp # 拷贝文件
-# 拷贝文件夹
-cp  -r 
+cp  -r # 拷贝文件夹
+cp -r dir1 dir2 # 表示将dir1及其dir1下所包含的文件复制到dir2下
 
 mv # 移动文件和重命名
 touch # 创建新文件
