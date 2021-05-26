@@ -57,11 +57,16 @@ with open('brandname.csv','r') as f:
     lines_100 = io.StringIO(f.read(size))
 for line in lines_100:
     print(line)
+    
+    
+    
+import json
+dump_data = json.dumps(tag_dic)  # dumps 将字典变成json类型
+with open('test_json.txt','w+') as f:
+    f.write(dump_data)
 ```
 
 
-
-str.lower( ) # 字符串大写变小写
 
 ### flask
 
