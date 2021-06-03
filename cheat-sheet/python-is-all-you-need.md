@@ -68,6 +68,12 @@ with open('test_json.txt','w+') as f:
 
 
 
+WSGI（Python Web Server Gateway Interface）
+
+
+
+
+
 ### flask
 
 ```python
@@ -85,9 +91,31 @@ if __name__ == '__main__':
 
 ```
 
+### gunicorn
+
+```python
+from flask import Flask
+app = Flask(__name__)
+
+@app.route("/")
+def hello():
+    return "Hello World!
+   
+```
+
+#### 使用gunicorn运行flask: 
+
+conda3/bin/gunicorn -w 2 -b 10.41.24.195:8123 flask_server:app 
+
+flask_server : 为py文件名
+
+-w : worker 数量
+
+-b : 指定端口号
+
+ps -ef | grep gunicorn
 
 
-which python #看目前使用的什么python环境
 
 
 
@@ -127,7 +155,7 @@ Non-ASCII character '\xe5' in file word2vec_api.py on line 1, but no encoding de
 
 ```
 
-
+which python #看目前使用的什么python环境
 
 
 
