@@ -1,11 +1,18 @@
 ## SQL 
 
-### DDL (data definition language) 数据定义语言
+### 操作数据库
 
 ```mysql
-Create 创建
+Create 创建数据库或表
+# 建db
+create database shop; # 创建名为shop的数据库
+
 Drop 删除
 Alter 修改
+
+# 修改表名
+ALTER TABLE name RENAME TO new_name  
+
 truncate 清空一张表
 
 # 删除表
@@ -13,9 +20,29 @@ DROP TABLE ads_lv3_hash
 
 # TRUNCATE TABLE 快速清空一个表m,数据无法找回
 TRUNCATE TABLE table_name
+
+
+show databases;   #显示数据库列表 
+use database d1;  #进入数据库
+show tables;  		#显示数据库中所有的表
+desc tabl_name;		#描述表结构
+
+
+GRANT 授权
+
+ROLLBACK 回滚
+
+
+# 授予权限
+grant select on table table_name_1 to user user_name;
+
+# 撤回权限
+revoke select on table table_name_1 to user user_name;
+
+
 ```
 
-### DML (data manipulation language)数据操纵语言
+### 操作表
 
 ```mysql
 Select 查询
@@ -28,57 +55,17 @@ delete 是一行一行删的，可以恢复，无法释放磁盘空间
 update table_name set 
 
 product_id CHAR(4) NOT NULL ;
-
-```
-
-### DCL  数据控制语言
-
-```mysql
-GRANT 授权
-
-ROLLBACK 回滚
-
-
-# 授予权限
-grant select on table table_name_1 to user user_name;
-
-# 撤回权限
-revoke select on table table_name_1 to user user_name;
-
-```
-
-### 事务 Transaction
-
-是需要在同一个处理单元中执行的一系列更新处理的集合
-
-```mysql
-start transaction;
-dml_1
-dml_2
-commit;
-```
-
-
-
-### 操作数据库
-
-```mysql
-show databases;   #显示数据库列表 
-use database d1;  #进入数据库
-show tables;  		#显示数据库中所有的表
-desc tabl_name;		#描述表结构
 ```
 
 ### 建表
 
 ```mysql
-CREATE TABLE table_name1  (word string, hash_number string）  
+CREATE TABLE table_name1  (word string comment '名字', hash_number string comment 'hash值'）  
+# comment 添加注释                          
 
 # 建表 设置partition 和 列间的分隔符                           
 create table if not exists table_name1 (word string, hash_number string, class string) PARTITIONED BY (dt string) row format delimited fields terminated by '\t';                           
 ```
-
-
 
 ```mysql
 CREATE TABLE table1 (ID INTEGER primary key, number int,data char(32)）
@@ -95,6 +82,7 @@ create table test2 as select * from test1;	# 用表test2中的数据创建一个
 
 ```mysql
 insert into test1 values(16 , 25 , 'car' ) ; #向表test1中插入数据
+insert into test1 (ID,number,data) values (16,25,'car')
 
 插入两行：
 insert into test1 values(16 , 25 , 'car' ) ,(15 , 25, 'bus');
@@ -103,6 +91,11 @@ insert into test1 values(16 , 25 , 'car' ) ,(15 , 25, 'bus');
 Insert into table1(number,bno,data) select * from table2
 插入从table2读出的所有数据插入table1。
 ID是唯一关键字，会自己增加，无需插入。但是如果删除记录,则会从当前记录的ID最大值+1继续记录.
+
+
+insert into：直接向表或静态分区中插入数据。您可以在insert语句中直接指定分区值，将数据插入指定的分区。如果您需要插入少量测试数据，可以配合VALUES使用。
+insert overwrite：先清空表中的原有数据，再向表或静态分区中插入数据。
+
 ```
 
 ### Select 
@@ -127,9 +120,11 @@ LEFT(name,2)  # 返回name 的前两个字符
 # 统计行数
 select count(*) from ads_lv3_hash where dt = '20201204';
 
+# 求和
+select sum(population) from world where continent='Europe'
 
 # 查找时去重  DISTINCT
-
+select DISTINCT continent from world	
 
 CONCAT_WS(separator, str1, str2,...) 
 # 第一个参数剩余参数间的分隔符
@@ -138,7 +133,8 @@ select CONCAT_WS(name,age)
 select 嵌套 用as设定新表名
 select name from (select * from student where age=16) as t1 where score >90;
 
-
+# as 
+SELECT a.created_at AS time from table1 a;
 ```
 
 ### GROUP BY
@@ -197,7 +193,7 @@ create view  test_view as select * from test1;	#用test1中的数据创建一个
 每当视图被其他查询语句使用时， 存储在视图中的查询语句都会被执行
 ```
 
-### 修改表名
+### 修改
 
 ```mysql
 ALTER TABLE name RENAME TO new_name
@@ -318,4 +314,24 @@ redis_conn = redis.Redis(host='127.0.0.1', port= 6379, password= 'your pw', db= 
 ```
 
 
+
+
+
+```mysql
+ROUND(data) # 数据限制小数位数
+CONCAT(data,'%')  # 连接 % 在data后
+```
+
+
+
+### 事务 Transaction
+
+是需要在同一个处理单元中执行的一系列更新处理的集合
+
+```mysql
+start transaction;
+dml_1
+dml_2
+commit;
+```
 

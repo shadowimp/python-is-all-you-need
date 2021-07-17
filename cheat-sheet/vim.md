@@ -35,5 +35,10 @@ vim -d
 # 看两个文件
 
 yy + p #复制一行
+
+
+#行号
+set number 
+set nonumber 
 ```
 

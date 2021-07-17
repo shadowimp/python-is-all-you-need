@@ -87,8 +87,20 @@ def index():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000)
+    
+## example 2
+import flask
+from flask import request 
 
+app = Flask(__name__)
 
+@app.route("/api/sum")
+def get():
+  a,b = request.args['a'] + request.args['b']
+  return str(int(a) + int(b))
+if __name__ == '__main__':
+  app.run()
+# 访问浏览器查看效果 http://127.0.0.1:5000/api/sum?a=1&b=3  
 ```
 
 ### gunicorn
