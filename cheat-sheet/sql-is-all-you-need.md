@@ -135,6 +135,7 @@ select name from (select * from student where age=16) as t1 where score >90;
 
 # as 
 SELECT a.created_at AS time from table1 a;
+
 ```
 
 ### GROUP BY
@@ -315,11 +316,12 @@ redis_conn = redis.Redis(host='127.0.0.1', port= 6379, password= 'your pw', db= 
 
 
 
-
+### 常用函数
 
 ```mysql
 ROUND(data) # 数据限制小数位数
 CONCAT(data,'%')  # 连接 % 在data后
+
 ```
 
 
@@ -333,5 +335,29 @@ start transaction;
 dml_1
 dml_2
 commit;
+```
+
+### date
+
+```mysql
+select curdate()  # 当天日期  
+select CURRENT_DATE
+>>2021-07-17
+
+select DATE_SUB(curdate(),INTERVAL 1 DAY)  # 昨天
+>> 2021-07-16 
+
+
+select CURRENT_TIME  # 当前时间
+>> 17:10:11 
+
+select CURRENT_TIMESTAMP # 当前日期和时间
+2021-07-17 17:17:12
+
+select CAST('20091214' AS DATE) # 字符串类型转换为日期类型
+
+
+
+
 ```
 

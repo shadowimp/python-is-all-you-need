@@ -447,6 +447,7 @@ awk    'NR==m {print $k}'  path/filename # 打印第m行
 
 sed -n '2p' file                   # 打印文件第二行
 sed -n '2,5p' file                 # 打印文件第二到第五行
+sed -n '5,$ p' file    							# 第5行到最后一行
 
 sed 's/find/replace/' file         # 替换文件中首次出现的字符串并输出结果
 sed '10s/find/replace/' file       # 替换文件第 10 行内容
@@ -460,6 +461,9 @@ sed -i -r 's/^\s+//g' file         # 删除文件每行头部空格
 sed '/^$/d' file                   # 删除文件空行并打印
 sed -i 's/\s\+$//' file            # 删除文件每行末尾多余空格
 
+sed 's/root/new/' file                          //将文件中的root替换成new，每行只替换一次
+sed 's/root/new/g' file                       //将每行的所有root全部替换成new        g替换多次
+sed '3,4s/root/new/g' file                 //只替换第3到第4行的root为new
 
 cat testfile |tr a-z A-Z  #将文件testfile中的小写字母全部转换成大写字母
 
