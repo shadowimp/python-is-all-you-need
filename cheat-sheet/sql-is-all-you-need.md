@@ -63,6 +63,8 @@ product_id CHAR(4) NOT NULL ;
 CREATE TABLE table_name1  (word string comment '名字', hash_number string comment 'hash值'）  
 # comment 添加注释                          
 
+double # 小数
+                           
 # 建表 设置partition 和 列间的分隔符                           
 create table if not exists table_name1 (word string, hash_number string, class string) PARTITIONED BY (dt string) row format delimited fields terminated by '\t';                           
 ```
@@ -105,7 +107,7 @@ select * from city where population >100000 and countrycode = 'USA'
 
 select name from employee order by name   #按名字的字母顺序排序
 
-select * from test1 order by id ;	# 按id的顺序显示
+select * from test1 order by id, name ;	# 先按id的顺序显示,后按name
 
 select name from employee where salary > 2000 and months <10 order by employee_id asc 
 # 按employee_id排序 ，  desc 降序
