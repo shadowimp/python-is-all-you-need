@@ -84,6 +84,41 @@ md5sum yuanbo.txt 	# md5校验文件的唯一性
 
 # 查找
 grep -rn "Hello" ./  #查找当前目录下包含"Hello"的文件
+
+
+
+### shell 变量
+定义shell变量，变量名和等号之间不能有空格
+your_name="pony"
+
+使用shell变量，添加美元符号，使用或不使用括号均可
+echo $your_name
+echo ${your_name}
+
+# 字符串长度
+string="abcd"
+echo ${#string} #输出 4
+
+# 字符串切片
+string="apple"
+echo ${string:0:3}
+>>app
+
+
+# 多行注释
+:<<!
+注释内容...
+注释内容...
+注释内容...
+!
+
+# 数组
+array_name=(value0 value1 value2 value3)
+
+${array_name[n]}
+
+# 数组长度
+${#array_name[*]}
 ```
 
 ###  环境
@@ -101,10 +136,14 @@ df -h   						# 查看磁盘空间使用情况
 sudo du -h --max-depth=0 yuanbo6 # 查看yuanbo6目录的大小
 du -sh ./*  # 获得当前文件夹下所有文件和文件夹的大小，使用
 du -h   						#查看当前各目录大小 disk usage
+du -s -h						# 查看当前目录总共占的存储空间
 vmstat              # 显示内存和 CPU 使用情况
 free                # 显示内存和交换区使用情况
 uname               # 显示系统版本号
 hostname            # 显示主机名称
+hostname -i					# 显示机器ip
+
+
 whoami              # 显示我的用户名
 who                 # 显示已登陆用户信息，w / who / users 内容略有不同
 su                  # 切换到 root 用户
