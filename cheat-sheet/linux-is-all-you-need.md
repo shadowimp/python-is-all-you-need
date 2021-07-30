@@ -550,3 +550,18 @@ echo '{"key": {"key2": ["val1", "val2"]}}' | jq '.key.key2[1]'
 ### 反引号``
 
 反引号``是命令替换，命令替换是指Shell可以先执行``中的命令，将输出结果暂时保存，在适当的地方输出。语法:`command`
+
+
+
+### conda环境迁移
+
+```shell
+pip install conda-pack
+
+conda pack -n my_env
+conda pack -n my_env -o out_name.tar.gz
+
+
+
+```
+
