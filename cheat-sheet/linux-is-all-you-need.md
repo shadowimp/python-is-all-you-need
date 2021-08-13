@@ -1,4 +1,4 @@
-### 常用命令
+### hash_code_topic.go常用命令
 
 ```shell
 ls /usr/bin | grep python		#列出/usr/bin  目录下 ，文p名中有python 的文件 
@@ -142,6 +142,7 @@ free                # 显示内存和交换区使用情况
 uname               # 显示系统版本号
 hostname            # 显示主机名称
 hostname -i					# 显示机器ip
+mip=$(hostname -i|awk -F '.' '{print $4}') 
 
 
 whoami              # 显示我的用户名
@@ -215,14 +216,21 @@ tar -zcvf test.tar.gz test  # 压缩文件test到test.tar.hz
 
 ```
 
-### chmod 权限
+### chmod 改权限    
+
+### chown改所属用户 
+
+### chgrp改所属用户组
 
 ```shell
 sudo chmod 777 + 文件名	#给每个人读和写以及执行的权限
+sudo chmod 775 + 文件名  # 文件所有者和所有组有读写执行权限（4+2+1）,其他人有读执行权限（4+1）
+chmod 644 file      # 修改文件权限为 644，可以接 -R 对目录循环改权限
+chmod 775 dir -R    # 对 dir 文件夹下的所有文件修改权限
 
-chmod 644 {fn}      # 修改文件权限为 644，可以接 -R 对目录循环改权限
-chgrp group {fn}    # 修改文件所属的用户组
-chown user1 {fn}    # 修改文件所有人为 user1, chown user1:group1 fn 可以修改组
+
+chown user1 file.txt     # 修改文件所有人为 user1
+chgrp -v yuanbo file.txt  # 修改文件所属的用户组为yuanbo
 ```
 
 ### tmux 
@@ -555,13 +563,52 @@ echo '{"key": {"key2": ["val1", "val2"]}}' | jq '.key.key2[1]'
 
 ### conda环境迁移
 
+
+
+
+
+
+
 ```shell
+# 显示当前的conda环境信息
+conda info --envs
+
+# 打包名为base的环境 建立snapshot
+conda create --name snapshot --clone base
+
+# 从机器A上导出环境
+conda env export -n base > environment.yaml
+
+# 在机器B上创建 env_name 的环境
+conda env create -n env_name -f environment.yaml
+
+# 在机器A上导出pip安装包
+pip freeze > requirements.txt
+
+
+# 启动名为 myenv 的环境
+conda activate myenv
+```
+
+
+
+
+
+`Conda-pack` 是一个命令行工具，用于打包 conda 环境
+
+```shell
+
 pip install conda-pack
 
 conda pack -n my_env
 conda pack -n my_env -o out_name.tar.gz
 
+# 解压到 conda 目录下
+tar -xzf conda.tar.gz -C conda
 
+
+source my_env/bin/activat 
+conda-unpack 
 
 ```
 

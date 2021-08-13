@@ -556,7 +556,7 @@ for i := 0; i < 3; i++ {
 ### 安装库
 
 ```shell
-echo $GOPATH // 打印go环境地址
+hash_code_topic.go // 打印go环境地址
 
 // 创建文件夹
 mkdir -p $GOPATH/src/golang.org/x

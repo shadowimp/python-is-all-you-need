@@ -171,5 +171,9 @@ which python #看目前使用的什么python环境
 
 
 
+### pip
 
+```shell
+pip ``install` `numpy --upgrade --ignore-installed
+```
 

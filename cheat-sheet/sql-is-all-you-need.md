@@ -138,6 +138,13 @@ select name from (select * from student where age=16) as t1 where score >90;
 # as 
 SELECT a.created_at AS time from table1 a;
 
+
+## in 
+where a in (v1,v2)
+
+# 字符串长度
+LENGTH('name')
+
 ```
 
 ### GROUP BY
@@ -204,7 +211,7 @@ ALTER TABLE name RENAME TO new_name
 
 
 
-### nvl
+### if (nvl)
 
 ```mysql
 NVL（表达式1，表达式2）
