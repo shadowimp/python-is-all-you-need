@@ -11,6 +11,10 @@ git的工作流
 ```bash
 git status #  查看当前 git状态
 git add . # 添加当前所有新增的文件
+* 'git add --ignore-removal <pathspec>', which is the current default,
+  ignores paths you removed from your working tree.
+
+* 'git add --all <pathspec>' will let you also record the removals.
 git commit -m "注释"
 git push # 推送到github
 
@@ -20,11 +24,9 @@ git config --list #  显示当前的Git配置
 git log # 查看所有提交历史
 git log –p my_file # 查看某文件的提交历史
 
-git branch yuanbo6	#创建分支yuanbo6
-git checkout yuanbo6	#切换到分支yuanbo6
-git push origin branchname	#将分支yuanbo6上的代码push上去
-
 git push origin master  #push 代码
+
+
 
 # 撤销，代码回滚
 # 代码还未add
@@ -121,5 +123,24 @@ credential.helper=store
 *.zip 过滤所有.zip文件
 
 # 最后一步就是把.gitignore也提交到Git
+```
+
+### branch
+
+```bash
+ git branch #查看branch
+ git branch -a  # 查看所有分支，包括本地和远程分支
+ 
+git branch yuanbo6	#创建分支yuanbo6
+git checkout yuanbo6	#切换到分支yuanbo6
+git push origin yuanbo6:yuanbo6 # 将分支yuanbo6的代码push到远程yuanbo6的分支上
+
+# 删除远程分支
+git push origin --delete yuanbo6
+
+# 新建本地分支
+git checkout -b localbranch
+
+
 ```
 

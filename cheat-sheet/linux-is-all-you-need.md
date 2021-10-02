@@ -63,7 +63,7 @@ cat train.tsv | cut -f 4,5,6 > train.tsv.cut # 将训练文件的4，5，6列提
 
 paste file1.txt file2.txt # 横向拼接两个文件
 
-sort train.tsv.cut | uniq | shuf > train.tsv # 训练数据的去重和shuffle
+sort train.tsv.cut | uniq |  > train.tsv # 训练数据的去重和shuffle
 awk ' !x[$0]++'  test_file # 去重不改变顺序
 
 man ascii                          # 显示 ascii 表
@@ -85,6 +85,9 @@ md5sum yuanbo.txt 	# md5校验文件的唯一性
 # 查找
 grep -rn "Hello" ./  #查找当前目录下包含"Hello"的文件
 
+
+# 将文件打乱
+shuf input_file.txt -o output_file.txt
 
 
 ### shell 变量
@@ -478,8 +481,11 @@ awk '{a+=$2}END{print a}'	#对文件的第二列求和
 
 awk -F,  '{sum += $3};END {print sum}' test	#求文件test第三列的和
 
+-F 可以定义分割符
+awk -F '\t' '{print $1}' test.txt  #以tab为分隔
+
 head lol.txt | awk '{print $1}'		# 打印 lol.txt head的第一列 
-awk '{print $5}' file              # 打印文件中以空格分隔的第五列 ,从1开始而不是0
+awk '{print $5}' file              # 打印文件中以空格分隔的第五列 ,从1开始而不是0  , ($0为所有)
 awk '{print $1,$2,$3,$4}' # 四列
 
 awk -F ',' '{print $5}' file       # 打印文件中以逗号分隔的第五列
