@@ -180,7 +180,7 @@ pip ``install` `numpy --upgrade --ignore-installed
 
 
 ```python
-### 在python 中运行shell脚本
+## 在python 中运行shell脚本
 import os
 os.system('cd /usr/local')
 
