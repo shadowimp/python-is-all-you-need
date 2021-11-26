@@ -525,13 +525,14 @@ cat /data0/yuanbo6/pusou_log_2.txt |tr a-z A-Z  #大写变小写
 cat pusou_log.txt |tr [:upper:] [:lower:] >> pusou_lower.txt  #将文件中的大写字母全部转换成小写字母
 
 # 统计词频
-cat words.txt | tr -s ' ' '\n'|sort|uniq -c |sort -r|awk '{print $2" "$1}'
+cat words.txt | tr -s ' ' '\n'|sort|uniq -c |sort -nr|awk '{print $2" "$1}'
 
 cat ——浏览文件
 tr -s ——替换字符串（空格换为换行）保证了一行一个单词
 sort ——默认ASCII值排序，排序号后还会有重复
 uniq —— 去重，-c再输出重复次数。结果就是 ”4 abc“ abc出现了4次
 sort -r —— 反向排序，也就是从大到小。得到按频率高低的结果
+-n 依照数值的大小排序
 awk ——格式化输出，规定输出是先字符串再重复次数，所以先$2再$1，中间空格分隔
 ```
 
@@ -557,6 +558,10 @@ sudo yum install -y jq	#下载安装jq
 echo '{"key": "syw"}' | jq '.key'
 echo '{"key": {"key2": "val"}}' | jq '.key.key2'
 echo '{"key": {"key2": ["val1", "val2"]}}' | jq '.key.key2[1]'
+
+# 去掉文本中的引号
+head log.txt|jq '.content'|sed 's/\"//g'
+sed 's/\"//g'
 ```
 
 
