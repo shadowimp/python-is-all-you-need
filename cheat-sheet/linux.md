@@ -1,4 +1,4 @@
-### hash_code_topic.go常用命令
+### 常用命令
 
 ```shell
 ls /usr/bin | grep python		#列出/usr/bin  目录下 ，文p名中有python 的文件 
@@ -265,16 +265,6 @@ DT2=`date -d '-2 days' +%Y%m%d` # 两天前
 DT7 = `date -d '-7 days' +%Y%m%d` #七天前
 
 cal                       # 显示日历
-```
-
-### docker
-
-```shell
-docer run -it -v $PWD:/work centos: latest /bin/bash     #docker启动centos
-
-docker pull nvidia/cuda:10.1-devel-ubuntu18.04	# doucker 拉镜像
-
-docker save 7e66518b68a8 > nvidia.tar	#docker dao
 ```
 
 ### rsync 文件传输
@@ -558,50 +548,7 @@ sed 's/\"//g'
 
 
 
-### conda环境迁移
 
 
 
-```shell
-# 显示当前的conda环境信息
-conda info --envs
-
-# 打包名为base的环境 建立snapshot
-conda create --name snapshot --clone base
-
-# 从机器A上导出环境
-conda env export -n base > environment.yaml
-
-# 在机器B上创建 env_name 的环境
-conda env create -n env_name -f environment.yaml
-
-# 在机器A上导出pip安装包
-pip freeze > requirements.txt
-
-
-# 启动名为 myenv 的环境
-conda activate myenv
-```
-
-
-
-
-
-`Conda-pack` 是一个命令行工具，用于打包 conda 环境
-
-```shell
-
-pip install conda-pack
-
-conda pack -n my_env
-conda pack -n my_env -o out_name.tar.gz
-
-# 解压到 conda 目录下
-tar -xzf conda.tar.gz -C conda
-
-
-source my_env/bin/activat 
-conda-unpack 
-
-```
 
