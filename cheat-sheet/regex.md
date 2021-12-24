@@ -40,5 +40,16 @@ re.sub('#', '', sen2)
 
 # 提取书名号中内容
 re.findall('《(.*?)》','亚洲首部以iPhone全程拍摄的剧情长片《怪胎》| 由担任《那些年我们一起追的女孩》执行导演廖明毅执导')
+
+
+## 匹配数字
+import re 
+text1 = '2017/08/20'
+if re.match(r'\d+/\d+/\d+',text1):
+    print(1)
+else:
+    print(0)
+    
+
 ```
 

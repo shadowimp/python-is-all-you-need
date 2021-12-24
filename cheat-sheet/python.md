@@ -64,6 +64,24 @@ import json
 dump_data = json.dumps(tag_dic)  # dumps 将字典变成json类型
 with open('test_json.txt','w+') as f:
     f.write(dump_data)
+    
+    
+def is_english(s):
+    '全是英文的返回TRUE'
+    for c in s:
+        if '\u4e00' <= c <= '\u9fa5':
+            return False
+    return True  
+  
+  
+# jieba 
+import jieba
+
+def Sent2Word(sentence):
+    words = jieba.cut_for_search(sentence)
+    # words = [w for w in words if w not in stop_words]
+    return list(words)
+  
 ```
 
 
@@ -186,4 +204,33 @@ os.system('cd /usr/local')
 
 
 ```
+
+### argv
+
+```python
+import sys
+a, b,c = sys.argv[0] , sys.argv[1], sys.argv[2]
+print(a,b,c)
+
+>> python test.py 1 2 
+>> test.py 1 2
+
+
+import sys
+a = sys.argv[1:]
+print(a)
+>> python test.py 1 2 3 a
+>> ['1', '2', '3', 'a']
+
+```
+
+
+
+
+
+pyinotify
+
+监控文件变动
+
+
 
