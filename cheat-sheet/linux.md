@@ -85,7 +85,7 @@ paste file1.txt file2.txt # 横向拼接两个文件
 
 
 # 建立文件的软连接 , 都要写绝对路径
-ln -s 源文件 目标文件
+ln -s 源文件(磁盘存储空间大的) 目标文件(空间小的,相当与快捷方式)
 ls -al user.dict.utf8 # 查看软连接的真实源文件
 正确删除 软连接 最安全的方式是使用 命令unlink
 unlink 目标文件
@@ -103,7 +103,6 @@ md5sum yuanbo.txt 	# md5校验文件的唯一性
 
 # 查找
 grep -rn "Hello" ./  #查找当前目录下包含"Hello"的文件
-
 
 
 
@@ -302,10 +301,16 @@ hosts allow=*
 rsync -av test.py 10.41.12.123::yuanbo6
 #rsync -av 源目录 目的地目录
 
+-a: 递归同步 ，保留符号连接，设备文件，修改时间，组，所有者，权限等信息
+
 
 rsync重启：
 rsync error: error in socket IO (code 10) at clientserver.c(122) [sender=3.0.9]
 sudo rsync --daemon --config=/etc/rsyncd.conf
+
+
+问题：rsync: mkstemp  No space left on device
+后面加 --inplace
 ```
 
 ### xargs 
@@ -490,7 +495,7 @@ awk '{s+=$1} END {print s}' file   # 计算所有第一列的合
 awk 'NR%3==1' file                 # 从第一行开始，每隔三行打印一行
 awk    'NR==m {print $k}'  path/filename # 打印第m行
 
-
+awk -F '\t' '($1=="光遇")' test.txt  # 打印文件中第一列是光遇的所有行
 
 sed -n '2p' file                   # 打印文件第二行
 sed -n '2,5p' file                 # 打印文件第二到第五行
@@ -505,7 +510,7 @@ sed '/line/s/find/replace/' file   # 先搜索行特征再执行替换
 sed -e 's/f/r/' -e 's/f/r' file    # 执行多次替换
 sed 's#find#replace#' file         # 使用 # 替换 / 来避免 pattern 中有斜杆
 sed -i -r 's/^\s+//g' file         # 删除文件每行头部空格
-sed '/^$/d' file                   # 删除文件空行并打印
+sed '/^$/d' file                   # 删除文件空行并打印 去掉空行 删除空行
 sed -i 's/\s\+$//' file            # 删除文件每行末尾多余空格
 
 sed 's/root/new/' file                          //将文件中的root替换成new，每行只替换一次
@@ -573,11 +578,8 @@ if test -s file.txt;
 then
 xxx
 fi 
+
+
 ```
-
-
-
-
-
 
 

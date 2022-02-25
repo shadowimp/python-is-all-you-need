@@ -1,4 +1,10 @@
 ```python	
+集合set
+交集 &
+并集 |
+差集 -
+
+
 # 注意lambda返回值是一个元祖
 sorted(person,key=lambda x: (x.age, x.height)) 
 
@@ -6,6 +12,10 @@ sorted(person,key=lambda x: (x.age, x.height))
 对于一个三元组的list用默认的sorted，结果是先按照第一个字段升序，在第一个字段相同的情况下按照第二个字段升序，在前两个字段都相同的情况下按照第三个字段升序。
 
 key=lambda x: (-x[0], x[1]) # 优先对x[0] 降序排列，然后对x[1] 进行升序排列
+
+a = ['ab:1','ad:90','ac:8','d:2.2']
+sorted(a, key = lambda x:x.split(':')[1], reverse=True)
+>> ['ad:90', 'ac:8', 'd:2.2', 'ab:1']
 
 
 res_dic = {}
@@ -82,6 +92,9 @@ def Sent2Word(sentence):
     # words = [w for w in words if w not in stop_words]
     return list(words)
   
+
+import time
+time.sleep(5) 
 ```
 
 
@@ -232,5 +245,5 @@ pyinotify
 
 监控文件变动
 
-
+加上我们三个的数据，准确率能到多少
 

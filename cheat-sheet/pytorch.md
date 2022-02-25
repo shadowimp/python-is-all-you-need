@@ -90,3 +90,28 @@ BN是对数据的规范化，使每层的数据输入都保持在相近的范围
 
 训练是基于batch的，而预测是单个单个预测，预测是不存在batch的概念。因此会直接拿训练过程中对整个样本空间估算的均值和方差直接来用。
 
+
+
+### shuf data
+
+train_loader = DataLoader(train_set, batch_size=16, shuffle=False,num_workers=2) 
+
+
+
+### fassi
+
+```
+Faiss 相似度搜索使用余弦相似性:
+https://www.cxyzjd.com/article/flyfish1986/108012151
+```
+
+
+
+```python
+# tensor to list
+data = torch.zeros(3,3)
+data = data.tolist()
+```
+
+
+
