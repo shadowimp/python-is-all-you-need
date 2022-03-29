@@ -1,6 +1,6 @@
 ## 正则表达式
 
-### 正则表达式
+### 正则表达式 regex : regular expression
 
 ```bash
 \w 	匹配一个常用字符，包括字母、数字、下划线
@@ -28,6 +28,10 @@
 将字母换成大写，就表示相反的意思。用 \d 你可以匹配一个数字，\D 则表示匹配一个非数字
 
 
+
+
+
+
 去除方框内的文字
 sen2 = '昨天跑路跑到高雄[偷笑]~[太阳]天气好好喔！'
 sen2 = re.sub('\[.*?\]', '', sen2)
@@ -51,5 +55,19 @@ else:
     print(0)
     
 
+```
+
+
+
+```python
+re.findall(regex, str)
+# 匹配文本中所有满足regex的str， 输出一个list
+
+re.search(regex,str)
+# 找到一个满足regex的str就结束
+
+re.match(regex, str)
+
+re.
 ```
 

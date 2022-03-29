@@ -115,3 +115,86 @@ data = data.tolist()
 
 
 
+### bert pretrain
+
+-   `output_dir`: *The output directory where the model predictions and checkpoints will be written. I set it up to `pretrained_bert_model` where the model and will be saved.*
+-   `overwrite_output_dir`: *Overwrite the content of the output directory. I set it to `True` in case I run the notebook multiple times I only care about the last run.*
+-   `do_train`: *Whether to run training or not. I set this parameter to `True` because I want to train the model on my custom dataset.*
+-   `do_eval`: *Whether to run evaluation on the evaluation files or not. I set it to `True` since I have test data file and I want to evaluate how well the model trains.*
+-   `per_device_train_batch_size`: *Batch size GPU/TPU core/CPU training. I set it to `2` for this example. I recommend setting it up as high as your GPU memory allows you.*
+-   `per_device_eval_batch_size`: *Batch size GPU/TPU core/CPU for evaluation.I set this value to `100` since it's not dealing with gradients.*
+-   `evaluation_strategy`: *Evaluation strategy to adopt during training: `no`: No evaluation during training; `steps`: Evaluate every `eval_steps;`epoch`: Evaluate every end of epoch. I set it to 'steps' since I want to evaluate model more often.*
+-   `logging_steps`: *How often to show logs. I will se this to plot history loss and calculate perplexity. I set this to `20` just as an example. If your evaluate data is large you might not want to run it that often because it will significantly slow down training time.*
+-   `eval_steps`: *Number of update steps between two evaluations if evaluation_strategy="steps". Will default to the same value as logging_steps if not set. Since I want to evaluate model ever`logging_steps` I will set this to `None` since it will inherit same value as `logging_steps`.*
+-   `prediction_loss_only`: *Set prediction loss to `True` in order to return loss for perplexity calculation. Since I want to calculate perplexity I set this to `True` since I want to monitor loss and perplexity (which is exp(loss)).*
+-   `learning_rate`: *The initial learning rate for Adam. Defaults is set to `5e-5`.*
+-   `weight_decay`: *The weight decay to apply (if not zero)Defaults is set to `0`.*
+-   `adam_epsilon`: *Epsilon for the Adam optimizer. Defaults to `1e-8`.*
+-   `max_grad_norm`: *Maximum gradient norm (for gradient clipping). Defaults to `0`.*
+-   `num_train_epochs`: *Total number of training epochs to perform (if not an integer, will perform the decimal part percents of the last epoch before stopping training). I set it to `2` at most. Since the custom dataset will be a lot smaller than the original dataset the model was trained on we don't want to overfit.*
+-   `save_steps`: *Number of updates steps before two checkpoint saves. Defaults to `500`.*
+
+```
+http://haokailong.top/2020/12/21/利用预训练语言模型计算句子相似度/
+```
+
+
+
+
+
+```python
+net = ResNet()
+loss = MSE()
+optimizer = torch.optim.SGD(net.parameters(), lr=0.001)
+""" 中断后，加载权重继续训练 """ 
+checkpoint = torch.load("model_path/model.pth") 
+current_epoch = checkpoint["epoch"] 
+net.load_state_dict(checkpoint['net']) 
+optimizer.load_state_dict(checkpoint['optimizer']) 
+net.train()
+for epoch in range(current_epoch , total_epochs):
+   ...
+   for x, y in dataloader:
+       ...
+       loss = ...
+       loss.backward()
+       optimizer.step()
+   state_dict = {"net": net.state_dict(), "optimizer": optimizer.state_dict(), "epoch": epoch}
+   torch.save(state_dict, "model_path/model.pth")
+    
+```
+
+
+
+
+
+加载transformer预训练模型
+
+```
+下载bert-base-chinese的
+config.josn，vocab.txt，pytorch_model.bin三个文件后，
+放在bert-base-chinese文件夹下，
+此例中该文件夹放在目下下。
+
+
+import numpy as np
+import torch 
+from transformers import BertTokenizer, BertConfig, BertForMaskedLM, BertForNextSentencePrediction
+from transformers import BertModel
+
+model_name = 'bert-base-chinese'
+MODEL_PATH = './bert-base-chinese/'
+
+# 加载分词器
+tokenizer = BertTokenizer.from_pretrained(model_name)
+# 导入配置文件
+model_config = BertConfig.from_pretrained(model_name)
+# 修改配置
+model_config.output_hidden_states = True
+model_config.output_attentions = True
+# 通过配置和路径导入模型
+bert_model = BertModel.from_pretrained(MODEL_PATH, config = model_config)
+
+
+```
+

@@ -210,10 +210,16 @@ pip ``install` `numpy --upgrade --ignore-installed
 
 
 
+### subprocess
+
 ```python
 ## 在python 中运行shell脚本
 import os
 os.system('cd /usr/local')
+
+import subprocess as sp
+cmd1 = 'pwd'
+ret = sp.run(cmd1, shell=True)
 
 
 ```
@@ -246,4 +252,18 @@ pyinotify
 监控文件变动
 
 加上我们三个的数据，准确率能到多少
+
+
+
+### 获得路径下的最新文件
+
+```python
+import os
+file_path = '/usr/home/xiaolu10/xiaolu4/query_get_blog/data'
+files = os.listdir(file_path)
+files_path =[os.path.join(file_path,file_name) for file_name in files]
+files_path.sort(key=lambda fp: os.path.getctime(fp),reverse=True)
+latest_file = files_path[:2]
+print(latest_file) # 绝对路径
+```
 

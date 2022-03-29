@@ -85,7 +85,7 @@ paste file1.txt file2.txt # 横向拼接两个文件
 
 
 # 建立文件的软连接 , 都要写绝对路径
-ln -s 源文件(磁盘存储空间大的) 目标文件(空间小的,相当与快捷方式)
+ln -s 源文件(磁盘存储空间大的,先创建好文件夹) 目标文件(空间小的,相当与快捷方式,目前不存在)
 ls -al user.dict.utf8 # 查看软连接的真实源文件
 正确删除 软连接 最安全的方式是使用 命令unlink
 unlink 目标文件
@@ -155,6 +155,8 @@ df -h   						# 查看磁盘空间使用情况
 sudo du -h --max-depth=1   # 查看当前目录下每个文件夹占用的大小
 
 sudo du -h --max-depth=0 yuanbo6 # 查看yuanbo6目录的大小
+
+sudo du -s /usr/home/* |sort -nr|head # /usr/home/ 下文件夹的大小，按顺序排列
 du -sh ./*  # 获得当前文件夹下所有文件和文件夹的大小，使用
 du -h   						#查看当前各目录大小 disk usage
 du -s -h						# 查看当前目录总共占的存储空间
@@ -442,6 +444,15 @@ function fun1 () { echo 'a' }
 unset -f fun1  # 删除函数
 
 declare -f     # 查看所有函数
+
+if [$? -ne 0]; #  如果上一条命令成功执行
+# ？表示上一条命令的返回值，成功0，失败1 -ne代表不等于， 
+-eq 等于
+-ne 不等于
+-gt 大于
+-ge 大于等于
+
+
 ```
 
 
@@ -574,12 +585,25 @@ sed 's/\"//g'
 判断文件是否为空
 
 ```bash
-if test -s file.txt;
+if test -s temp.txt;
 then
-xxx
+    echo "生产成功"
+else
+    echo "生产失败"
 fi 
-
 
 ```
 
+test -e #文件是否存在
 
+
+
+```bash
+#获取文件的最后修改时间
+LAST_MODIFY_TIMESTAMP=`stat -c %Y  file`
+formart_date=`date '+%Y-%m-%d' -d @$LAST_MODIFY_TIMESTAMP`
+```
+
+
+
+sudo lsof -i tcp:8889  # 根据端口号查找进程名
