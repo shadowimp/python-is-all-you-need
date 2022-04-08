@@ -152,6 +152,8 @@ whatis bash         # 查看某个命令的解释，一句话告诉你这是干�
 uname -a            # 查看内核版本等信息
 
 df -h   						# 查看磁盘空间使用情况
+df -i 							# 查看文件节点数(inode文件索引占用)
+
 sudo du -h --max-depth=1   # 查看当前目录下每个文件夹占用的大小
 
 sudo du -h --max-depth=0 yuanbo6 # 查看yuanbo6目录的大小
@@ -251,6 +253,7 @@ sudo chmod 775 + 文件名  # 文件所有者和所有组有读写执行权限�
 chmod 644 file      # 修改文件权限为 644，可以接 -R 对目录循环改权限
 chmod 775 dir -R    # 对 dir 文件夹下的所有文件修改权限
 
+-R 为递归处理文件夹下的所有文件
 
 chown user1 file.txt     # 修改文件所有人为 user1
 chgrp -v yuanbo file.txt  # 修改文件所属的用户组为yuanbo
@@ -607,3 +610,24 @@ formart_date=`date '+%Y-%m-%d' -d @$LAST_MODIFY_TIMESTAMP`
 
 
 sudo lsof -i tcp:8889  # 根据端口号查找进程名
+
+
+
+```bash
+# 查看目录下的文件数
+# scan.sh
+# scan.sh /home
+florder=$1
+dir=$(ls -l $florder |awk '/^d/ {print $NF}')
+for i in $dir
+do
+    if [ "$i" != 'home' -a "$i" != 'proc' ];then
+    f=$i
+    if [ $florder != '/' ];then
+        f=$florder/$i
+    fi
+        rs=$(ls -lR $f|grep "^-"| wc -l)
+    echo $f 文件以及子文件个数 $rs
+    fi
+```
+

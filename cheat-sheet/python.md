@@ -95,6 +95,10 @@ def Sent2Word(sentence):
 
 import time
 time.sleep(5) 
+
+## 深拷贝
+import copy
+b = copy.deepcopy(a)
 ```
 
 

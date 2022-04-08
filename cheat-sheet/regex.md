@@ -54,6 +54,14 @@ if re.match(r'\d+/\d+/\d+',text1):
 else:
     print(0)
     
+# 去掉纯数字, 只要有汉字或者英文就能返回
+re_han = re.compile("([\u4E00-\u9FD5a-zA-Z]+)", re.U)
+if len(re_han.findall(word)) > 0:  #不要纯英文数字
+	print(word.lower())
+
+
+
+    
 
 ```
 
@@ -68,6 +76,6 @@ re.search(regex,str)
 
 re.match(regex, str)
 
-re.
+
 ```
 

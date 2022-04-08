@@ -170,7 +170,7 @@ for epoch in range(current_epoch , total_epochs):
 
 加载transformer预训练模型
 
-```
+```python
 下载bert-base-chinese的
 config.josn，vocab.txt，pytorch_model.bin三个文件后，
 放在bert-base-chinese文件夹下，
@@ -194,6 +194,64 @@ model_config.output_hidden_states = True
 model_config.output_attentions = True
 # 通过配置和路径导入模型
 bert_model = BertModel.from_pretrained(MODEL_PATH, config = model_config)
+
+
+```
+
+
+
+tokenizer
+
+```python
+# encode仅返回input_ids
+tokenizer.encode('手机')
+
+>> [101, 2797, 3322, 102]
+
+# encode_plus 返回 input_ids(词典编码位置) , token_type_ids(上句为0，下句为1), attention_mask ：对哪些词进行self-attention
+
+tokenizer.encode_plus('手机')
+
+>> {'input_ids': [101, 2797, 3322, 102], 
+    'token_type_ids': [0, 0, 0, 0], 
+    'attention_mask': [1, 1, 1, 1]}
+
+tokenizer.encode_plus('手机','电脑')
+>> {'input_ids': [101, 2797, 3322, 102, 4510, 5554, 102], 
+    'token_type_ids': [0, 0, 0, 0, 1, 1, 1], 
+    'attention_mask': [1, 1, 1, 1, 1, 1, 1]}
+
+#  convert_ids_to_tokens 将 编码变回文字
+tokenizer.convert_ids_to_tokens(sen_code['input_ids'])
+```
+
+
+
+### hfl/chinese-roberta-wwm-ext
+
+```python
+
+
+from transformers import AutoTokenizer, AutoModelForMaskedLM
+
+tokenizer = AutoTokenizer.from_pretrained("hfl/chinese-roberta-wwm-ext")
+
+model = AutoModelForMaskedLM.from_pretrained("hfl/chinese-roberta-wwm-ext")
+
+
+```
+
+
+
+```
+# 特殊token
+{"unk_token": "[UNK]", # 未知字符
+"sep_token": "[SEP]",  # 分隔两个句子
+"pad_token": "[PAD]",   
+"cls_token": "[CLS]", # 
+"mask_token": "[MASK]"}
+
+
 
 
 ```
