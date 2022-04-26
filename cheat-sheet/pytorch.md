@@ -256,3 +256,13 @@ model = AutoModelForMaskedLM.from_pretrained("hfl/chinese-roberta-wwm-ext")
 
 ```
 
+0421: 918/2000 = 0.459
+
+0422:905/2000 =0.452
+
+
+
+### torch pth 文件转pt
+
+Pytorch的模型文件一般会保存为.pth文件，C++接口一般读取的是.pt文件，利用pytorch提供的函数torch.jit.trace进行转换
+
