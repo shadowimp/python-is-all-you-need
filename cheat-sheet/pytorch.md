@@ -266,3 +266,25 @@ model = AutoModelForMaskedLM.from_pretrained("hfl/chinese-roberta-wwm-ext")
 
 Pytorch的模型文件一般会保存为.pth文件，C++接口一般读取的是.pt文件，利用pytorch提供的函数torch.jit.trace进行转换
 
+```python
+import torch
+example = (torch.tensor(torch.ones(1, 128), dtype=torch.long).to(device), torch.tensor(torch.ones(1, 128), dtype=torch.long).to(device),torch.tensor(torch.ones(1, 128), dtype=torch.long).to(device))
+traced_script_module = torch.jit.trace(model, example)
+traced_script_module.save('rbt3_model.pt')
+```
+
+
+
+
+
+RuntimeError: xxx.pth is a zip archive(did you mean to use torch.jit.load()?)
+
+
+
+`xxx.pth`来自pytorch1.6或更高的版本。1.6之后pytorch默认使用zip文件格式来保存权重文件，导致这些权重文件无法直接被1.5及以下的pytorch加载。
+
+
+
+state_dict = torch.load("xxx.pth") 
+
+torch.save(state_dict, "xxx.pth", _use_new_zipfile_serialization=False)

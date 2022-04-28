@@ -271,3 +271,15 @@ latest_file = files_path[:2]
 print(latest_file) # 绝对路径
 ```
 
+
+
+### 版本查看
+
+```python
+import torch
+import numpy as np
+import transformers
+print(torch.__version__)  # 1.7.1
+print(transformers.__version__)
+```
+
