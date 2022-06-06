@@ -241,6 +241,18 @@ tar -zcvf test.tar.gz test  # 压缩文件test到test.tar.hz
 
 ```
 
+### zip压缩
+
+```bash
+zip -q -r html.zip /home/html # 将 /home/html/ 这个目录下所有文件和文件夹打包为当前目录下的 html.zip：
+
+unzip html.zip # 解压
+```
+
+
+
+
+
 ### chmod 改权限    
 
 ### chown改所属用户 

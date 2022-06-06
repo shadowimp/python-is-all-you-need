@@ -15,3 +15,10 @@ for c1, c2 in data.values
 
 ```
 
+pandas.read_csv()导入大文件时出现pandas.errors.ParserError: Error tokenizing data. C error: Buffer overflow c问题
+
+使用python及其大文件，可以使用 engine='python’如下，解决这个问题。
+
+```python
+df = pd.read_csv( file_, index_col=None, header=0, engine='python' )
+```

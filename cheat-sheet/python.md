@@ -283,3 +283,13 @@ print(torch.__version__)  # 1.7.1
 print(transformers.__version__)
 ```
 
+
+
+### bytes 转换为 str
+
+str(b, encoding = "utf-8") 
+
+
+
+
+

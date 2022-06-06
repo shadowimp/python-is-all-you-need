@@ -40,5 +40,12 @@ yy + p #复制一行
 #行号
 set number 
 set nonumber 
+
+set nu  # 显示行号
+set nonu # 不显示行号
+
+:1,10, <       #  1至10行左移4个字符间距
+
+
 ```
 

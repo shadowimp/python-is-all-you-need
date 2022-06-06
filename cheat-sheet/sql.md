@@ -292,10 +292,17 @@ hadoop fs -copyFromLoca /opt/test/xx.zip  /user/data #从本地系统拷贝文�
 hadoop fs -cat  /user/wcinput/wc.input # 显示文件内容
 hadoop fs -copyToLocal /user/input/小王子.txt /opt/download/tonghua.txt #从hdfs拷贝到本地
 hadoop fs -df -h  # 统计文件系统的可用空间信息
-hadoop fs -du -s -h # 统计文件夹的大小信息
+hadoop fs -du -s -h  yuanbo# 统计yuanbo文件夹的大小信息
+hadoop fs -du yuanbo  #   查看yuanbo文件夹下各文件的大小
 
-
+hadoop fs -put retargeting.zip shuangshuang9/copy195
+hadoop fs -get 
 hadoop fs -get
+
+hadoop fs -cat hadoop fs viewfs://test.txt  # 查看文件内容
+
+ hdfs dfs -chmod 777 viewfs://yuanbo/output
+
 ```
 
 
