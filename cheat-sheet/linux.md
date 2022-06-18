@@ -138,6 +138,14 @@ ${array_name[n]}
 
 # 数组长度
 ${#array_name[*]}
+
+
+## && , &
+& 表示任务在后台执行
+&&  两条命令间使用，前一条执行完后再执行后一条命令  echo '1' && echo '2'
+
+｜ 上一条命令的输出作为下一条命令的输入 echo 'yes'|wc -l
+||  上一条命令执行失败后 才会执行下一条命令
 ```
 
 ###  环境
@@ -641,5 +649,21 @@ do
         rs=$(ls -lR $f|grep "^-"| wc -l)
     echo $f 文件以及子文件个数 $rs
     fi
+```
+
+
+
+
+
+```bash
+# 判断程序是否在运行
+RUNPID=`ps -ef|grep recall_sort.py|grep -v grep|awk '{print $3}'`
+echo "$RUNPID"
+if [ "$RUNPID" != "" ];
+then 
+echo "正在运行"
+else
+echo "不在运行"
+fi
 ```
 
