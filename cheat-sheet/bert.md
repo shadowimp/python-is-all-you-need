@@ -80,3 +80,51 @@ https://zhuanlan.zhihu.com/p/414384344
 
 http://haokailong.top/2020/12/21/利用预训练语言模型计算句子相似度/
 
+
+
+
+
+
+
+Bert句[向量空间](https://www.zhihu.com/search?q=向量空间&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra={"sourceType"%3A"article"%2C"sourceId"%3A"444346578"})的各向异性:
+
+原生的bert不适合句向量的生成。
+
+Bert 词向量， 在向量空间分布不均匀，词之间的距离不能很好的表征相关性。
+
+
+
+ sentence bert：
+
+
+
+
+
+
+
+
+
+gpt2
+
+```
+gpt2-Chinese的train.py报错：
+AttributeError: module transformers has no attribute modeling_gpt2
+
+solution:
+from transformers.modeling_gpt2 import GPT2LMHeadModel
+change to :
+from transformers.models.gpt2.modeling_gpt2 import GPT2LMHeadModel
+
+
+
+AttributeError: module transformers has no attribute WarmupLinearSchedule
+
+solution:
+from transformer import get_linear_schedule_with_warmup
+change to 
+
+
+
+
+```
+

@@ -60,6 +60,9 @@ if len(re_han.findall(word)) > 0:  #不要纯英文数字
 	print(word.lower())
 
 
+## 	判断是否为16位数字
+if re.match(r'^\d{16}$' ,'4789109984072231'):
+    print(1)
 
     
 
@@ -77,5 +80,62 @@ re.search(regex,str)
 re.match(regex, str)
 
 
+```
+
+```python
+import re
+def text_normal_l1(text):
+    rule_url = re.compile('(https?://)?(www\\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)')
+    rule_legal = re.compile('[^\\[\\]@#a-zA-Z0-9\u4e00-\u9fa5]')
+    rule_space = re.compile('\\s+')
+    text = str(text).replace('\\n', ' ').replace('\n', ' ').strip()
+    text = rule_url.sub(' ', text)
+    text = re.sub('\[.*?\]', '', text)
+    text = rule_legal.sub(' ', text)
+    text = rule_space.sub(' ', text)
+    text = text.replace('\t','')
+    return text.strip()
+  
+  
+def text_normal_l1(text):
+    # 对数据进行简单清洗
+    rule_url = re.compile(
+        '(https?://)?(www\\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)'
+    )
+    rule_legal = re.compile('[^\\[\\]@#a-zA-Z0-9\u4e00-\u9fa5]')
+
+    rule_space = re.compile('\\s+')
+    text = str(text).replace('\\n', ' ').replace('\n', ' ').strip()
+    text = rule_url.sub(' ', text)
+    text = rule_legal.sub(' ', text)
+    text = rule_space.sub(' ', text)
+    
+    
+# 保留中文标点， 去掉表情 ，换行符
+import re
+def text_normal_l1(text):
+    # 对数据进行简单清洗
+    rule_url = re.compile(
+        '(http?://)?(www\\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)'
+    )
+
+    rule_legal = re.compile('[^\\[\\]@#a-zA-Z0-9\u4e00-\u9fa5，。！？：《》、*]')
+
+    rule_space = re.compile('\\s+')
+    text = str(text).replace('\\n', ' ').replace('\n', ' ').strip()
+    text = rule_url.sub(' ', text)
+    text = rule_legal.sub(' ', text)
+    text = rule_space.sub(' ', text)
+        
+    # 去除表情符号
+    try:  
+        rule_emoij = re.compile(u'['u'\U0001F300-\U0001F64F' u'\U0001F680-\U0001F6FF'u'\u2600-\u2B55]+')  
+    except re.error:  
+        rule_emoij = re.compile(u'('u'\ud83c[\udf00-\udfff]|'u'\ud83d[\udc00-\ude4f\ude80-\udeff]|'u'[\u2600-\u2B55])+') 
+        
+    text = rule_emoij.sub(' ', text)
+    
+    text = re.sub("\[\S+?\]", " ", text)  # 取出表情符号
+    return text.strip()  
 ```
 

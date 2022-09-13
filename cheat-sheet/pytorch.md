@@ -288,3 +288,42 @@ RuntimeError: xxx.pth is a zip archive(did you mean to use torch.jit.load()?)
 state_dict = torch.load("xxx.pth") 
 
 torch.save(state_dict, "xxx.pth", _use_new_zipfile_serialization=False)
+
+
+
+### 加速
+
+
+
+使用半精度，将pytorch默认的float32 改成 float16  ，加快推理速度， 减少显存占用
+
+model.half()  
+
+model.cuda()
+
+model.eval()
+
+
+
+输入也应改为半精度
+
+img = torch.from_numpy(image).float()
+
+img = img.cuda()
+
+img = img.half()
+
+
+
+
+
+
+
+###  no_grad
+
+
+
+
+
+
+

@@ -168,6 +168,8 @@ ps -ef | grep gunicorn
 
 
 
+
+
 #### python get ip 地址
 
 ```python
@@ -288,6 +290,34 @@ print(transformers.__version__)
 ### bytes 转换为 str
 
 str(b, encoding = "utf-8") 
+
+
+
+
+
+isinstance
+
+判断变量是不是指定类型
+
+```python
+a = 2 
+isinstance(a,int) 
+>> True
+
+isinstance (a,(str,int,list)) #是其中任一就为True
+
+
+```
+
+
+
+
+
+getctime : 最后修改时间
+
+getmtime 创建时间
+
+getatime  访问时间
 
 
 

@@ -281,6 +281,9 @@ mysql -uroot -p	#以root方式进入mysql
 
 ```bash
 hive -e 'select * from  ods_dim_tblog_obj_info_adv where dt=20200520;' > hot_lv3_20200520.txt
+
+# 查看一张表的详细信息
+hive -e "desc formated table_name"
 ```
 
 ### Hadoop
@@ -295,9 +298,12 @@ hadoop fs -df -h  # 统计文件系统的可用空间信息
 hadoop fs -du -s -h  yuanbo# 统计yuanbo文件夹的大小信息
 hadoop fs -du yuanbo  #   查看yuanbo文件夹下各文件的大小
 
-hadoop fs -put retargeting.zip shuangshuang9/copy195
+hadoop fs -put retargeting.zip ss9/copy195
+-put -f # 在已经有文件的情况下，强行覆盖。
+
 hadoop fs -get 
 hadoop fs -get
+
 
 hadoop fs -cat hadoop fs viewfs://test.txt  # 查看文件内容
 
