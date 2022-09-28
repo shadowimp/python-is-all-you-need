@@ -325,5 +325,13 @@ img = img.half()
 
 
 
+### TypeError : can't convert cuda:0 device type tensor to numpy 
+
+gpu tensor -> numpy ,需要先将tensor转换到cpu上，因为numpy是cpu-only
+
+data = data.cpu().numpy()
+
+
+
 
 

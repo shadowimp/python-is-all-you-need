@@ -128,3 +128,10 @@ change to
 
 ```
 
+```python
+from transformers import BertTokenizer, GPT2LMHeadModel, TextGenerationPipeline
+tokenizer = BertTokenizer.from_pretrained(MODEL_NAME)
+model = GPTLMHeadModel.from_pretrained(MODEL_NAME)
+text_generator = 
+```
+

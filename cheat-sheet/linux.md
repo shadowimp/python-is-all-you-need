@@ -225,6 +225,12 @@ lsof 显示系统打开的文件 lists openfiles
 yum install lsof
 lsof -i:8125 	#看进程
 lsof abc.txt 显示开启文件abc.txt的进程
+
+
+
+uptime  #查看当前负载
+16:58:49 up 3 days,  5:36, 20 users,  load average: 101.48, 112.46, 107.16
+
 ```
 
 
@@ -314,28 +320,7 @@ cal                       # 显示日历
 ### rsync 文件传输
 
 ```shell
-sudo vi /etc/rsyncd.conf #配置rsync
 
-[yuanbo6]
-path= /data0/yuanbo6/
-uid=root
-gid=root
-read only=no
-hosts allow=*
-
-rsync -av test.py 10.41.12.123::yuanbo6
-#rsync -av 源目录 目的地目录
-
--a: 递归同步 ，保留符号连接，设备文件，修改时间，组，所有者，权限等信息
-
-
-rsync重启：
-rsync error: error in socket IO (code 10) at clientserver.c(122) [sender=3.0.9]
-sudo rsync --daemon --config=/etc/rsyncd.conf
-
-
-问题：rsync: mkstemp  No space left on device
-后面加 --inplace
 ```
 
 ### xargs 
@@ -370,6 +355,12 @@ find /data0/yuanbo6/ads/ -type f -mtime +7 -exec rm -f {} \;
 -ctime： 创建时间
 -name： 
 -name ap* ： 以ap开头的文件
+
+# 删除文件夹内，5天前的所有文件
+sudo find /data0/yuanbo6/log/ -mtime +5 -name 'pusou_log*' -exec rm -f {} \;
+
+# 将ads下超过7天内的文件合并去重
+find /ads/ -type f -mtime -7 |xargs -i cat {}|sort|uniq 
 
 
 # 将日志保存，清空现有日志，并删除7天前的日志

@@ -138,4 +138,3 @@ def text_normal_l1(text):
     text = re.sub("\[\S+?\]", " ", text)  # 取出表情符号
     return text.strip()  
 ```
-
