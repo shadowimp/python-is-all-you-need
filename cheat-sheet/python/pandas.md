@@ -1,4 +1,8 @@
 ```python
+# 给0行 score 列赋值
+data.loc[0,'score'] = 0.4
+
+
 dtrange = sorted(log['dt'].unique())
 
 

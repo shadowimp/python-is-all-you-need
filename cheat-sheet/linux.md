@@ -146,6 +146,9 @@ ${#array_name[*]}
 
 ｜ 上一条命令的输出作为下一条命令的输入 echo 'yes'|wc -l
 ||  上一条命令执行失败后 才会执行下一条命令
+
+
+test -e #文件是否存在
 ```
 
 ###  环境
@@ -229,8 +232,16 @@ lsof abc.txt 显示开启文件abc.txt的进程
 
 
 uptime  #查看当前负载
-16:58:49 up 3 days,  5:36, 20 users,  load average: 101.48, 112.46, 107.16
+16:58:49 up 3 days,  5:36, 20 users,  load average: 101.48, 112.46, 107.16 
+#依次则是过去1分钟、5分钟、15分钟的平均负载。
 
+lscpu # 查看cpu个数
+
+
+
+
+
+sudo lsof -i tcp:8889  # 根据端口号查找进程名
 ```
 
 
@@ -315,12 +326,6 @@ DT2=`date -d '-2 days' +%Y%m%d` # 两天前
 DT7 = `date -d '-7 days' +%Y%m%d` #七天前
 
 cal                       # 显示日历
-```
-
-### rsync 文件传输
-
-```shell
-
 ```
 
 ### xargs 
@@ -429,48 +434,6 @@ curl -u 'bob:12345' https://google.com/login
 
 
 
-### Shell 编程
-
-```bash
-# 定义变量
-a = 1 
-echo $varname             # 查看变量内容
-
-# 条件语句
-# 如果存在 /root 中存在 a.txt ，则返回1 ， 否则返回0 ， if的[ ] , 前后都有空格
-# linux 中 0代表条件为真，1代表为假
-if [ -f /root/a.txt ]; then echo 1 ; else echo 0; fi
-
-if ["$1" == 100]; then 
-
-# 循环语句
-for i in {1..10}; do echo $i ; done 
-for (( i=1; i<10 ; i++)) ; do echo $i ; done
-for file in /data0/yuanbo6/* ; do echo $file ; done  # for 循环打印某目录下面的所有文件
-for loop in 1 2 3 ;do  echo $loop ; done
-
-i=1;while [ $i -le 10 ]; do echo $i; i=$(expr $i + 1); done
-
-
-# 函数
-function fun1 () { echo 'a' }
-
-unset -f fun1  # 删除函数
-
-declare -f     # 查看所有函数
-
-if [$? -ne 0]; #  如果上一条命令成功执行
-# ？表示上一条命令的返回值，成功0，失败1 -ne代表不等于， 
--eq 等于
--ne 不等于
--gt 大于
--ge 大于等于
-
-
-```
-
-
-
 ### 文本处理 - cut/awk / sed
 
 ```bash	
@@ -569,19 +532,6 @@ sudo cat log.txt|jq '.key'|sed 's/\"//g' |sort|uniq -c |sort -nr|awk '$1>10{prin
 
 
 
-### wrk2 压测工具
-
-```bash
-git clone https://github.com/giltene/wrk2.git
-cd wrk2 && make
-./wrk -t2 -c100 -d30s -R2000 http://www.baidu.com
-压测时间持续30秒，并发12线程，保持400个HTTP连接请求。
--t2: 并发2线程 (threads)
--c100 : 保持100个HTTP连接请求 (connections)
--d30s : 压测时间持续30秒 (duration)
--R2000 : 每秒2k个请求
-```
-
 ### shell处理json
 
 ```bash
@@ -615,7 +565,7 @@ fi
 
 ```
 
-test -e #文件是否存在
+
 
 
 
@@ -626,8 +576,6 @@ formart_date=`date '+%Y-%m-%d' -d @$LAST_MODIFY_TIMESTAMP`
 ```
 
 
-
-sudo lsof -i tcp:8889  # 根据端口号查找进程名
 
 
 
