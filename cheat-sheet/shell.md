@@ -99,5 +99,5 @@ sudo find /data0/yuanbo6/all_pusou_log/ -mtime +5 -name 'pusou_log*' -exec rm -f
 
 
 
-
+https://blog.csdn.net/weixin_43274002/article/details/119256557?spm=1001.2014.3001.5502
 

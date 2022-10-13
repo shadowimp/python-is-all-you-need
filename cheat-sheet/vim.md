@@ -10,9 +10,31 @@
 
 
 
+```
+control + a    jump to head 
+control + e    jump to tail 
+control + f    cursor forward 
+control + b    cursor backward 
+control + p    the previous command
+control + n    the next command 
+
+control + v		 到最后一行
+
+control + h    delete 
+control + d			向右删除一个字符
+control + k     delete 后面的到行末尾
+control + o    另起一行
+
+control + t			交换前两个字母
+
+https://blog.csdn.net/weixin_43274002/article/details/126513777
+```
+
 
 
 Terminal 快捷键
+
+
 
 ```bash
 control + a    jump to head 
