@@ -115,7 +115,9 @@ credential.helper=store
 
 ```bash
 # 创建文件 .gitignore  ,vim .gitignore或touch .gitignore命令
+vim .gitignore
 向其中添加不想上传到git 的文件
+
 
 
 以斜杠/开头表示目录
@@ -123,6 +125,9 @@ credential.helper=store
 *.zip 过滤所有.zip文件
 
 # 最后一步就是把.gitignore也提交到Git
+
+find ./ -type f -size +2M #查找当前目录下大于2m的文件
+find ./ -type f -size +2M  >> .gitignore
 ```
 
 ### branch
@@ -140,6 +145,18 @@ git push origin --delete yuanbo6
 
 # 新建本地分支
 git checkout -b localbranch
+
+
+```
+
+
+
+### bugs
+
+```
+error: RPC failed; result=22, HTTP code = 413
+
+可能是因为传输的文件较大
 
 
 ```
