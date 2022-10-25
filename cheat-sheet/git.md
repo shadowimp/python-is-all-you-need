@@ -124,6 +124,8 @@ vim .gitignore
 
 *.zip 过滤所有.zip文件
 
+code/*.txt #过滤code路径下的所有txt文件
+
 # 最后一步就是把.gitignore也提交到Git
 
 find ./ -type f -size +2M #查找当前目录下大于2m的文件
