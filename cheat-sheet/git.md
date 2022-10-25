@@ -61,8 +61,8 @@ git revert # 放弃指定提交的修改，但是会生成一次新的提交，�
 ##### Create a new repository
 
 ```bash
-git clone http://git.intra.weibo.com/yuanbo6/ziding_handover.git
-cd ziding_handover
+git clone http://git.com
+cd dir
 touch README.md
 git add README.md
 git commit -m "add README"
@@ -74,7 +74,7 @@ git push -u origin master
 ```bash
 cd existing_folder
 git init
-git remote add origin http://git.intra.weibo.com/yuanbo6/ziding_handover.git
+git remote add origin http://git.com
 git add .
 git commit -m "Initial commit"
 git push -u origin master
@@ -89,7 +89,7 @@ git pull origin master --allow-unrelated-histories
 ```bash
 cd existing_repo
 git remote rename origin old-origin
-git remote add origin http://git.intra.weibo.com/yuanbo6/ziding_handover.git
+git remote add origin http://git.com
 git push -u origin --all
 git push -u origin --tags
 ```

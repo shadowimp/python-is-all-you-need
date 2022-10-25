@@ -355,7 +355,7 @@ sudo find ./ -type f -name "jieba*"  #查找当前目录下以jieba开头的文�
 cat ads_type.txt|tail -n +10000|head -10 #看文件从第1w行起的10行
 
 # 删除ads下修改时间超过7天的文件
-find /data0/yuanbo6/ads/ -type f -mtime +7 -exec rm -f {} \;
+find /ads/ -type f -mtime +7 -exec rm -f {} \;
 -exec： find命令对匹配的文件执行该参数所给出的shell命令
 -ctime： 创建时间
 -name： 
