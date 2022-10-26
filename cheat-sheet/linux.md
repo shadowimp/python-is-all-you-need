@@ -232,7 +232,7 @@ lsof abc.txt 显示开启文件abc.txt的进程
 
 
 uptime  #查看当前负载
-16:58:49 up 3 days,  5:36, 20 users,  load average: 101.48, 112.46, 107.16 
+16:58:49 up 3 days,  5:36, 20 users,  load average: 10, 11, 10
 #依次则是过去1分钟、5分钟、15分钟的平均负载。
 
 lscpu # 查看cpu个数

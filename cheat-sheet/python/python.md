@@ -152,7 +152,7 @@ def hello():
 
 #### 使用gunicorn运行flask: 
 
-conda3/bin/gunicorn -w 2 -b 10.41.24.195:8123 flask_server:app 
+conda3/bin/gunicorn -w 2 -b 1.2.3.4:1234 flask_server:app 
 
 flask_server : 为py文件名
 
