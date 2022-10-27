@@ -22,3 +22,13 @@ tokenizer.save_vocabulary(output_vocab_file)
 
 ```
 
+
+
+
+
+```
+bugs : 
+多线程时报错：RuntimeError : Already borrowed
+adding "tokenizer_args": {"use_fast": false} to sentence_bert_config.json
+```
+
