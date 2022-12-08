@@ -149,6 +149,9 @@ ${#array_name[*]}
 
 
 test -e #文件是否存在
+
+dirname test.py  # 返回文件的目录名
+
 ```
 
 ###  环境
@@ -239,8 +242,6 @@ lscpu # 查看cpu个数
 
 
 
-
-
 sudo lsof -i tcp:8889  # 根据端口号查找进程名
 ```
 
@@ -296,25 +297,17 @@ chown user1 file.txt     # 修改文件所有人为 user1
 chgrp -v yuanbo file.txt  # 修改文件所属的用户组为yuanbo
 ```
 
-### tmux 
-
-cntrol + B +D    退出tmux界面
-
-```shell
-tmux new -s zyb      #新建名为zyb的tmux
-tmux at -t zyb    # 进入名为zyb的tmux
-tmux ls	# 查看目前开启的tmux
-tmux kill-session -t session-name # 关闭session
-tmux rename-session -t old-name new-name # session 重命名
-```
-
 ### date
 
 ```shell
-date -d "-1days" +%Y-%m-%d  #显示日期 形式 ： 2020-04-02
-DT=`date -d "-1days" +%Y-%m-%d`
-
 date                      # 显示日期
+
+date -d "0 days" +%Y-%m-%d  # 今天  2020-04-02
+date -d "-1 days" +%Y-%m-%d #昨天
+date -d "1 days" +%Y-%m-%d # 明天
+DT=`date -d "-1days" +%Y-%m-%d` 
+
+
 date +%Y%m%d							# 20200716
 date +%Y_%m_%d%t%H:%M:%S	# 2020_07_16	17:10:15
 date -d 'last day' #昨天
@@ -379,6 +372,34 @@ ps -ef | grep gunicorn | grep 8888 | cut -c 9-15 | xargs kill -9
 mv ./logger_industry/nohup_log.out ./logger_industry/nohup_log.out.$(date +%Y.%m.%d.%H.%M.%S)
 nohup conda3/bin/gunicorn httpserver:app -b 0.0.0.0:8888 -w 2 > ./logger_industry/nohup_log.out &
 
+
+# 判断文件是否为空
+if test -s temp.txt;
+then
+    echo "生产成功"
+else
+    echo "生产失败"
+fi 
+
+# 查看目录下的文件数
+# scan.sh
+# scan.sh /home
+florder=$1
+dir=$(ls -l $florder |awk '/^d/ {print $NF}')
+for i in $dir
+do
+    if [ "$i" != 'home' -a "$i" != 'proc' ];then
+    f=$i
+    if [ $florder != '/' ];then
+        f=$florder/$i
+    fi
+        rs=$(ls -lR $f|grep "^-"| wc -l)
+    echo $f 文件以及子文件个数 $rs
+    fi
+    
+#获取文件的最后修改时间
+LAST_MODIFY_TIMESTAMP=`stat -c %Y  file`  # ### 反引号``是命令替换，命令替换是指Shell可以先执行``中的命令，将输出结果暂时保存，在适当的地方输出。
+formart_date=`date '+%Y-%m-%d' -d @$LAST_MODIFY_TIMESTAMP`
 ```
 
 ### 网络
@@ -500,6 +521,7 @@ sed 's#find#replace#' file         # 使用 # 替换 / 来避免 pattern 中有�
 sed -i -r 's/^\s+//g' file         # 删除文件每行头部空格
 sed '/^$/d' file                   # 删除文件空行并打印 去掉空行 删除空行
 sed -i 's/\s\+$//' file            # 删除文件每行末尾多余空格
+sed -i '1d' file 									 # 删除第一行
 
 sed 's/root/new/' file                          //将文件中的root替换成new，每行只替换一次
 sed 's/root/new/g' file                       //将每行的所有root全部替换成new        g替换多次
@@ -547,69 +569,9 @@ sed 's/\"//g'
 
 
 
-### 反引号``
-
-反引号``是命令替换，命令替换是指Shell可以先执行``中的命令，将输出结果暂时保存，在适当的地方输出。语法:`command`
-
-
-
-判断文件是否为空
-
-```bash
-if test -s temp.txt;
-then
-    echo "生产成功"
-else
-    echo "生产失败"
-fi 
-
-```
 
 
 
 
 
-```bash
-#获取文件的最后修改时间
-LAST_MODIFY_TIMESTAMP=`stat -c %Y  file`
-formart_date=`date '+%Y-%m-%d' -d @$LAST_MODIFY_TIMESTAMP`
-```
-
-
-
-
-
-```bash
-# 查看目录下的文件数
-# scan.sh
-# scan.sh /home
-florder=$1
-dir=$(ls -l $florder |awk '/^d/ {print $NF}')
-for i in $dir
-do
-    if [ "$i" != 'home' -a "$i" != 'proc' ];then
-    f=$i
-    if [ $florder != '/' ];then
-        f=$florder/$i
-    fi
-        rs=$(ls -lR $f|grep "^-"| wc -l)
-    echo $f 文件以及子文件个数 $rs
-    fi
-```
-
-
-
-
-
-```bash
-# 判断程序是否在运行
-RUNPID=`ps -ef|grep test.py|grep -v grep|awk '{print $3}'`
-echo "$RUNPID"
-if [ "$RUNPID" != "" ];
-then 
-echo "正在运行"
-else
-echo "不在运行"
-fi
-```
 

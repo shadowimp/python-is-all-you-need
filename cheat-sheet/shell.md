@@ -36,6 +36,15 @@ if [$? -ne 0]; #  如果上一条命令成功执行
 -ge 大于等于
 
 
+
+$0 # 程序的名字
+$1 # 程序的第1个参数
+$2 # 程序的第2个参数
+$* # all parameter
+$? # 执行上一个指令的返回值 (显示最后命令的退出状态。0表示没有错误，其他任何值表明有错误)
+$# # nums of parameter 
+$$ # pid number 
+$! # 上一个运行的
 ```
 
 
@@ -95,6 +104,17 @@ alarm_file /data0/yuanbo6/pusou_log.txt
 ```bash
 # 删除文件夹内，5天前的所有文件
 sudo find /log/ -mtime +5 -name 'pusou_log*' -exec rm -f {} \;
+
+
+# 判断程序是否在运行
+RUNPID=`ps -ef|grep test.py|grep -v grep|awk '{print $3}'`
+echo "$RUNPID"
+if [ "$RUNPID" != "" ];
+then 
+echo "正在运行"
+else
+echo "不在运行"
+fi
 ```
 
 

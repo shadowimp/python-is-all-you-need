@@ -113,6 +113,10 @@ credential.helper=store
 
 ### git ignore 
 
+git 跟踪文件，而不是目录；
+
+如果本地仓库文件已被跟踪，那么即使在 .gitignore 中设置了忽略，也不起作用。
+
 ```bash
 # 创建文件 .gitignore  ,vim .gitignore或touch .gitignore命令
 vim .gitignore
@@ -121,10 +125,16 @@ vim .gitignore
 
 
 以斜杠/开头表示目录
+data/ #过滤data文件夹下的所有内容
 
 *.zip 过滤所有.zip文件
 
 code/*.txt #过滤code路径下的所有txt文件
+
+
+!main.go  # !表示反向操作，之前忽略会强制跟踪
+
+data/**/data_20  # **表示中间间隔的多级目录
 
 # 最后一步就是把.gitignore也提交到Git
 
