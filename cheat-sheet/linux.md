@@ -522,7 +522,7 @@ sed -i -r 's/^\s+//g' file         # 删除文件每行头部空格
 sed '/^$/d' file                   # 删除文件空行并打印 去掉空行 删除空行
 sed -i 's/\s\+$//' file            # 删除文件每行末尾多余空格
 sed -i '1d' file 									 # 删除第一行
-
+sed -i '$d' file 										# 删除最后一行
 sed 's/root/new/' file                          //将文件中的root替换成new，每行只替换一次
 sed 's/root/new/g' file                       //将每行的所有root全部替换成new        g替换多次
 sed '3,4s/root/new/g' file                 //只替换第3到第4行的root为new

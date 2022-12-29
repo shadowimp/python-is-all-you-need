@@ -23,6 +23,9 @@ git config --list #  显示当前的Git配置
 
 git log # 查看所有提交历史
 git log –p my_file # 查看某文件的提交历史
+git log --graph # 以图表形式查看提交历史
+
+
 
 git push origin master  #push 代码
 
@@ -109,6 +112,19 @@ credential.helper=store
 #后面操作的时候只需要输入一次密码之后，就可以免密码操作了。
 ```
 
+### git reset 
+
+回溯历史版本
+
+```bash
+git reset --hard + commit id  #恢复到之前的状态
+
+```
+
+
+
+
+
 
 
 ### git ignore 
@@ -172,4 +188,8 @@ error: RPC failed; result=22, HTTP code = 413
 
 
 ```
+
+
+
+### rebase
 
