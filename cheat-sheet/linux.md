@@ -62,9 +62,12 @@ tail -f  #能显示还在更新的文件
 
 ll -h   # 查看文件大小,代表human 以人类的方式看内存
 
+
 wc log.txt          # log文件的统计信息  
 >> 3 92 598 testfile       # log文件的行数为3、单词数92、字节数598
 wc -l # 只显示行数
+head -1 temp.txt| wc -w # 显式文件列数，以空格分割
+
 
 >  # 覆盖，如果文件存在，将原来文件的内容覆盖；原文件不存在则创建文件，再添加信息
 >> # 追加在后面
@@ -400,6 +403,13 @@ do
 #获取文件的最后修改时间
 LAST_MODIFY_TIMESTAMP=`stat -c %Y  file`  # ### 反引号``是命令替换，命令替换是指Shell可以先执行``中的命令，将输出结果暂时保存，在适当的地方输出。
 formart_date=`date '+%Y-%m-%d' -d @$LAST_MODIFY_TIMESTAMP`
+
+grep -E # 正则
+cat file.txt | grep -E '^([0-9]{3}-|\([0-9]{3}\)\s)[0-9]{3}-[0-9]{4}$'
+
+grep -P # -P 使用 Perl 拓展正则，支持\d匹配数字
+
+
 ```
 
 ### 网络

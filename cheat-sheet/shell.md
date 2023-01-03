@@ -121,3 +121,20 @@ fi
 
 https://blog.csdn.net/weixin_43274002/article/details/119256557?spm=1001.2014.3001.5502
 
+
+
+
+
+shell中运行python
+
+```python
+lines=open('file.txt').readlines()
+items=[item.strip().split() for item in lines]
+print(items)
+```
+
+```bash
+python3 -c "lines=open('file.txt').readlines();items=[item.strip().split() for item in lines];print(items)
+"
+```
+

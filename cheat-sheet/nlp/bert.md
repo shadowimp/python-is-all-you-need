@@ -102,6 +102,140 @@ Bert 词向量， 在向量空间分布不均匀，词之间的距离不能很�
 
 
 
+### bert快速搭框架
+
+```python
+import re
+import numpy as np
+import pandas as pd
+import transformers
+import torch
+from torch import nn
+from torch.utils.data import Dataset, DataLoader, RandomSampler, SequentialSampler
+from transformers import BertTokenizer, BertModel, BertConfig, AutoTokenizer
+from transformers import AdamW
+from transformers import get_linear_schedule_with_warmup
+from tqdm import tqdm
+import gc
+from torch import cuda
+import datetime
+import time
+import argparse
+import os
+import torch.optim as optim
+
+from transformers import logging
+
+logging.set_verbosity_warning()
+logging.set_verbosity_error()
+
+MAX_LEN = 256
+TRAIN_BATCH_SIZE = 16
+VALID_BATCH_SIZE = 16
+LEARNING_RATE = 0.00001
+EPOCHS = 10
+
+MODEL_NAME = "hfl/chinese-roberta-wwm-ext"
+os.environ["CUDA_VISIBLE_DEVICES"]="2"
+device = 'cuda' if cuda.is_available() else 'cpu'
+device = torch.device("cuda:1" if torch.cuda.is_available() else "cpu")
+device
+
+```
+
+```python
+class Classifier(torch.nn.Module):
+    def __init__(self):
+        super(Classifier, self).__init__()
+        self.dense1 = torch.nn.Linear(768, 256)
+        self.dense2 = torch.nn.Linear(256, 1)
+        self.activation = torch.nn.Tanh()
+        self.dropout = torch.nn.Dropout(0.1)
+        
+        
+    def forward(self, x):
+        x = self.dropout(x)
+        x = self.dense1(x)
+        x = self.activation(x)
+        x = self.dropout(x)
+        x = self.dense2(x)
+        return x
+
+class BertSim(torch.nn.Module):
+    def __init__(self):
+        super(BertSim, self).__init__()
+        self.bert = transformers.BertModel.from_pretrained(MODEL_NAME)
+        self.classifier = Classifier()
+        
+    def forward(self, input_ids, attention_mask, token_type_ids):
+        _, output_1= self.bert(input_ids=input_ids, attention_mask = attention_mask, token_type_ids = token_type_ids, return_dict=False)
+        output = self.classifier(output_1)
+        return output
+```
+
+
+
+```python
+tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
+model = BertSim()
+model.to(device)
+optim = AdamW([
+    {'params': model.bert.parameters()},
+    {'params':model.classifier.parameters(), 'lr':LEARNING_RATE*10}],
+    lr=LEARNING_RATE)
+criterion = nn.MSELoss()
+
+
+```
+
+
+
+```python
+class CustomDataset(Dataset):
+
+    def __init__(self, data, tokenizer, max_len, with_labels=True):
+        self.tokenizer = tokenizer
+        self.data = data
+        self.max_len = max_len
+        self.with_labels = with_labels
+
+    def __len__(self):
+        return len(self.data)
+    
+    def text_normal_l1(self, text):
+        rule_url = re.compile('(https?://)?(www\\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)')
+        rule_legal = re.compile('[^\\[\\]@#a-zA-Z0-9\u4e00-\u9fa5]')
+        rule_space = re.compile('\\s+')
+        text = str(text).replace('\\n', ' ').replace('\n', ' ').strip()
+        text = rule_url.sub(' ', text)
+        text = rule_legal.sub(' ', text)
+        text = rule_space.sub(' ', text)
+        return text.strip()
+
+    def __getitem__(self, index):
+        sent1 = self.text_normal_l1(str(self.data.loc[index,'query1']))
+        sent2 = self.text_normal_l1(str(self.data.loc[index,'query2']))
+        
+        encoded_pair = self.tokenizer(sent1, sent2, 
+                                      padding='max_length',  # Pad to max_length
+                                      truncation=True,  # Truncate to max_length
+                                      max_length=self.max_len,  
+                                      return_tensors='pt') 
+        token_ids = encoded_pair['input_ids'].squeeze(0) 
+        attn_masks = encoded_pair['attention_mask'].squeeze(0)
+        token_type_ids = encoded_pair['token_type_ids'].squeeze(0)
+        
+        if self.with_labels:  # True if the dataset has labels
+            sim_score = float(self.data.loc[index,'sim_score'])
+            return token_ids, attn_masks, token_type_ids, sim_score
+        else:
+            return token_ids, attn_masks, token_type_ids
+```
+
+
+
+
+
 
 
 

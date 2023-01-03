@@ -156,6 +156,8 @@ data/**/data_20  # **表示中间间隔的多级目录
 
 find ./ -type f -size +2M #查找当前目录下大于2m的文件
 find ./ -type f -size +2M  >> .gitignore
+
+*checkpoint*
 ```
 
 ### branch

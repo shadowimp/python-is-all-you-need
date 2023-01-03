@@ -1,3 +1,15 @@
+```python
+# sigmod 
+f = nn.Sigmoid()
+x = torch.randn(10)
+y = m(x)
+
+y.min()
+y.max()
+```
+
+
+
 ### warmup
 
 训练初期使用较小的学习率，从0开始慢慢增加，避免模型过早进入局部最优从而过拟合.
