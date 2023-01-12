@@ -298,6 +298,7 @@ chmod 775 dir -R    # 对 dir 文件夹下的所有文件修改权限
 
 chown user1 file.txt     # 修改文件所有人为 user1
 chgrp -v yuanbo file.txt  # 修改文件所属的用户组为yuanbo
+sudo chown yuanbo6 yuanbo6 -R
 ```
 
 ### date
@@ -479,6 +480,7 @@ cat word_hash.txt | tr " " "\t" > word_hash_tab.txt
 
 ```bash	
 cut -c 1-16                        # 截取每行头16个字符
+cut -c 3- file   									# 第三个字符到最后一个字符
 cut -c 1-16 file                   # 截取指定文件中每行头 16个字符
 cut -c3-                           # 截取每行从第三个字符开始到行末的内容
 cut -d':' -f5                      # 截取用冒号分隔的第五列内容

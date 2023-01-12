@@ -11,10 +11,10 @@ git的工作流
 ```bash
 git status #  查看当前 git状态
 git add . # 添加当前所有新增的文件
-* 'git add --ignore-removal <pathspec>', which is the current default,
+* 'git add --ignore-removal <pathspec>', which is the current default,本地删除的远程不删除
   ignores paths you removed from your working tree.
 
-* 'git add --all <pathspec>' will let you also record the removals.
+* 'git add --all <pathspec>' will let you also record the removals. 本地删除的远程也会删除
 git commit -m "注释"
 git push # 推送到github
 
@@ -41,7 +41,7 @@ git reset HEAD a.txt	# 取消暂存
 git reset HEAD .   # 这个命令仅改变暂存区，并不改变工作区，
 
 # git commit到本地分支、但没有git push到远程
-git reset --hard	# 重置暂存区与工作区，与上一次 commit 保持一致
+git reset --hard	# 重置暂存区与工作区，与上一次 commit 保持一致   ，本地的代码会回退到上个版本！
 git reset --hard commit_id 	# 将代码回滚到当前commit_id的版本
 git reset --hard HEAD^  # 回到最新的一次提交
 
@@ -58,6 +58,17 @@ git stash apply # 恢复，恢复后，stash内容并不删除，你要使用命
 
 git revert # 放弃指定提交的修改，但是会生成一次新的提交，需要填写提交注释，以前的历史记录都在；
 ```
+
+
+
+```bash
+# 删除远程提交的文件，但本地不删除
+git rm -r --cached filename 
+
+
+```
+
+
 
 
 
@@ -155,7 +166,7 @@ data/**/data_20  # **表示中间间隔的多级目录
 # 最后一步就是把.gitignore也提交到Git
 
 find ./ -type f -size +2M #查找当前目录下大于2m的文件
-find ./ -type f -size +2M  >> .gitignore
+find ./* -type f -size +1M |cut -c 3-  >> .gitignore  # 将当前目录下所有大于1m的文件加入gitignore, 递归所有的
 
 *checkpoint*
 ```
@@ -194,4 +205,13 @@ error: RPC failed; result=22, HTTP code = 413
 
 
 ### rebase
+
+
+
+
+
+```bash
+git remote show origin # 看远程仓库信息
+git remote set-url origin URL # 修改远程仓库
+```
 
