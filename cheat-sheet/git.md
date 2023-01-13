@@ -166,9 +166,20 @@ data/**/data_20  # **表示中间间隔的多级目录
 # 最后一步就是把.gitignore也提交到Git
 
 find ./ -type f -size +2M #查找当前目录下大于2m的文件
-find ./* -type f -size +1M |cut -c 3-  >> .gitignore  # 将当前目录下所有大于1m的文件加入gitignore, 递归所有的
+find ./*  -type f -size +1M |cut -c 3-  >> .gitignore  # 将当前目录下所有大于1m的文件加入gitignore, 递归所有的
+
+find ./*  -type f -size +1M |grep -v conda|cut -c 3-  >> .gitignore
+
 
 *checkpoint*
+
+find ./*  -type f -size +1M |grep -v conda|cut -c 3-  >> .gitignore
+awk ' !x[$0]++'  .gitignore > .gitignore_temp
+mv .gitignore_temp .gitignore
+
+
+
+
 ```
 
 ### branch

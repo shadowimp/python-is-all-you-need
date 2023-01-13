@@ -268,6 +268,11 @@ tar -zxvf file.tar.gz -C ./test # 解压文件到test文件夹下
 
 tar -zcvf test.tar.gz test  # 压缩文件test到test.tar.hz
 
+tar --exclude 
+
+# 备份大文件
+find yuanbo6/  -type f -size +1000M |grep -v conda  > big_file_pth.txt
+tar -zcvf  yuanbo6.tar yuanbo6 --exclude-from=big_file_pth.txt
 ```
 
 ### zip压缩
@@ -336,6 +341,7 @@ ps -ef | grep httpserver_cust_indus | cut -c 9-15 | xargs kill -9
 
 # 下载多个链接
 cat url-list.txt | xargs wget -c
+
 ```
 
 ###  常用脚本
