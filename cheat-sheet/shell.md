@@ -5,6 +5,10 @@
 a = 1 
 echo $varname             # 查看变量内容
 
+# 时间变量
+time_archive=$(date "+%Y%m%d")
+
+
 # 条件语句
 # 如果存在 /root 中存在 a.txt ，则返回1 ， 否则返回0 ， if的[ ] , 前后都有空格
 # linux 中 0代表条件为真，1代表为假
@@ -12,7 +16,7 @@ if [ -f /root/a.txt ]; then echo 1 ; else echo 0; fi
 
 if ["$1" == 100]; then 
 
-# 循环语句
+# 循环语句	
 for i in {1..10}; do echo $i ; done 
 for (( i=1; i<10 ; i++)) ; do echo $i ; done
 for file in /data0/yuanbo6/* ; do echo $file ; done  # for 循环打印某目录下面的所有文件
@@ -28,7 +32,7 @@ unset -f fun1  # 删除函数
 
 declare -f     # 查看所有函数
 
-if [$? -ne 0]; #  如果上一条命令成功执行
+if [$? -eq 0]; #  如果上一条命令成功执行
 # ？表示上一条命令的返回值，成功0，失败1 -ne代表不等于， 
 -eq 等于
 -ne 不等于
@@ -86,7 +90,7 @@ else
 }
 fi
 
-# 检测文件是否符合标准
+# 调用 ： 检测文件是否符合标准
 alarm_file /data0/yuanbo6/pusou_log.txt 
 
 # exit 0 正常退出程序 。

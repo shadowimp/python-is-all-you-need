@@ -14,42 +14,51 @@ with open('test.json') as f:
 
 
 
-关于周三汇报时，您提的为什么语义召回实验ecpm上升，普搜ecpm下降的问题。会后我和兴帅以及其他同学讨论。
+### 获得文件夹下的最新文件
 
-一、今年大盘的ecpm整体也是跌,那普搜跌也正常啊 就看跌的比例是比大盘多，还是没有大盘多。
-
-超粉大盘eCPM：2022年（7.68）相比2021年（10.77），下降28.67%。
-
-普搜流ecpm ： 2022年(4.56) 相比 2021年(6.48) , 下降29.59%
-
-二、我们分析可能得原因有两个：
-
-\1. 我们这个广告算法组，包括粗排，精排以及策略，都在优化自己的模型，而模型往往，而普搜的ctcvr可能被低估，模型往往只针对大盘，不会专门优化普搜的ecpm和ctcvr。
-
-\2. 今年在普搜流新出了，这些一般都是高质量的商业流量，占用了原有普搜流的流量，但是不算普搜流的收入和ecpm，所以普搜的ecpm下降。
-
-
-
-
+```python
+import os
+file_path = '/data0/yuanbo6/pusou_query_count/'
+files = os.listdir(file_path)
+files_path =[os.path.join(file_path,file_name) for file_name in files]
+files_path.sort(key=lambda fp: os.path.getctime(fp),reverse=True)
+latest_file = files_path[0]
 
 ```
-老板好：
-
-关于周三汇报时，您提的为什么语义召回实验ecpm上升，然而全年普搜整体ecpm下降的问题，会后我和兴帅以及其他同学讨论，得到以下猜想和思考。
 
 
-一、今年大盘的ecpm整体也是跌的,所以普搜ecpm跌也是正常的， 就看跌的比例是比大盘多，还是没有大盘多。
 
-超粉大盘eCPM：2022年（7.68）相比2021年（10.77），下降28.67%。
+### write csv
 
-普搜流ecpm ： 2022年(4.56) 相比 2021年(6.48) , 下降29.59%
+```python
+# importing the csv module
+import csv
+	
+# my data rows as dictionary objects
+mydict =[{'branch': 'COE', 'cgpa': '9.0', 'name': 'Nikhil', 'year': '2'},
+		{'branch': 'COE', 'cgpa': '9.1', 'name': 'Sanchit', 'year': '2'},
+		{'branch': 'IT', 'cgpa': '9.3', 'name': 'Aditya', 'year': '2'},
+		{'branch': 'SE', 'cgpa': '9.5', 'name': 'Sagar', 'year': '1'},
+		{'branch': 'MCE', 'cgpa': '7.8', 'name': 'Prateek', 'year': '3'},
+		{'branch': 'EP', 'cgpa': '9.1', 'name': 'Sahil', 'year': '2'}]
+	
+# field names
+fields = ['name', 'branch', 'year', 'cgpa']
+	
+# name of csv file
+filename = "university_records.csv"
+	
+# writing to csv file
+with open(filename, 'w') as csvfile:
+	# creating a csv dict writer object
+	writer = csv.DictWriter(csvfile, fieldnames = fields)
+		
+	# writing headers (field names)
+	writer.writeheader()
+		
+	# writing data rows
+	writer.writerows(mydict)
 
-普搜ecpm比大盘整体多跌 0.92%
 
-二、关于普搜的ecpm跌的比大盘跌，我们分析可能得原因有两个：
-
-1\ 我们这个广告算法组，包括粗排，精排以及策略，都在优化自己的模型，而模型往往，而普搜的ctcvr可能被低估，模型往往只针对大盘，不会专门优化普搜的ecpm和ctcvr。
-
-2. 今年在普搜流新出了，这些一般都是高质量的商业流量，占用了原有普搜流的流量，但是不算普搜流的收入和ecpm，所以普搜的ecpm下降。
 ```
 

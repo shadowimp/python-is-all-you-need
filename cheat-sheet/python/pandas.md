@@ -26,3 +26,15 @@ pandas.read_csv()导入大文件时出现pandas.errors.ParserError: Error tokeni
 ```python
 df = pd.read_csv( file_, index_col=None, header=0, engine='python' )
 ```
+
+
+
+
+
+```
+df = pd.DataFrame({'name': ['Raphael', 'Donatello'],
+...                    'mask': ['red', 'purple'],
+...                    'weapon': ['sai', 'bo staff']})
+>>> df.to_csv(index=False)
+```
+
