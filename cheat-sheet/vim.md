@@ -145,8 +145,6 @@ vim ~/.vimrc
 
 set filetype=python
 
-au BufNewFile,BufRead *.py,*.pyw setf python
-
 set autoindent " same level indent
 
 set smartindent " next level indent
@@ -158,6 +156,8 @@ set tabstop=4
 set shiftwidth=4
 
 set softtabstop=4
+
+set number
 
 
 

@@ -263,7 +263,7 @@ sort -u file                       # 去重排序
 ### tar 压缩
 
 ```shell
-tar -zcvf file.tar.gz	# 解压文件
+tar -zcvf file..gz	# 解压文件
 tar -zxvf file.tar.gz -C ./test # 解压文件到test文件夹下
 
 tar -zcvf test.tar.gz test  # 压缩文件test到test.tar.hz
@@ -523,6 +523,10 @@ awk 'NR%3==1' file                 # 从第一行开始，每隔三行打印一�
 awk    'NR==m {print $k}'  path/filename # 打印第m行
 
 awk -F '\t' '($1=="光遇")' test.txt  # 打印文件中第一列是光遇的所有行
+&& #与
+|| # 或
+
+
 
 sed -n '2p' file                   # 打印文件第二行
 sed -n '2,5p' file                 # 打印文件第二到第五行
