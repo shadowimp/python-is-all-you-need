@@ -62,3 +62,14 @@ with open(filename, 'w') as csvfile:
 
 ```
 
+### save image 保存图片
+
+```python
+# save image
+import requests
+url = 'http://images.cocodataset.org/val2017/000000039769.jpg'
+img_data = requests.get(url).content
+with open('./image_name.jpg', 'wb') as handler:
+    handler.write(img_data)
+```
+

@@ -1,4 +1,4 @@
-### 常用命令
+### ''常用命令
 
 ```shell
 # 目录
@@ -484,6 +484,10 @@ echo ${#str}
 cat word_hash.txt | tr " " "\t" > word_hash_tab.txt
 ```
 
+
+
+#### cut
+
 ```bash	
 cut -c 1-16                        # 截取每行头16个字符
 cut -c 3- file   									# 第三个字符到最后一个字符
@@ -524,7 +528,7 @@ awk    'NR==m {print $k}'  path/filename # 打印第m行
 
 awk -F '\t' '($1=="光遇")' test.txt  # 打印文件中第一列是光遇的所有行
 && #与
-|| # 或
+|| # 
 
 
 

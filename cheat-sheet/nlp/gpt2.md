@@ -86,3 +86,9 @@ model = GPT2LMHeadModel.from_pretrained(MODEL_NAME)
 
 
 
+### 指令微调 instruct tuning 
+
+将下游任务变成一句话 (数据集)
+
+
+
