@@ -4,6 +4,9 @@
 并集 |
 差集 -
 
+# sort dic 
+sorted_query_dic = sorted(query_dic.items(), key = lambda query_dic:query_dic[1], reverse=True)
+
 
 # 注意lambda返回值是一个元祖
 sorted(person,key=lambda x: (x.age, x.height)) 
