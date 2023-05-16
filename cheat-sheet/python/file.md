@@ -1,3 +1,9 @@
+
+
+
+
+
+
 ### read json 
 
 ```
@@ -11,6 +17,20 @@ with open('test.json') as f:
     line= f.readline()
     dic = eval(line)
 ```
+
+### os
+
+```python
+import os 
+dir_path = '/data0/test'
+# 当前目录下的文件
+os.listdir(dir_path)
+
+# 显示目前所处的目录
+os.getcwd()
+```
+
+
 
 
 
@@ -71,5 +91,15 @@ url = 'http://images.cocodataset.org/val2017/000000039769.jpg'
 img_data = requests.get(url).content
 with open('./image_name.jpg', 'wb') as handler:
     handler.write(img_data)
+```
+
+### gif to jpg
+
+```python
+from PIL import Image
+
+im = Image.open('Fighter-Front.gif')
+im.convert("RGBA")
+im.save('test1.png')
 ```
 

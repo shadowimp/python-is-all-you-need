@@ -93,6 +93,11 @@ ls -al user.dict.utf8 # 查看软连接的真实源文件
 正确删除 软连接 最安全的方式是使用 命令unlink
 unlink 目标文件
 
+mkdir /data0/yuanbo6/usr_cache
+mv /usr/yuanbo6/.cache/* /data0/yuanbo6/usr_cache
+rm -r /usr/yuanbo6/.cache/
+ln -s /data0/yuanbo6/usr_cache 
+
 
 sleep 3 #睡眠3秒
 

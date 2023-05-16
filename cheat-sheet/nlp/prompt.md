@@ -11,6 +11,10 @@ My first suggestion request is "I need help creating an advertising campaign for
 
 
 
+
+
+
+
 Write a Weibo advertising copy about "{content},{ocr_prompt}", about 150 words, add some Weibo expression   and translate it into simplified Chinese, 
 
 
