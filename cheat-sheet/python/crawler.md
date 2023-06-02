@@ -10,6 +10,20 @@ soup
 
 # text 
 app_content = soup.p.text
+
+
+# tag 的 .content 属性可以将tag的子节点以列表的方式输出
+print soup.head.contents 
+
+for child in soup.body.children:
+  print child
+  
+  
+  for child in soup.descendants:
+  print child
+  
+  
+  soup.find('div').find('aside')
 ```
 
 

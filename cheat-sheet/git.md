@@ -180,7 +180,27 @@ mv .gitignore_temp .gitignore
 
 
 
+
+
 ```
+
+
+
+```bash
+# touch gitignore
+echo data/ >> .gitignore
+echo *.zip >> .gitignore
+echo *.txt  >> .gitignore
+echo *.csv >> .gitignore
+echo *.log >> .gitignore
+find ./*  -type f -size +1M |cut -c 3-  >> .gitignore  # 将当前目录下所有大于1m的文件加入gitignore, 递归所有的
+awk ' !x[$0]++'  .gitignore >  gitignore_temp # 去重不改变顺序
+mv gitignore_temp .gitignore
+```
+
+
+
+
 
 ### branch
 

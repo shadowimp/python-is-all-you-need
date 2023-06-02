@@ -1,4 +1,5 @@
-```
+```bash
+# 本地安装
 conda create --name paddle_env python=3.8 --channel https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
 
 conda activate paddle_env
@@ -8,6 +9,11 @@ python3 -m pip install paddlepaddle-gpu -i https://mirror.baidu.com/pypi/simple
 python3 -m pip install paddlepaddle -i https://mirror.baidu.com/pypi/simple
 
 pip install paddleocr
+
+# docker 安装
+https://hub.docker.com/r/paddlecloud/paddleocr/tags
+
+docker run --name ppocr --runtime=nvidia -v $PWD:/mnt -p 8888:8888 -it --shm-size=32g paddlecloud/paddleocr:2.5-gpu-cuda10.2-cudnn7-latest /bin/bash
 ```
 
 

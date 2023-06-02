@@ -171,7 +171,9 @@ echo $SHELL         # 显示你在使用什么 SHELL
 which bash          # 搜索 $PATH，查找哪个程序对应命令 bash
 whereis bash        # 搜索可执行，头文件和帮助信息的位置，使用系统内建数据库
 whatis bash         # 查看某个命令的解释，一句话告诉你这是干什么的
-uname -a            # 查看内核版本等信息
+uname -a            # 查看内核版本等信息 系统内核 
+cat /proc/version # 查看内核版本等信息 系统内核
+lsb_release -a
 
 df -h   						# 查看磁盘空间使用情况
 df -i 							# 查看文件节点数(inode文件索引占用)
@@ -427,7 +429,7 @@ grep -P # -P 使用 Perl 拓展正则，支持\d匹配数字
 ### 网络
 
 ```bash
-# 传文件
+# 传文件 服务器传输数据
 python2 -m SimpleHTTPServer 9000	#在发送端启动 HTTPServer
 wget http://机器ip:9000/yuanbo.txt	# 接收端接收，yuanbo.txt为发送端目录下的文件
 
