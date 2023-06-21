@@ -83,8 +83,31 @@ page = driver.page_source
 
 
 
+```python
+# 等待1s加载
+driver.implicitly_wait(1) #最多10秒
+ 
+
 ```
 
 
+
+
+
+
+
+
+
+```python
+def parse():
+    r = session.get('http://www.qdaily.com/')
+    # 获取首页新闻标签、图片、标题、发布时间
+    for x in r.html.find('.packery-item'):
+        yield {
+            'tag': x.find('.category')[0].text,
+            'image': x.find('.lazyload')[0].attrs['data-src'],
+            'title': x.find('.smart-dotdotdot')[0].text if x.find('.smart-dotdotdot') else x.find('.smart-lines')[0].text,
+            'addtime': x.find('.smart-date')[0].attrs['data-origindate'][:-6]
+        }
 ```
 

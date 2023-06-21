@@ -79,3 +79,33 @@ url = ''
 nohup python test_api.py >> test.log 	2>&1 &
 ```
 
+
+
+```bash
+# gunicorn start 
+nohup /data0/yuanbo6/conda/bin/gunicorn -w 3 -b 10.10.10.123:1234 api:app >> api.log 2>&1 &
+
+# kill 
+ps -ef | grep gunicorn | grep 8139 | cut -c 9-15 | xargs kill -9
+```
+
+
+
+
+
+```python
+# get ip
+requst_ip = request.remote_addr
+file_log.info('ip:'+str(requst_ip))
+```
+
+
+
+
+
+### gunicorn
+
+```
+pip install gunicorn
+```
+

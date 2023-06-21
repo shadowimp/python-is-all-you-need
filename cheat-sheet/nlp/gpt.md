@@ -92,3 +92,13 @@ model = GPT2LMHeadModel.from_pretrained(MODEL_NAME)
 
 
 
+
+
+
+
+### 一文整理GPT-3 + RL 全流程训练开源项目
+
+https://mp.weixin.qq.com/s/BFGT6f7HFTYZ1VUooJqpXg
+
+
+

@@ -253,6 +253,8 @@ lscpu # 查看cpu个数
 
 
 sudo lsof -i tcp:8889  # 根据端口号查找进程名
+
+ps -ef | grep tingting66  | cut -c 9-15 | xargs kill -9
 ```
 
 
