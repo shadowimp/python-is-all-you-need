@@ -111,3 +111,28 @@ def parse():
         }
 ```
 
+
+
+
+
+
+
+### 安装中文字体
+
+```
+https://www.cnblogs.com/helios-fz/p/13706157.html
+
+https://www.cnblogs.com/yanjieli/p/10119900.html#:~:text=Windows%E5%AD%97%E4%BD%93%E5%8C%85%E4%B8%8B%E8%BD%BD%E9%93%BE%E6%8E%A5%EF%BC%9A%20https%3A%2F%2Fpan.baidu.com%2Fs%2F1ks9a70snHo02CTuqTrQhhg%20%E6%8F%90%E5%8F%96%E7%A0%81%EF%BC%9A7aw5%20%EF%BC%881%EF%BC%89%E5%9C%A8%2Fusr%2Fshare%2Ffonts%2F%E4%B8%8B%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%9B%AE%E5%BD%95%E5%AD%98%E6%94%BEWindows%E5%AD%97%E4%BD%93%20%23%20mkdir%20%2Fusr%2Fshare%2Ffonts%2Fwinfonts%2F%20%EF%BC%882%EF%BC%89%E5%B0%86%E5%AD%97%E4%BD%93%E4%B8%8A%E4%BC%A0%E5%88%B0%E5%88%9B%E5%BB%BA%E5%A5%BD%E7%9A%84%E7%9B%AE%E5%BD%95%E5%B9%B6%E8%A7%A3%E5%8E%8B,%23%20cd%20%2Fusr%2Fshare%2Ffonts%2Fwinfonts%2F%20%23%20tar%20xf%20Windows_fonts.%20tar.gz
+
+https://learnku.com/articles/50665
+```
+
+
+
+
+
+```
+# 手机 user agent 
+http://fynas.com/ua
+```
+

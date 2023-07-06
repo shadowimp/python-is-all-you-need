@@ -142,3 +142,44 @@ python3 -c "lines=open('file.txt').readlines();items=[item.strip().split() for i
 "
 ```
 
+
+
+
+
+```shell
+#!/bin/bash
+
+# 指定日志文件的路径和前缀
+log_directory="./"
+log_prefix="combine_demo_"
+
+# 获取当前日期
+current_date=$(date +"%Y%m%d")
+
+# 获取当前月份
+current_month=$(date +"%Y%m")
+
+# 指定汇总文件名
+summary_file="log_month_${current_month}.txt"
+
+# 创建一个空的汇总文件
+touch "${summary_file}"
+
+# 遍历日志文件
+for logfile in ${log_directory}${log_prefix}*.txt; do
+  # 提取日志文件的日期部分
+  log_date=$(basename "${logfile}" | cut -d '_' -f 2)
+
+  # 检查日志文件的日期是否在当前月份内
+  if [[ "${log_date}" == ${current_month}* ]]; then
+    # 追加当前日志文件内容到汇总文件
+    cat "${logfile}" >> "${summary_file}"
+  fi
+done
+
+echo "日志已汇总到 ${summary_file}"
+
+
+
+```
+

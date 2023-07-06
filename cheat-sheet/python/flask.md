@@ -16,14 +16,16 @@ import re
 
 app = Flask(__name__)
 
-@app.route('/')
+@app.route('/hello')
 def hello_world():
     return 'hello world!'
 
 if __name__ == '__main__':
+		import socket 
+    host_name = socket.gethostname()
     app.config["JSON_AS_ASCII"] = False
     app.config['JSONIFY_MIMETYPE'] = "application/json;charset=UTF-8" 
-    app.run(host='0.0.0.0',port=8888, debug=True)  
+    app.run(host='0.0.0.0',port=host_name , debug=True)  
 # 定义机器号和端口号
 # debug=True :调试模式 , 出现错误能够显示错误信息，并且在代码发生变化时，能够自动的重启程序。
 
