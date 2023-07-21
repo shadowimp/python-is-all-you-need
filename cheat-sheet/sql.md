@@ -239,7 +239,7 @@ Create table Person (PersonId int , FirstName varchar(255) , LastName varchar(25
 
 ### 创建一个地址表： 地址Id ， 个人Id ， 城市 ， 州
 ```MySQL
-Create table Address (AddressId int, PersonId int, City varchar(255), State varchar(255))
+Create table Address (AddressId int, PersonId int, City varchar(255), State varchar(255))  --注释
 ```
 
 ### 插入数据

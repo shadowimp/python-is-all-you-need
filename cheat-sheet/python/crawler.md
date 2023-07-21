@@ -88,6 +88,10 @@ page = driver.page_source
 driver.implicitly_wait(1) #最多10秒
  
 
+# 退出
+driver.close() - closes the browser active window.
+
+driver.quit() - closes all browser windows and ends driver's session/process.
 ```
 
 

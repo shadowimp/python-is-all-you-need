@@ -208,4 +208,14 @@ set cursorcolumn        "突出显示当前列"
 
 ```
 
-### 
+### 中文显示乱码
+
+```
+:e ++enc=utf8
+
+
+'readonly' option is set:
+wq! 强制退出保存
+或set noreadonly
+```
+

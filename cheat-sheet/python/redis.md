@@ -12,6 +12,11 @@ redis_conn.set('name_2', 'Zarten_2')
 v = redis_conn.get('name_1')
 print(v)
 
+
+# exist
+redis_conn.exists('name')
+
+# delete 
 ```
 
 
