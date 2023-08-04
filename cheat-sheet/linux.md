@@ -1,3 +1,5 @@
+
+
 ### ''常用命令
 
 ```shell
@@ -290,6 +292,8 @@ tar -zcvf  yuanbo6.tar yuanbo6 --exclude-from=big_file_pth.txt
 zip -q -r html.zip /home/html # 将 /home/html/ 这个目录下所有文件和文件夹打包为当前目录下的 html.zip：
 
 unzip html.zip # 解压
+
+unzip filename.zip -d /data0/project/  # 将压缩文件解压到指定的文件夹
 ```
 
 

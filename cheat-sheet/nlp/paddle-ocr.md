@@ -16,6 +16,10 @@ pip install paddleocr
 https://hub.docker.com/r/paddlecloud/paddleocr/tags
 
 docker run --name ppocr --runtime=nvidia -v $PWD:/mnt -p 8888:8888 -it --shm-size=32g paddlecloud/paddleocr:2.5-gpu-cuda10.2-cudnn7-latest /bin/bash
+
+
+# 报错；CommandNotFoundError: Your shell has not been properly configured to use 'conda activate'.
+source /data0/user/conda/etc/profile.d/conda.sh
 ```
 
 

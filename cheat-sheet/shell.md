@@ -5,6 +5,9 @@
 a = 1 
 echo $varname             # 查看变量内容
 
+# 文件内容存入变量
+value =`cat sources.xml`
+
 # 时间变量
 time_archive=$(date "+%Y%m%d")
 

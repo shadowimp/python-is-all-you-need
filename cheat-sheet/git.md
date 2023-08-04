@@ -57,6 +57,13 @@ git stash apply # 恢复，恢复后，stash内容并不删除，你要使用命
 
 
 git revert # 放弃指定提交的修改，但是会生成一次新的提交，需要填写提交注释，以前的历史记录都在；
+
+
+
+# 强制拉取远程代码，忽略本地修改
+git fetch
+git reset --hard HEAD
+git merge origin/master 
 ```
 
 
