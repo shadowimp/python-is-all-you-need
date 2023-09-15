@@ -64,6 +64,9 @@ git revert # 放弃指定提交的修改，但是会生成一次新的提交，�
 git fetch
 git reset --hard HEAD
 git merge origin/master 
+
+git fetch;git reset --hard HEAD;git merge origin/master 
+sudo chown yuanbo6 * -R
 ```
 
 

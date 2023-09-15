@@ -383,3 +383,17 @@ select CAST('20091214' AS DATE) # 字符串类型转换为日期类型
 
 ```
 
+### get_json_object  从json字符串中取值
+
+```bash
+get_json_object(json_string, '$.json_key')
+
+- json_string : json字符串
+- json_key :  需要的key
+
+SELECT get_json_object('{"name": "John", "age": 30}', '$.name');
+
+```
+
+
+

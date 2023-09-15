@@ -12,6 +12,8 @@ pip install paddleocr -i https://mirror.baidu.com/pypi/simple
 
 pip install paddleocr
 
+pip3 install opencv-python-headless==4.5.3.56
+
 # docker 安装
 https://hub.docker.com/r/paddlecloud/paddleocr/tags
 
@@ -20,6 +22,9 @@ docker run --name ppocr --runtime=nvidia -v $PWD:/mnt -p 8888:8888 -it --shm-siz
 
 # 报错；CommandNotFoundError: Your shell has not been properly configured to use 'conda activate'.
 source /data0/user/conda/etc/profile.d/conda.sh
+
+
+
 ```
 
 
@@ -33,6 +38,14 @@ ocr = PaddleOCR(use_angle_cls=True,
                 use_gpu=False,
                 rec_model_dir='ch_PP-OCRv3_rec_infer/',
                 det_model_dir='ch_PP-OCRv3_det_infer/',
+                det_db_box_thresh=0.8
+               )
+
+ocr = PaddleOCR(use_angle_cls=True, 
+                lang="ch",
+                use_gpu=True,
+                rec_model_dir='models/ch_PP-OCRv3_rec_infer/',
+                det_model_dir='models/ch_PP-OCRv3_det_infer/',
                 det_db_box_thresh=0.8
                )
 

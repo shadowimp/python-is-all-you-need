@@ -6,7 +6,7 @@ https://hub.docker.com/
 
 
 
-```
+```bash
 # install docker 
 
 install docker 
@@ -14,14 +14,25 @@ sudo apt install docker.io
 
 ```
 
+```bash
+# docker pull image  
+docker image pull nvidia/cuda:10.1-devel-ubuntu18.04	
+
+docker pull continuumio/miniconda3
+docker run -t -i continuumio/miniconda3 /bin/bash
+```
+
 
 
 
 
 ```shell
-docer run -it -v $PWD:/work centos: latest /bin/bash     #docker启动centos
+#docker启动centos
+docer run -it -v $PWD:/work centos: latest /bin/bash     
+# -i : access the interactive model  
+# -t : allocate a vitual terminal sessions
 	
-docker pull nvidia/cuda:10.1-devel-ubuntu18.04	# doucker 拉镜像
+
 
 docker save 7e66518b68a8 > nvidia.tar	#docker 导出image
 

@@ -1,4 +1,92 @@
 ```python
+import torch
+
+# create tensor 
+x = torch.tensor(2,4)
+
+# tensor type 
+x.type()
+x.dtype
+
+#list to tensor 
+l = [1,2,3]
+x = torch.Tensor(l)
+
+# index to item 
+x[0]
+
+#  create tensor 
+torch.zeros(2,4)
+torch.ones(2,4)
+torch.eye(3)
+torch.rand(2,4)
+torch.arange(1,4)  : tensor([1,2,3])
+
+# 运算
+torch.add(a,b) # 对应元素相加
+x + 3  # tensor每个元素都+3
+
+torch.dot(a,b) # 向量点积
+torch.mv(a,b) # 矩阵与向量乘法
+torch.mm(a,b)  # 矩阵乘法
+
+
+
+
+```
+
+
+
+
+
+
+
+
+
+```python
+import torch
+print(torch.__version__)
+print(torch.version.cuda)
+print(torch.backends.cudnn.version())
+
+
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+```
+
+
+
+
+
+
+
+
+
+### view
+
+功能同reshape相同
+
+改变tensor的shape
+
+```python
+X = torch.rand(3,4,5)
+X.shape # 3,4,5
+X_ = X.view(3*4,5) 
+X_shape # 12,5
+```
+
+
+
+### sigmod
+
+$$ sigmod(x) = \frac{1}{1+e^{-x}}$$
+
+x = 0  , sigmod(x)  = 0.5
+
+x = -无穷 ， sigmod(x) = 0
+
+x = +无穷， sigmod(x) = 1
+
+```python
 # sigmod 
 f = nn.Sigmoid()
 x = torch.randn(10)
@@ -7,6 +95,63 @@ y = m(x)
 y.min()
 y.max()
 ```
+
+### logistic Regression
+
+使用sigmod函数将 任意值转到 0-1 之间来实现二分类
+
+
+
+### softmax
+
+二分类softmax = sigmod
+
+把数列变为概率.  通过指数运算后，差距变大，分类效果明显
+
+0-1之间的数，所有值相加为1 
+
+[1,2,3] -> [0.09 , 0.24, 0.67]
+
+[1,2,5] -> [0.02, 0.05, 0.94]
+
+$$ y_i = \frac{e^{x_i}}{\sum^{V}_{j-1} e^{x_j}}$$
+
+
+
+```python
+def softmax(x):
+  # x : vector
+  exps = np.exp(x)
+  return exps / np.sum(exps)
+
+```
+
+层次softmax  (hierarchcal softmax)
+
+word2vec 词很多，算每个词的softmax概率计算量太大，
+
+词频大的位于浅层，词频小的位于深层。
+
+高频词能够更快的找到，
+
+W shape: V * N .   V个单词， N维向量。
+
+反向更新梯度本质是极大似然估计， 时间复杂度为 O(V) 
+
+Hierarchical Softmax 时间复杂度 O(log(V))
+
+哈夫曼树： 词频高的词编码短， 词频低的词编码长，
+
+![img](https://pic4.zhimg.com/v2-b150ffbf4429ec221613ede2cb310fe7_b.jpg)
+
+```
+变长：45*1 + 13+3 + 12*3 + 16*3 +9*4 +5*4 = 224
+定长： (45+13+12+16+9+5)*3 = 300
+```
+
+hierarchical softmax利用哈夫曼树将一个多分类问题转化为多个二分类问题
+
+
 
 
 

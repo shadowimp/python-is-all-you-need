@@ -437,6 +437,7 @@ grep -P # -P 使用 Perl 拓展正则，支持\d匹配数字
 ```bash
 # 传文件 服务器传输数据
 python2 -m SimpleHTTPServer 9000	#在发送端启动 HTTPServer
+python3 -m http.server
 wget http://机器ip:9000/yuanbo.txt	# 接收端接收，yuanbo.txt为发送端目录下的文件
 
 wget {url}                # 下载文件，可加 --no-check-certificate 忽略 ssl 验证
