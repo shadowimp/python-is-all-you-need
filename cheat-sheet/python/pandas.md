@@ -15,6 +15,9 @@ lv3 = lv3[-lv3['keyword'].isna()].reset_index(drop=True)  # remove nan's
 for c1, c2 in data.values 
 
 
+# Sort a Pandas DataFrame by Date
+data2 = data.sort_values(by='date',ascending=True)
+
 
 
 ```

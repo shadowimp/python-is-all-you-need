@@ -1,3 +1,26 @@
+### git LFS( large file storage)
+
+
+
+```
+curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.rpm.sh | sudo bash
+sudo yum install git-lfs
+git lfs install
+
+```
+
+```
+git lfs track test_file.md
+
+git lfs ls-files  # show tracked file 
+git lfs untrack test_file.md  # cancel the tracked file 
+
+```
+
+
+
+
+
 ### Git
 
 git的工作流

@@ -1,3 +1,15 @@
+###  国内镜像站 
+
+https://hf-mirror.com
+
+```
+export HF_ENDPOINT=https://hf-mirror.com
+```
+
+
+
+
+
 ### 保存模型
 
 需要保存3个文件，才能加载finetune后的model

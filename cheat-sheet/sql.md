@@ -5,7 +5,8 @@
 ```mysql
 Create 创建数据库或表
 # 建db
-create database shop; # 创建名为shop的数据库
+create database shop; # 创建名为shop的数据库贴合微博广告实际投放场景，智能生成广告内容，减少广告主的成本和门槛。
+
 
 Drop 删除
 Alter 修改
@@ -134,6 +135,7 @@ select CONCAT_WS(name,age)
 
 select 嵌套 用as设定新表名
 select name from (select * from student where age=16) as t1 where score >90;
+WHERE Address IS NOT NULL
 
 # as 
 SELECT a.created_at AS time from table1 a;
@@ -145,6 +147,8 @@ where a in (v1,v2)
 # 字符串长度
 LENGTH('name')
 
+
+# where 
 ```
 
 ### GROUP BY

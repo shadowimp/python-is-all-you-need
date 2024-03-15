@@ -1,3 +1,65 @@
+### convert bytes to string
+
+```
+>>> b"abcde".decode("utf-8")
+```
+
+
+
+### hash
+
+```python
+import hashlib
+
+hash_obj = hashlib.md5()
+
+hash_obj.update("string".encode('utf-8'))
+
+res_hash=hash_obj.hexdigest()
+
+```
+
+
+
+### json
+
+```
+import json
+data = {'name':'z'}
+json_str=json.dumps(data)
+
+
+# json.dumps: convert python type to json   ,json.dump : save json to file 
+# json.loads: convert json to python type 
+```
+
+
+
+```
+
+```
+
+
+
+
+
+
+
+
+
+
+
+```python
+# assert 
+def fun_div(a,b):
+		assert b != 0 , "被除数不得为0"
+    return a/b 
+```
+
+
+
+
+
 ```python	
 集合set
 交集 &

@@ -8,9 +8,15 @@ https://hub.docker.com/
 
 ```bash
 # install docker 
+# https://docs.docker.com/engine/install/centos/
+sudo yum install -y yum-utils
+sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+sudo yum install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
-install docker 
-sudo apt install docker.io
+# start docker 
+sudo systemctl start docker
+
+# 
 
 ```
 
