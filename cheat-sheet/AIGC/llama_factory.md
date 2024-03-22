@@ -27,9 +27,6 @@ python -m llmtuner.webui.interface
 ```
 
 
-
-
-
 CUDA_VISIBLE_DEVICES=0 /data0/yuanbo6/conda_env/envs/chatglm/bin/python src/train_bash.py \
     --stage sft \
     --do_train \
@@ -112,6 +109,12 @@ print(response)
 ```
 
 
+
+```
+# set dataset 
+# dataset_info.json
+
+```
 
 
 

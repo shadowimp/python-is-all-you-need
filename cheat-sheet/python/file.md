@@ -1,6 +1,6 @@
-### read json 
+###  json 
 
-```
+```python
 import json
 f = open('file_name.json')
 data = json.loads(f)
@@ -10,6 +10,25 @@ f.close
 with open('test.json') as f:
     line= f.readline()
     dic = eval(line)
+    
+with open('dev.json') as f:
+    data = json.loads(f.read())
+    print(data)
+    
+### json
+# json.dumps: convert python type to json   ,json.dump : save json to file 
+# json.loads: convert json to python type 
+
+### wirte 
+import json
+data = {'name':'z'}
+json_str=json.dumps(data)
+
+import json
+dump_data = json.dumps(tag_dic)  # dumps 将字典变成json类型
+with open('test_json.txt','w+') as f:
+    f.write(dump_data)
+    
 ```
 
 ### os

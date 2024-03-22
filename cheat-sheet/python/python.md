@@ -1,3 +1,33 @@
+```python
+# 日志
+import sys
+import logging 
+class Logger(object):
+    level_relations = { 
+        'debug': logging.DEBUG,
+        'info': logging.INFO,
+        'warning': logging.WARNING,
+        'error': logging.ERROR,
+        'crit': logging.CRITICAL
+    }  # 日志级别关系映射
+    
+    def __init__(self,filename,level='info'):
+        self.logger = logging.getLogger()
+        handler = logging.FileHandler(filename)
+        formatter = logging.Formatter("%(asctime)s [%(levelname)s]%(message)s",datefmt='%Y-%m-%d %H:%M:%S')
+        handler.setFormatter(formatter)
+        self.logger.addHandler(handler)
+        self.logger.setLevel(self.level_relations.get(level)) # 设置日志级别   
+file_log_name = 'file.log'
+file_log = Logger(file_log_name,level='info').logger
+
+file_log.info('start')
+```
+
+
+
+
+
 ### convert bytes to string
 
 ```
@@ -18,32 +48,6 @@ hash_obj.update("string".encode('utf-8'))
 res_hash=hash_obj.hexdigest()
 
 ```
-
-
-
-### json
-
-```
-import json
-data = {'name':'z'}
-json_str=json.dumps(data)
-
-
-# json.dumps: convert python type to json   ,json.dump : save json to file 
-# json.loads: convert json to python type 
-```
-
-
-
-```
-
-```
-
-
-
-
-
-
 
 
 
@@ -132,13 +136,6 @@ with open('brandname.csv','r') as f:
     lines_100 = io.StringIO(f.read(size))
 for line in lines_100:
     print(line)
-    
-    
-    
-import json
-dump_data = json.dumps(tag_dic)  # dumps 将字典变成json类型
-with open('test_json.txt','w+') as f:
-    f.write(dump_data)
     
     
 def is_english(s):
