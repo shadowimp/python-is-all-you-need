@@ -1,3 +1,55 @@
+### LineProfiler 性能分析
+
+分析每行代码的运行时间， analysis run time
+
+```python
+from line_profiler import LineProfiler
+def two_sum(nums,target):
+    nums_dict = { }  #创建一个空字典,将target-num1作为key，num1的下标作为value。
+    for i in range(len(nums)):
+        if nums[i] not in nums_dict: #如果没有，则将 target-nums1 和 nums1的下标 存入字典nums_dict
+            nums_dict[target-nums[i]]  = i
+        else:       #遍历字典看其中是否有x，如果有说明两个数找到了
+            return [nums_dict[nums[i]],i]
+
+
+lp = LineProfiler()
+lp_wrapper = lp(two_sum)
+lp_wrapper([2,5,7,11,15],18)
+lp.print_stats()
+```
+
+
+
+
+
+
+
+### argparse解析命令行参数
+
+```python
+import argparse
+
+parser = argparse.ArgumentParser()
+
+parser.add_argument('-length',type=int,default=100)
+opt = parser.parse_args()
+
+print(parser.parse_args())
+
+
+```
+
+
+
+
+
+
+
+
+
+### log
+
 ```python
 # 日志
 import sys
@@ -154,6 +206,12 @@ def Sent2Word(sentence):
     # words = [w for w in words if w not in stop_words]
     return list(words)
   
+
+# time
+
+import datetime
+time = datetime.datetime.now()
+ts = str(time.day)+'-'+str(time.hour)+'-'+str(time.minute)
 
 import time
 time.sleep(5) 
