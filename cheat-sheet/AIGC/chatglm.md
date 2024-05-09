@@ -39,28 +39,40 @@ pip install cpm_kernels
 ```
 # 参数
 Maximum length  ： 输入最大长度，一般为2048
+Maximum length 参数
+通常用于限制输入序列的最大长度，因为 ChatGLM-6B 是 2048 长度推理的，一般这个保持默认就行，太大可能会导致性能下降。
+
+
 Temperature ： 	调整softmax函数的输出，调节不同类别的置信度
 T=0.05 ,model倾向于选择概率最大的类别输出
 T=0.95 ，model更不稳定，倾向于输出多个类别
+temperature 越大，输出结果的随机性越大，
 
 
-temperature
-top_p
-
-
+Top-k采样：限制模型在生成下一个词时只考虑概率最高的k个词，这有助于避免生成低概率的词汇，提高文本的连贯性和可读性。
 top_k: 整数,大于1的数
 越大，生成的多样性更大， 越小生成的越固定
 
-temperature 越大，输出结果的随机性越大，
-
-Top-k采样：限制模型在生成下一个词时只考虑概率最高的k个词，这有助于避免生成低概率的词汇，提高文本的连贯性和可读性。
-
 
 Top-p采样（Nucleus Sampling）：与top-k类似，top-p采样确保所有选择的词汇的累积概率不超过一个给定的阈值（top_p），这有助于生成更加多样化的文本。
+top_p: 0-1:
+将 top-p 设定为 0.15，即选择前 15% 概率的 tokens 作为候选。如下图所示，United 和 Netherlands 的概率加起来为 15% ，所以候选词就是这俩，最后再从这些候选词里，根据概率分数，选择 united 这个词。
+Top-p is usually set to a high value (like 0.75) with the purpose of limiting the long tail of low-probability tokens that may be sampled. We can use both top-k and top-p together. If both k and p are enabled, p acts after k.
 
 
-Maximum length 参数
 
-通常用于限制输入序列的最大长度，因为 ChatGLM-6B 是 2048 长度推理的，一般这个保持默认就行，太大可能会导致性能下降。
+
+
+
+
+
+
+
+
+unk_token: 不存在词典里的字符.
+```
+
+```
+model.chat(tokenizer, prompt, history=[],do_sample=True, max_length=300, top_k=30,top_p=0.95)
 ```
 

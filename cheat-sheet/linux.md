@@ -1,3 +1,12 @@
+```bash 
+watch -n 2  -d nvidia-smi # 持续观察
+nvidia-smi -l 2 
+```
+
+
+
+
+
 
 
 ### ''常用命令

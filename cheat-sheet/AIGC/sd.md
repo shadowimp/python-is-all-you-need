@@ -19,6 +19,8 @@ image.save(save_path)
 
 
 
+### playground
+
 
 
 ```python
@@ -28,6 +30,24 @@ pipe_text2img_v2 = DiffusionPipeline.from_pretrained("playgroundai/playground-v2
 text = 'a cat'
 image =pipe_text2img_v2(prompt=text,guidance_scale=3.0).images[0]
 
+```
+
+```python
+from diffusers import DiffusionPipeline
+import torch
+
+pipe = DiffusionPipeline.from_pretrained(
+    "playgroundai/playground-v2-1024px-aesthetic",
+    torch_dtype=torch.float16,
+    use_safetensors=True,
+    add_watermarker=False,
+    variant="fp16"
+)
+pipe.to("cuda")
+
+prompt = "Astronaut in a jungle, cold color palette, muted colors, detailed, 8k"
+image  = pipe(prompt=prompt, guidance_scale=3.0).images[0]
+image.save('xx.png')
 ```
 
 
