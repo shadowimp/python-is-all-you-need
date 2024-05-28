@@ -62,6 +62,13 @@ latest_file = files_path[0]
 
 ```
 
+```python
+import os
+file_list =  os.listdir(file_dir)
+file_list =  [os.join_path(file_name,file_dir) for file_name in file_list]
+print(file_list)
+```
+
 
 
 ### write csv

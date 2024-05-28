@@ -22,6 +22,16 @@ model = AutoModel.from_pretrained("THUDM/chatglm3-6b", trust_remote_code=True).h
 # 
 response = model.chat(tokenizer, "你好")
 response, history = model.chat(tokenizer, "你好", history=history)
+
+
+from transformers import AutoTokenizer , AutoModel
+tokenizer = AutoTokenizer.from_pretrained('THUDM/chatglm-6b',trust_remote_code=True)
+model = AutoModel.from_pretrained("THUDM/chatglm-6b",trust_remote_code=True).half().cuda()
+model = model.eval()
+response,history  = model.chat(tokenizer ,'hello',histroy=[])
+print(response)
+response,history  = model.chat(tokenizer ,'晚上睡不着应该怎么办',histroy=history)
+print(response)
 ```
 
 
@@ -76,3 +86,10 @@ unk_token: 不存在词典里的字符.
 model.chat(tokenizer, prompt, history=[],do_sample=True, max_length=300, top_k=30,top_p=0.95)
 ```
 
+https://zhuanlan.zhihu.com/p/648074941?utm_id=0
+
+
+
+hf-mirror:
+
+https://hf-mirror.com/THUDM/chatglm3-6b

@@ -107,7 +107,7 @@ unlink 目标文件
 mkdir /data0/yuanbo6/usr_cache
 mv /usr/yuanbo6/.cache/* /data0/yuanbo6/usr_cache
 rm -r /usr/yuanbo6/.cache/
-ln -s /data0/yuanbo6/usr_cache 
+ln -s /data0/yuanbo6/usr_cache  
 
 
 sleep 3 #睡眠3秒

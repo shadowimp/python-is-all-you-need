@@ -1,3 +1,11 @@
+https://github.com/QwenLM/Qwen/issues/604
+
+model.chat and model.genarate
+
+
+
+
+
 ### vllm
 
 llm  的推理部署库， 可以提升服务的性能

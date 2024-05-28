@@ -1,6 +1,22 @@
 ### Shell 编程
 
 ```bash
+for file in data_2023* ;
+do
+echo "$file"| sed 's/2023/2024/';
+new_file=$(echo "$file"| sed 's/2023/2024/');
+echo "$new_file"
+mv "$file" "$new_file";
+echo "Renamed $file to $new_file";
+done
+
+echo "data_20240523.txt" | sed 's/2024/2025/' 
+> data_20250523.txt
+```
+
+
+
+```bash
 # 定义变量
 a = 1 
 echo $varname             # 查看变量内容
