@@ -1,3 +1,49 @@
+read and write
+
+```
+
+
+# 添加
+with open('test_json.txt','a+') as fw:
+    f.write(dump_data)
+```
+
+
+
+
+
+
+
+### excel
+
+```python
+import xlrd 
+import xlwt
+#加载excel数据
+data = xlrd.open_workbook('iris.xls')
+
+#取第一张表
+table = data.sheets()[0]
+
+#取表的名字
+table_name =table.name 
+
+#表的行数 和 列数
+n_row, ncols = table.nrows , table.ncols
+
+print("第一行第二列的值为 {0}".format(table.cell_value(rowx=0, colx=1)))
+print("第一行第二列的值为 {0}".format(table.row_values(0)[1]))
+
+
+# 打印前五行的值
+for i in range(5):
+    print(table.row_values(i))    
+```
+
+
+
+
+
 ###  json 
 
 ```python

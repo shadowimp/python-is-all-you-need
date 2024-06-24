@@ -1,3 +1,50 @@
+```sql
+# join 
+(8) SELECT (9) DISTINCT (11) <TOP_specification> <select_list>
+(1) FROM <left_table>
+(3) <join_type> JOIN <right_table>
+(2) ON <join_condition>
+(4) WHERE <where_condition>
+(5) GROUP BY <group_by_list>
+(6) WITH {CUBE | ROLLUP}
+(7) HAVING <having_condition>
+(10) ORDER BY <order_by_list>
+
+作者：黄赟
+链接：https://zhuanlan.zhihu.com/p/149311644
+来源：知乎
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+SELECT Header.OrderId
+    ,   Detail.ProductName
+    ,   Detail.Amount 
+FROM tblOrderHeader Header 
+    LEFT JOIN tblOrderDetail Detail 
+        ON Header.OrderId = Detail.OrderId 
+WHERE Header.OrderDate > '2020-01-01' 
+    AND Detail.Amount > 1000
+    
+    
+# join 多张表
+SELECT o.id,
+       o.order_no,
+       a.id,
+       a.order_id,
+       a.address_no
+FROM t_order o,
+     t_address a
+WHERE o.id = a.order_id  limit 0, 100000;
+
+作者：码农Academy
+链接：https://zhuanlan.zhihu.com/p/677362241
+来源：知乎
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+```
+
+
+
+
+
 ## SQL 
 
 ### 操作数据库

@@ -142,3 +142,10 @@ def text_normal_l1(text):
     text = re.sub("\[\S+?\]", " ", text)  # 取出表情符号
     return text.strip()  
 ```
+
+```python
+import re 
+def text_re(text1):
+    return re.sub('【文案\d+】', '', text)
+```
+
