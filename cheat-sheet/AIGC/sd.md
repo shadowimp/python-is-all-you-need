@@ -1,3 +1,15 @@
+### sd prompt 
+
+```
+xxmix_girl,a woman takes a fisheye selfie on a beach at sunset
+```
+
+
+
+
+
+
+
 ### control net
 
 指令修图，

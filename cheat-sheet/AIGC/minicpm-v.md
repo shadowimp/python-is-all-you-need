@@ -1,4 +1,25 @@
 ```
+# modelscope
+https://modelscope.cn/models/OpenBMB/MiniCPM-Llama3-V-2_5/files
+
+# demo 
+http://120.92.209.146:8889/
+
+
+# blog
+https://www.sohu.com/a/780826011_121119001
+
+
+# github
+https://github.com/OpenBMB/MiniCPM-V?tab=readme-ov-file
+
+```
+
+
+
+
+
+```
 conda create -n MiniCPM-V python=3.10 -y
 conda activate MiniCPM-V
 # install

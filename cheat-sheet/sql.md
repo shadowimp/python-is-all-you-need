@@ -35,6 +35,11 @@ FROM t_order o,
      t_address a
 WHERE o.id = a.order_id  limit 0, 100000;
 
+select * from tag
+join tag_post on tag_post.tag_id=tag.id
+join post on tag_post.post_id=post.id
+where tag.tag='mysql';
+
 作者：码农Academy
 链接：https://zhuanlan.zhihu.com/p/677362241
 来源：知乎
@@ -394,6 +399,20 @@ redis_conn = redis.Redis(host='127.0.0.1', port= 6379, password= 'your pw', db= 
 ```mysql
 ROUND(data) # 数据限制小数位数
 CONCAT(data,'%')  # 连接 % 在data后
+
+# str 
+
+# split
+split(str,':')[1]  
+
+# replace 
+replace(str, 'a', 'b')
+
+# len
+length(str)
+
+
+
 
 ```
 

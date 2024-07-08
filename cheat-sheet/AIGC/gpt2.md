@@ -1,6 +1,0 @@
-ft-data
-
-```
-query text 
-```
-
