@@ -1,3 +1,30 @@
+```python 3
+def fun(self, x):
+  a  = self(x)
+```
+
+### super init 
+
+super( ) 调用父类的方法， 无需指定父类的名称
+
+super init 就是调用父类的init方法
+
+```python 3
+class A:
+  def __init__(self):
+    print("init A")
+class B(A):
+  def __init__(self):
+    super().__init__() # 调用 A 的__init__
+    print("init B")
+b = B()
+>> 
+"init A"
+"init B"
+```
+
+
+
 ### LineProfiler 性能分析
 
 分析每行代码的运行时间， analysis run time

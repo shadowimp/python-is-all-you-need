@@ -1,3 +1,218 @@
+
+
+### register_buffer
+
+register_buffer是一个方法，它被用于将特定的Tensor注册到一个神经网络模型（继承自nn.Module的类）中，作为模型的一部分，但这些Tensor不参与模型的训练过程，即它们的requires_grad属性默认为False，这意味着在反向传播时不会计算这些Tensor的梯度。这个功能特别适用于那些需要在模型中持久化存储、跟踪但不需要优化的数值，例如在Batch Normalization层中的运行均值（running mean）和方差（running variance）
+
+-   **不参与梯度计算**：注册的缓冲区Tensor不会在训练过程中更新其值，除非手动更改，这使得它们适合存储静态数据或模型状态。
+-   **状态字典（state_dict）的一部分**：尽管不参与梯度计算，这些缓冲区仍会被包含在模型的state_dict中，这意味着在保存和加载模型时，这些数据会被正确保存和恢复，确保模型的完整性和一致性。
+
+register_buffer提供了一种机制，使得开发者可以将一些不需优化的Tensor作为模型的一部分进行管理，确保这些数据在模型的整个生命周期中得到妥善处理，包括训练、保存和加载等阶段
+
+```
+
+```
+
+
+
+
+
+### 矩阵乘法
+
+@ =torch.matmul() 矩阵乘法
+
+```
+c = a @ b 
+
+```
+
+
+
+
+
+### torch. tile 
+
+返回原张量中下三角部分的元素，上三角部分的元素则被置为0
+
+torch.tril(input, diagonal=0)
+
+-   `input`: 是一个张量，函数将对这个张量进行下三角操作。
+-   `diagonal`: 可选参数，指定了对角线的位置。默认为0，表示主对角线。正数会使对角线以上（包含对角线）的元素保留，负数则会使对角线以下的元素保留。
+
+`diagonal` 越大 保留的原元素越多， 
+
+```
+a = torch.tril(torch.ones(5,5), diagonal=0)
+a
+
+tensor([[1., 0., 0., 0., 0.],
+        [1., 1., 0., 0., 0.],
+        [1., 1., 1., 0., 0.],
+        [1., 1., 1., 1., 0.],
+        [1., 1., 1., 1., 1.]])
+        
+        
+        
+ a = torch.tril(torch.ones(5,5), diagonal=1)
+>>
+tensor([[1., 1., 0., 0., 0.],
+        [1., 1., 1., 0., 0.],
+        [1., 1., 1., 1., 0.],
+        [1., 1., 1., 1., 1.],
+        [1., 1., 1., 1., 1.]])
+        
+        
+a = torch.tril(torch.ones(5,5), diagonal=-1)
+a
+tensor([[0., 0., 0., 0., 0.],
+        [1., 0., 0., 0., 0.],
+        [1., 1., 0., 0., 0.],
+        [1., 1., 1., 0., 0.],
+        [1., 1., 1., 1., 0.]])
+```
+
+
+
+
+
+### model中的 forward 函数
+
+```
+
+执行 output = model(input_data)  时" 
+
+torch 会自动调用  model.__call__ 
+从而又调用，forword 来完成前向传播的计算（feed forward） 
+
+所以： 当执行model(x)的时候，底层自动调用forward方法计算结果
+
+
+```
+
+```python
+## nn.Module 源代码
+class torch.nn.Module:
+  def __init__(self):
+    super(Module,self).__init__()
+    self._modules = OrderedDict()
+    self.training = True 
+  def __call__(self,*input , **kwargs):
+    self.train(self.training)
+    output = self.forward(*input, **kwargs)
+   	return output
+ 	
+  
+```
+
+### nn.embedding 
+
+将原本最里面1维的数，变成一个（词嵌入维度的）向量
+
+```python
+import torch
+from torch.nn import Embedding
+
+# 假设我们有一个词汇表大小为10，每个词的嵌入维度为5
+embedding_layer = Embedding(64, 1024)
+
+# 输入是一个包含两个序列的批次，每个序列有两个索引
+input_indices = torch.tensor([[1, 2, 3 ], [4, 5,6 ]])
+print(input_indices.shape) 
+>> 2,3
+# 通过嵌入层
+word_embeddings = embedding_layer(input_indices)
+
+print(word_embeddings.shape) 
+>> 2,3,1024
+
+
+```
+
+
+
+
+
+### multinomial
+
+从一个概率分布中（概率和为1） 按概率值抽取， 默认不放回，输出抽取的序号.
+
+这个函数在训练神经网络时特别有用，比如在实现负例采样或者在某些生成模型中选择下一个状态时。
+
+得到下一个词的概率矩阵， 从而在其中选出输出的一个字。
+
+```python
+import torch
+
+# torch.multinomial(input, num_samples, replacement=False, out=None)
+# 假设我们有一个概率分布张量 ,按概率值返回
+prob_dist = torch.tensor([0.1, 0.5, 0.4])
+# 从这个分布中无放回地抽取2个样本 （默认是不放回的）
+
+nums = torch.tensor([0.5, 0.4,0.1])
+for _ in range(10):
+    print(torch.multinomial(nums, 1))
+tensor([0])
+tensor([0])
+tensor([0])
+tensor([0])
+tensor([2])
+tensor([1])
+tensor([0])
+tensor([1])
+tensor([0])
+tensor([1])
+
+
+
+nums = torch.tensor([0.1,0.9])
+for _ in range(10):
+    print(torch.multinomial(nums, 2))
+    
+tensor([1, 0])
+tensor([1, 0])
+tensor([1, 0])
+tensor([1, 0])
+tensor([1, 0])
+tensor([1, 0])
+tensor([1, 0])
+tensor([1, 0])
+tensor([1, 0])
+tensor([1, 0])
+    
+  
+nums = torch.tensor([0.9,0.1])
+for _ in range(10):
+    print(torch.multinomial(nums, 2))
+tensor([0, 1])
+tensor([0, 1])
+tensor([0, 1])
+tensor([0, 1])
+tensor([1, 0])
+tensor([0, 1])
+tensor([0, 1])
+tensor([0, 1])
+tensor([0, 1])
+tensor([0, 1])
+
+nums = torch.tensor([0.99,0.11])
+for _ in range(10):
+    print(torch.multinomial(nums, 2, replacement=True))
+tensor([0, 1])
+tensor([0, 0])
+tensor([0, 0])
+tensor([0, 0])
+tensor([0, 0])
+tensor([0, 0])
+tensor([0, 0])
+tensor([0, 0])
+tensor([0, 0])
+tensor([0, 0])
+
+
+```
+
+
+
 ```python
 import torch
 import numpy as np

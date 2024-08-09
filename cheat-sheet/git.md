@@ -17,6 +17,18 @@ git lfs untrack test_file.md  # cancel the tracked file
 
 ```
 
+bug: remote: fatal: pack exceeds maximum allowed size
+
+文件过大， 把大文件使用git-lfs管理：
+
+打开该git根目录下的.gitattributes文件（这个文件默认是隐藏的）在文件中添加一行：
+
+```
+大文件名称  filter=lfs diff=lfs merge=lfs -text
+
+
+```
+
 
 
 
@@ -90,6 +102,11 @@ git merge origin/master
 
 git fetch;git reset --hard HEAD;git merge origin/master 
 sudo chown yuanbo6 * -R
+
+
+
+
+
 ```
 
 
@@ -99,6 +116,16 @@ sudo chown yuanbo6 * -R
 git rm -r --cached filename 
 
 
+
+## 修改远程仓库的url
+git remote set-url origin https://XXX.git 
+
+# 删除名为origin的远程仓库
+git remote rm origin 
+
+
+# 链接远程仓库
+git remote add origin http://git.com
 ```
 
 
@@ -158,10 +185,36 @@ credential.helper=store
 
 ### git reset 
 
-回溯历史版本
+用于撤销提交、回溯版本和调整工作目录或暂存区状态
+
+-   **撤销错误的提交**：当提交了错误的代码或者不想保留某次提交时，可以使用 `git reset` 撤销提交，并重新修改代码。
+-   **准备精细的提交历史**：在提交代码时，如果希望将多次提交合并为一个更大的提交，可以使用 `git reset` 来撤销一部分提交，然后重新提交更改。
+-   **修改最近提交**： 当你意识到上一次提交包含了错误的信息或者忘记了包含某些重要更新时，可以通过 `git reset --soft` 回退至之前的提交，然后重新暂存并提交正确的更改。
+
+三种模式：--mixed（默认）  --soft、` 和 `--hard 
+
+
+
+````bash
+git reset  # 移动 HEAD 指针并重置索引，不会修改工作区，撤销了提交和暂存的更改，但保留了工作区的修改。
+````
 
 ```bash
-git reset --hard + commit id  #恢复到之前的状态
+# 仅仅删除 commit 记录，暂存区和工作目录中的更改都会保留在工作目录中，以便再次提交。
+git reset --soft HEAD^    #删除前一次的commit的记录
+git reset --soft HEAD~n   #删除前n次的commit的记录
+```
+
+谨慎使用 reset  hard ！！
+
+彻底删除了提交以及暂存区和工作区的修改，慎用，因为会导致工作区的内容丢失。
+
+```bash
+
+# git commit到本地分支、但没有git push到远程
+git reset --hard	# 重置暂存区与工作区，与上一次 commit 保持一致   ，本地的代码会回退到上个版本！
+git reset --hard commit_id 	# 将代码回滚到当前commit_id的版本
+git reset --hard HEAD^  # 回到最新的一次提交
 
 ```
 
