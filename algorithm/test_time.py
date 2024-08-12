@@ -8,26 +8,6 @@
 # Input: numbers={2, 7, 11, 15}, target=9
 # Output: index1=1, index2=2
 
-# <script>
-# /**
-#  * @param {number[]} nums
-#  * @param {number} target
-#  * @return {number[]}
-#  */
-# var twoSum = function(nums, target) {
-#     numsLength = nums.length;
-#     for (var i = 0; i < numsLength; i++) {
-#         for (var j = i+1; j < numsLength; j++) {
-#             if (nums[i]+nums[j] == target){
-#                 return [i,j];
-#             }
-#         }
-#     }
-# };
-
-# console.log(twoSum([2,8,3,8,1],10));
-
-# </script>
 
 class Solution(object):
     """
@@ -51,9 +31,6 @@ class Solution(object):
         index2 = len(nums)
 
         return [index1 + 1, index2 + 1]
-
-# score
-# Your runtime beats 31.77% of python submissions.
 
 
 
