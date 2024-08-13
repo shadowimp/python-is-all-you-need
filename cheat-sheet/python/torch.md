@@ -92,7 +92,6 @@ torch 会自动调用  model.__call__
 
 所以： 当执行model(x)的时候，底层自动调用forward方法计算结果
 
-
 ```
 
 ```python

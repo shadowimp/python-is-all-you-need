@@ -1,7 +1,22 @@
-```python 3
-def fun(self, x):
-  a  = self(x)
+### inf  无穷大
+
+```python
+x = float('inf')  # 正无穷 
+x = float('-inf') #  负无穷
 ```
+
+
+
+
+
+### divmod
+
+```python
+divmod(10,3)
+> (3,1)
+```
+
+
 
 ### super init 
 
@@ -151,6 +166,20 @@ def fun_div(a,b):
 
 # sort dic 
 sorted_query_dic = sorted(query_dic.items(), key = lambda query_dic:query_dic[1], reverse=True)
+
+# 按字符串排序 指定key
+s = ['waimai','dache','lvyou','liren','meishi','jiehun','lvyoujingding']
+sorted(s) # 按首字母排序
+>>  ['dache', 'jiehun', 'liren', 'lvyou', 'lvyoujingding', 'meishi', 'waimai']
+
+res = sorted(s, key=str ,reverse=True)  # 实际上这个参数在这里是多余的 逆序
+res
+>> 
+['waimai', 'meishi', 'lvyoujingding', 'lvyou', 'liren', 'jiehun', 'dache']
+
+s = ['waimai','dache','you','liren','meishi','jiehun','lvyoujingding']
+res = sorted(s, key=len) # 按长度排序
+res
 
 
 # 注意lambda返回值是一个元祖

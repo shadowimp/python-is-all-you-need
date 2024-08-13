@@ -383,6 +383,50 @@ load data local inpath 'data_path' overwrite into table table_name1 row format d
 ```
 
 
+### pymysql
+```python
+import pymysql
+# Connect to the database
+con = pymysql.connect(host='localhost',user='root',password='12345',db='mydata')
+cur = con.cursor()
+# 构建Mysql : >> Create table If Not Exists Custormers(Id int, Name varchar(255))
+sql = 'insert into Customers(Id,Name) values ('1','joe')'.
+cur.execute(sql)
+data = cur.fetchone() # 取查询结果的一行
+print(data)
+conn.close()
+
+#四部：连接，游标数据库，执行，取数
+
+
+
+
+```
+### sqlite3
+
+
+```python
+import sqlite3 as sq 
+con = sq.connect('test.db') 
+cur = con.cursor()
+sql_1 = "Create table If Not Exists Student(id int ,name varchar(255),age int) " 
+cur.execute(sql_1) 
+sql_2 = "insert into Student(id , name , age) values (1,'jobs',45)"
+cur.execute(sql_2)
+print(cur.rowcount) 
+cur.close()
+con.commit()
+con.close() 
+
+con2 = sq.connect('test.db')
+cur2 = con2.cursor() 
+sql_3 = 'select * from Student' 
+cur2.execute(sql_3) 
+data = cur2.fetchall()
+print(data) 
+cur2.close() 
+con2.close() 
+```
 
 ## redis
 
