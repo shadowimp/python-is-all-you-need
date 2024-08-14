@@ -67,7 +67,7 @@ def normalize(data):
 
 def dating_test():
 	h = 0.1 
-	train_mat,labels = dating_data('datingTestSet.txt')
+	train_mat,labels = dating_data('/data/datingTestSet.txt')
 	normalize_data,ranges,min_data = normalize(train_mat)
 	m = normalize_data.shape[0]
 	n = int(m*h)
@@ -105,7 +105,7 @@ def img2vector(filename):
 			result_vector[0,32*i+j] = int(line[j])
 	return result_vector
 
-file_digits_name = '0_1.txt'
+file_digits_name = '/data/0_1.txt'
 print(img2vector(file_digits_name)[0,34:78])
 
 def handwriting():
