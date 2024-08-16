@@ -19,3 +19,8 @@ image VAE , (self supervise) VAriational Autoencoder
 
 
 离散 latent
+
+
+
+
+

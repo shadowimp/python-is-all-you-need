@@ -7,8 +7,6 @@ x = float('-inf') #  负无穷
 
 
 
-
-
 ### divmod
 
 ```python

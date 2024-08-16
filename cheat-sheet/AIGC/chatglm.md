@@ -74,11 +74,6 @@ Top-p is usually set to a high value (like 0.75) with the purpose of limiting th
 
 
 
-
-
-
-
-
 unk_token: 不存在词典里的字符.
 ```
 

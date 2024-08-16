@@ -46,4 +46,12 @@ llm  的推理部署库， 可以提升服务的性能
 
 
 
+### rag
+
 llama index
+
+
+
+### video 2 text 
+
+https://arxiv.org/pdf/2212.14546

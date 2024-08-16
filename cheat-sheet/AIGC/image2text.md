@@ -1,3 +1,19 @@
+### chatglm-4v-9b.md
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ```python
 from PIL import Image
 import numpy as np

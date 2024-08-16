@@ -27,7 +27,7 @@ python -m llmtuner.webui.interface
 ```
 
 
-CUDA_VISIBLE_DEVICES=0 /data0/yuanbo6/conda_env/envs/chatglm/bin/python src/train_bash.py \
+CUDA_VISIBLE_DEVICES=0 python src/train_bash.py \
     --stage sft \
     --do_train \
     --model_name_or_path path_to_llama_model \
