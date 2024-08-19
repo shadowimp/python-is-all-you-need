@@ -1,0 +1,8 @@
+BGE是由北京智源人工智能研究院提出的新的embedding模型。
+
+在预训练阶段，作者选择在Wudao数据集上进行，采用的模型架构为RetroMAE[2]。
+
+RetroMAE的模型架构为非对称的encoder-decoder结构。为什么是非对称的呢？因为它的encoder部分是由bert组成(12层transformer的encoder)，而它的decoder部分仅有由一层transformer的decoder构成。
+
+
+
