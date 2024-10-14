@@ -83,6 +83,7 @@ git reset --hard HEAD^  # 回到最新的一次提交
 # 已经用 git push把修改提交到远程仓库
 git reset --hard <commit_id>
 git push origin HEAD --force # 强制提交一次，之前错误的提交就从远程仓库删除
+git push origin HEAD:master # Push a detached git HEAD
 
 
 git stash	# 将目前改动的代码暂存起来

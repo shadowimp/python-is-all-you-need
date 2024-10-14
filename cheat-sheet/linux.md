@@ -371,6 +371,7 @@ sort file                          # 排序文件
 sort -r file                       # 反向排序（降序）
 sort -n file                       # 使用数字而不是字符串进行比较
 sort -t: -k 3n /etc/passwd         # 按 passwd 文件的第三列进行排序
+sort -t$'\t' -k5,5 test.txt -r |head   # 将文件按照第五行排序
 sort -u file                       # 去重排序
 ```
 

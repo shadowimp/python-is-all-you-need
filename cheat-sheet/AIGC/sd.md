@@ -4,13 +4,17 @@
 xxmix_girl,a woman takes a fisheye selfie on a beach at sunset
 ```
 
+tensor rt加速
 
+https://developer.nvidia.com/zh-cn/blog/tensorrt-accelerates-stable-diffusion-nearly-2x-faster-with-8-bit-post-training-quantization/
 
 
 
 
 
 ### control net
+
+https://mp.weixin.qq.com/s/k8rE9GrF97E-0TKJhih9kw
 
 指令修图，
 

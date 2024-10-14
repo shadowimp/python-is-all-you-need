@@ -1,6 +1,76 @@
+### Bert (Bidirectional Encoder Representions form Transformers )
+
+### 参数量
+
+词表长度3w， embeding 维度 768 。
+
+[BERT-base](https://zhida.zhihu.com/search?content_id=195736300&content_type=Article&match_order=1&q=BERT-base&zhida_source=entity)的参数量是110M，[BERT-large](https://zhida.zhihu.com/search?content_id=195736300&content_type=Article&match_order=1&q=BERT-large&zhida_source=entity)的参数量是340M。
+
+BERT-BASE (L=12, H=768, A=12, Total Parameters=110M)
 
 
 
+embedding 层： 
+
+Bert采用的词表长度 |V| 为30522
+
+hidden_size即[embedding长度](https://zhida.zhihu.com/search?content_id=195736300&content_type=Article&match_order=1&q=embedding长度&zhida_source=entity) e 为768（论文中的 H)
+
+序列最大长度 N 为512（They are sampled such that the combined length is ≤ 512 tokens）；
+
+ 参数量 = V * E  + S *e + N * E = （30522 + 2 + 512) * 768
+
+
+
+
+
+### BertClient
+
+Bert-serving可以直接调用谷歌训练好的字向量，然后很轻松就可以生成我们需要的词向量
+
+```python
+from bert_serving.client import BertClient
+bc = BertClient()
+bc.encode(['First do it', 'then do it right', 'then do it better'])
+```
+
+
+
+
+
+
+
+
+
+### bert 与 gpt的不同:
+
+1、训练任务不同：
+
+bert ： mlm任务 随机mask词 做预测，nsp任务 判断两个句子是否连续
+
+gpt: 单向自回归预训练，仅依赖于已生成的文本上下文来预测下一个词
+
+2、架构不同，
+
+bert ： 双向encoder，model同时考虑上下文信息  ， sft时通常将cls向量送入分类器，
+
+gpt:  单向decoder  only， 没有encoder， 依赖单向信息。 每个词的生成只依赖于它之前的词。
+
+
+
+### T5和gpt的区别：
+
+T5： encoder + decoder架构，可以接收双向的上下文信息 ，而解码器在生成过程中虽然不能直接看到未来的信息（通过掩码机制避免），但因为有编码器的输入，间接地利用了双向信息。
+
+多种任务预训练，能够适应多种任务。
+
+T5的推理过程可能在某些情况下更高效，因为它只需要对输入进行一次编码，而生成时的解码过程可以更聚焦。
+
+GPT ： decoder only 。去除了编码器部分，简化了模型结构，使得模型更易于训练和理解。GPT-3 通过其 Decoder 层处理输入序列。输入数据（如一段文本）首先被转换为[词嵌入](https://www.zhihu.com/search?q=词嵌入&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra={"sourceType"%3A"answer"%2C"sourceId"%3A3379518716})，然后加上[位置编码](https://www.zhihu.com/search?q=位置编码&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra={"sourceType"%3A"answer"%2C"sourceId"%3A3379518716})，之后通过多个 Decoder 层进行处理。在每个 Decoder 层中，GPT-3 使用掩蔽（masked）的自注意力机制，这确保在生成每个词时，模型只能考虑到之前的词（即保持自回归性质）。
+
+GPT-3 在大量多语言文本上进行预训练，这使得它能够理解和生成多种语言。即使它没有专门的编码器来处理输入语言，它仍然能够通过其大规模的训练数据理解不同语言之间的关联。
+
+GPT每次生成新词时都要处理到目前为止生成的所有词，这在计算上可能更昂贵
 
 
 

@@ -1,3 +1,35 @@
+
+
+
+
+### 分区
+
+```
+INSERT INTO TABLE partitioned_table PARTITION ( dt,class_tag) # 动态分区要在静态分区之后
+SELECT 
+    student_id,
+    class_id,
+    class_tag,
+    TO_DATE(date_column) AS dt
+FROM 
+    A
+JOIN 
+    B 
+ON 
+    A.class_id = B.class_id
+WHERE 
+    A.class_id <> '001';
+    
+    
+    
+To turn this off set hive.exec.dynamic.partition.mode=nonstrict
+# 动态分区 ，在运行hive时先添加下面两行
+set hive.exec.dynamic.partition=true
+set hive.exec.dynamic.partition.mode=nonstrict
+```
+
+
+
 ```sql
 # join 
 (8) SELECT (9) DISTINCT (11) <TOP_specification> <select_list>
@@ -44,6 +76,10 @@ where tag.tag='mysql';
 链接：https://zhuanlan.zhihu.com/p/677362241
 来源：知乎
 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+# 包含 in
+SELECT * FROM your_table_name WHERE your_column_name LIKE '%specific_string%';
 ```
 
 
@@ -354,6 +390,8 @@ hadoop fs -df -h  # 统计文件系统的可用空间信息
 hadoop fs -du -s -h  yuanbo# 统计yuanbo文件夹的大小信息
 hadoop fs -du yuanbo  #   查看yuanbo文件夹下各文件的大小
 
+hadoop fs -put -f terst.txt viewfs://
+
 hadoop fs -put retargeting.zip ss9/copy195
 -put -f # 在已经有文件的情况下，强行覆盖。
 
@@ -365,6 +403,8 @@ hadoop fs -cat hadoop fs viewfs://test.txt  # 查看文件内容
 
  hdfs dfs -chmod 777 viewfs://yuanbo/output
 
+
+hdfs dfs -du -h viewfs:// # 查看hdfs下文件(hive表地址)大小
 ```
 
 

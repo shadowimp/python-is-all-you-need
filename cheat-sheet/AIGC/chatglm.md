@@ -1,3 +1,11 @@
+
+
+
+
+
+
+
+
 ```
 https://huggingface.co/THUDM/chatglm3-6b
 https://github.com/THUDM/ChatGLM3
@@ -36,13 +44,23 @@ print(response)
 
 
 
-```
+```python
 # int 4 量化
 model = AutoModel.from_pretrained("THUDM/chatglm3-6b", trust_remote_code=True).quantize(4).half().cuda()
 
 # Quantization rely on cpm_kernels. Install it by:
 pip install cpm_kernels
+
+
+# 4 bit quantize 
+from auto_gptq import AutoGPTQForCausalLM, BaseQuantizeConfig
+quantize_config = BaseQuantizeConfig(bits=4, group_size=128,desc_act=False,)
+model =   AutoGPTQForCausalLM.from_pretrained(model_dir,quantize_config)
+# infer
+output_ids = self.yi_model.generate(input_ids=input_ids.to('cuda'),max_new_tokens=200)
 ```
+
+
 
 
 
