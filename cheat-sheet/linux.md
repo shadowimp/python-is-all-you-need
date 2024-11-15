@@ -25,6 +25,7 @@ pwd               # 显示当前所在目录
 history 10 #查看历史10条命令
 
 
+sudo du -h --max-depth=1 # 文件夹大小
 
 cat #显示文件内容
 cat -n	# 打印内容的同时，打印行号
@@ -52,8 +53,8 @@ grep -r message ./  #递归的查找当前目录下包含字符串message 的文
 # 文件去重
 cat keywords_pusou.txt |sort|uniq >  keywords_pusou1.txt
 sort train.tsv.cut | uniq |  > train.tsv # 训练数据的去重
-awk ' !x[$0]++'  test_file # 去重不改变顺序
-
+awk ' !x[$0]++'  test_file >test_file.uni # 去重不改变顺序， 不改变顺序去重
+ 
 # 将文件打乱
 shuf input_file.txt -o output_file.txt
 

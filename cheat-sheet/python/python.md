@@ -1,3 +1,15 @@
+```python
+#获得一个字符串的所有子串
+def get_SubString(s): 
+	return [s[j:j+i+1] for i in range(len(s)) for j in range(len(s)-i)]
+
+print(get_SubString('adf'))
+```
+
+
+
+
+
 ### inf  无穷大
 
 ```python

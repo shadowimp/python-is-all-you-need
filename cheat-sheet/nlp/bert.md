@@ -10,15 +10,59 @@ BERT-BASE (L=12, H=768, A=12, Total Parameters=110M)
 
 
 
-embedding 层： 
+**embedding 层：** 
 
 Bert采用的词表长度 |V| 为30522
 
-hidden_size即[embedding长度](https://zhida.zhihu.com/search?content_id=195736300&content_type=Article&match_order=1&q=embedding长度&zhida_source=entity) e 为768（论文中的 H)
+hidden_size即[embedding长度](https://zhida.zhihu.com/search?content_id=195736300&content_type=Article&match_order=1&q=embedding长度&zhida_source=entity) E 为768（论文中的 H)
 
-序列最大长度 N 为512（They are sampled such that the combined length is ≤ 512 tokens）；
+S： 块向量（Segment Embeddings），
 
- 参数量 = V * E  + S *e + N * E = （30522 + 2 + 512) * 768
+N：序列最大长度 N 为512（They are sampled such that the combined length is ≤ 512 tokens）；
+
+ 参数量 = V * E  + S *E + N * E = （30522 + 2 + 512) * 768
+
+
+
+**multi-head attention layer** 
+
+$$Attention(Q,K,V) = softmax(\frac {QK^T} {\sqrt{d_k}})V$$
+
+Bert采用了12头self-attention. 
+
+论文中 dmodel 即hidden_size，768。
+
+768*768/ 
+
+Q ,K,V的参数维度相同:  e*d_k  均为    (64,768 )
+
+12个head拼接后 ： 12 * 64 * 768
+
+
+
+
+
+FFN ， feed forward network 
+
+包括两个全连接层。
+
+ feed-forward/filter size to be 4H = 4*768 = 3072
+
+$$ FFN(x)=max(0,xW_1+b_1)W_2+b_2$$
+
+
+
+```
+768*3072 + 3072 + 3072*768 + 768
+```
+
+
+
+
+
+
+
+
 
 
 
