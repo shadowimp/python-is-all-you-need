@@ -1,4 +1,160 @@
 ```python
+# json dump 
+json.dump(data,output_file,ensure_ascii=False, indent=2)
+
+
+# 字典按值排序
+sorted_query_dic = sorted(query_dic.items(), key = lambda query_dic:query_dic[1], reverse=True)
+
+
+# write 写文件
+with open('file.txt','w') as fw:
+    print('{} {}'.format(s1,s2),file=fw)
+
+    
+#解析命令行参数和选项
+  
+arg_parser = ArgumentParser('bert_sim',usage='test')
+
+default_train_data_path = 'word.txt'
+arg_parser.add_argument('--train_data_path' , default=default_train_data_path)
+
+args = arg_parser.parse_args()
+train_data = args.train_data_path
+print(train_data)
+
+```
+
+
+
+
+
+### time datetime
+
+```python
+# -*- coding:utf-8 -*-
+import time
+start_time = time.time()
+print("总耗时:", time.time() - start_time)
+
+
+
+
+time_start = time.perf_counter()
+time_end = time.perf_counter()
+print("Run time(minute):",(time_end-time_start)/60)
+
+
+import time 
+import os 
+while time.time() - os.path.getmtime(filename) < 10:      
+    print(time.ctime(),'文件 正在写入')
+    time.sleep(10)
+    
+    
+    
+import datetime
+date = datetime.datetime.now() - datetime.timedelta(days=1) 
+date = date.strftime("%Y%m%d")
+print(date)
+
+```
+
+
+
+
+
+
+
+### 日志 
+
+```python
+# 日志
+import sys
+import logging 
+class Logger(object):
+    level_relations = { 
+        'debug': logging.DEBUG,
+        'info': logging.INFO,
+        'warning': logging.WARNING,
+        'error': logging.ERROR,
+        'crit': logging.CRITICAL
+    }  # 日志级别关系映射
+    
+    def __init__(self,filename,level='info'):
+        self.logger = logging.getLogger()
+        handler = logging.FileHandler(filename)
+        formatter = logging.Formatter("%(asctime)s [%(levelname)s]%(message)s",datefmt='%Y-%m-%d %H:%M:%S')
+        handler.setFormatter(formatter)
+        self.logger.addHandler(handler)
+        self.logger.setLevel(self.level_relations.get(level)) # 设置日志级别   
+file_log_name = 'file.log'
+file_log = Logger(file_log_name,level='info').logger
+
+file_log.info('start')
+```
+
+
+
+
+
+### 文本清洗
+
+```python
+# 保留中文标点
+import re
+def text_normal_l1(text):
+    # 对数据进行简单清洗
+    rule_url = re.compile(
+        '(http?://)?(www\\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)'
+    )
+
+    rule_legal = re.compile('[^\\[\\]@#a-zA-Z0-9\u4e00-\u9fa5，。！？：《》、*]')
+
+    rule_space = re.compile('\\s+')
+    text = str(text).replace('\\n', ' ').replace('\n', ' ').strip()
+    text = rule_url.sub(' ', text)
+    text = rule_legal.sub(' ', text)
+    text = rule_space.sub(' ', text)
+        
+    # 去除表情符号
+    try:  
+        rule_emoij = re.compile(u'['u'\U0001F300-\U0001F64F' u'\U0001F680-\U0001F6FF'u'\u2600-\u2B55]+')  
+    except re.error:  
+        rule_emoij = re.compile(u'('u'\ud83c[\udf00-\udfff]|'u'\ud83d[\udc00-\ude4f\ude80-\udeff]|'u'[\u2600-\u2B55])+') 
+        
+    text = rule_emoij.sub(' ', text)
+    
+    text = re.sub("\[\S+?\]", " ", text)  # 取出表情符号
+    return text.strip()  
+    
+    
+    
+
+```
+
+```python
+import re
+def text_normal_l1(text):
+    rule_url = re.compile('(https?://)?(www\\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)')
+    rule_legal = re.compile('[^\\[\\]@#a-zA-Z0-9\u4e00-\u9fa5]')
+    rule_space = re.compile('\\s+')
+    text = str(text).replace('\\n', ' ').replace('\n', ' ').strip()
+    text = rule_url.sub(' ', text)
+    text = re.sub('\[.*?\]', '', text)
+    text = rule_legal.sub(' ', text)
+    text = rule_space.sub(' ', text)
+    text = text.replace('#','')
+    return text.strip()
+```
+
+
+
+
+
+
+
+```python
 #获得一个字符串的所有子串
 def get_SubString(s): 
 	return [s[j:j+i+1] for i in range(len(s)) for j in range(len(s)-i)]
@@ -451,12 +607,20 @@ pyinotify
 
 ```python
 import os
-file_path = '/usr/home/xiaolu10/xiaolu4/query_get_blog/data'
+file_path = 'data'
 files = os.listdir(file_path)
 files_path =[os.path.join(file_path,file_name) for file_name in files]
 files_path.sort(key=lambda fp: os.path.getctime(fp),reverse=True)
 latest_file = files_path[:2]
 print(latest_file) # 绝对路径
+
+
+import os
+file_path = 'data'
+files = os.listdir(file_path)
+files_path =[os.path.join(file_path,file_name) for file_name in files]
+files_path.sort(key=lambda fp: os.path.getctime(fp),reverse=True)
+latest_file = files_path[0]
 ```
 
 
