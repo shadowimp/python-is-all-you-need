@@ -157,6 +157,13 @@ git push -u origin master
 
 # 如果远程仓库已经有readme.md 首先运行
 git pull origin master --allow-unrelated-histories
+
+
+# cd existing_repo
+git remote add origin https://git.staff.sina.com.cn/yuanbo6/dsp-ai-union.git
+git branch -M main
+git push -uf origin main
+
 ```
 
 ##### Push an existing Git repository
