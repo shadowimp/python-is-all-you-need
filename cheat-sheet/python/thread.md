@@ -54,3 +54,56 @@ print(e-s)
 
 
 
+### asyncio 
+
+```python
+import asyncio
+
+async def boil_water():
+    print("点火烧水")
+    await asyncio.sleep(5)  # 模拟5秒等待，此时CPU可以去执行其他任务
+    print("水开了！")
+
+async def cut_fruit():
+    print("开始切水果")
+    await asyncio.sleep(2)
+    print("水果切好了")
+
+async def main():
+    # 创建两个并行任务
+    task1 = asyncio.create_task(boil_water())
+    task2 = asyncio.create_task(cut_fruit())
+    
+    # 等待两个任务都完成
+    await task1
+    await task2
+
+asyncio.run(main())
+```
+
+
+
+
+
+
+
+```python
+import asyncio
+
+async def boil_water(random_number):
+    print("点火烧水")
+    print(random_number)
+    await asyncio.sleep(random_number)  # 模拟5秒等待，此时CPU可以去执行其他任务
+    print("水开了！")
+    return random_number
+  
+async def concurrent_task_with_timeout(coroutines):
+    tasks = [asyncio.create_task(coro) for coro in coroutines]
+    results = [None] * len(coroutines) 
+    done , pending = await asyncio.wait(tasks)
+    for task in done:
+        index = tasks.index(task)
+        results[index] = task.result()
+    return results 
+```
+
